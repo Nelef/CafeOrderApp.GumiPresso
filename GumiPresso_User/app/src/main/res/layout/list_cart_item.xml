@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:elevation="6dp"
+            android:elevation="7dp"
             app:cardCornerRadius="10dp"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -68,25 +68,26 @@
             android:id="@+id/tv_order_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:text="@{cart.cart.totalPrice +`원`}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_menu_delete"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="000 원" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_menu_delete"
             android:layout_width="60dp"
             android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_color"
             android:text="삭제"
             android:textColor="@color/coffee_point_red"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

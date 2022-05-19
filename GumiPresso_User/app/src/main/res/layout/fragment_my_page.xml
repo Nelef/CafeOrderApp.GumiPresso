@@ -70,14 +70,19 @@
             app:layout_constraintTop_toBottomOf="@id/iv_title_bar"
             tools:text="Name" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/iv_logout"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/logout"
+            android:background="@drawable/button_color"
+            android:text="로그아웃"
+            android:textColor="@color/coffee_point_red"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/tv_username"
+            app:layout_constraintBottom_toBottomOf="@id/tv_username"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/membershipLayout"
@@ -85,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
+            app:cardElevation="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_username">
@@ -125,6 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:gravity="center"
+                    android:layout_marginRight="15dp"
                     android:text="혜택보기"
                     android:textColor="@color/gray"
                     app:layout_constraintBottom_toBottomOf="parent"

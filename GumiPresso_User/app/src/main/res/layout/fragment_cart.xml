@@ -90,16 +90,17 @@
                     android:layout_height="wrap_content"
                     android:text="@{viewmodel.totalCartQuantity}"
                     android:textColor="@color/black"
-                    tools:text="5 개"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="5 개" />
 
                 <TextView
                     android:id="@+id/tv_shoppinglist_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
                     android:text="@{viewmodel.totalCartPrice}"
                     android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="10,000 원" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -108,8 +109,8 @@
                 android:id="@+id/tv_order_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="주문 방식을 선택해주세요."
                 android:padding="10dp"
+                android:text="주문 방식을 선택해주세요."
                 app:layout_constraintBottom_toTopOf="@id/linear_button"
                 tools:layout_editor_absoluteX="35dp" />
 
