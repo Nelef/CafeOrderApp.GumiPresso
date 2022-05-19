@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.through.model.dto.User;
+import com.ssafy.through.model.service.FCMUtil;
 import com.ssafy.through.model.service.KakaoLoginService;
 import com.ssafy.through.model.service.NaverLoginService;
 import com.ssafy.through.model.service.UserService;
@@ -114,11 +115,7 @@ public class UserRestController {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("loginId")) {
 					String userId = cookie.getValue(); 					
-					//userId = userId.replace("%40", "@");
-					System.out.println("me/ "+userId);
 					User selectedUser = uService.select(userId);
-					//selectedUser.setPass("");
-					System.out.println(selectedUser);
 					response.addCookie(cookie);
 					return new ResponseEntity<User>(selectedUser, HttpStatus.OK);
 				}
@@ -131,8 +128,14 @@ public class UserRestController {
 	@ApiOperation(value = "회원가입 버튼 클릭시 -> insert user", response = User.class)
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody User user) {
-		int result = uService.insert(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);		
+		try {
+			int result = uService.insert(user);
+		}catch(Exception e) {
+			
+		}finally {
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+				
 	}
 	
     
@@ -181,5 +184,15 @@ public class UserRestController {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 	}
+	
+	@PostMapping("/fcm")
+	public String fcmTest(@RequestBody Map<String, String> map)
+	{
+		FCMUtil fcmUtil = new FCMUtil();
+		fcmUtil.send_FCM(map.get("token"), map.get("title"), map.get("content"));
+		return "d";
+	}
+
+	
 
 }
