@@ -19,6 +19,7 @@ class ApplicationClass: Application() {
         lateinit var userPrefs : SharedPreferences
         lateinit var noticePrefs : SharedPreferences
         lateinit var cookiePrefs : SharedPreferences
+        lateinit var fcmTokenPrefs: SharedPreferences
 
     }
     override fun onCreate() {
@@ -40,5 +41,6 @@ class ApplicationClass: Application() {
         userPrefs = getSharedPreferences("User", MODE_PRIVATE)
         noticePrefs = getSharedPreferences("CloudMessage", MODE_PRIVATE)
         cookiePrefs = getSharedPreferences("Cookie", MODE_PRIVATE)
+        fcmTokenPrefs = getSharedPreferences("FcmToken", MODE_PRIVATE)
     }
 }
