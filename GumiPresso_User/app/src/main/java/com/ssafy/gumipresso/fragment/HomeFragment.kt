@@ -80,16 +80,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         getUserFromPreferences()
-<<<<<<< HEAD
+        checkPermission()
 
         binding.ivNotification.setOnClickListener {
             (activity as MainActivity).movePage(CONST.FRAG_NOTI, null)
         }
-=======
-        getCloudMessage()
-        checkPermission()
-
->>>>>>> 73b68d49498a0a28c5d8facfe36c9068cddc9d02
 
         binding.btnFcmPush.setOnClickListener {
             userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
