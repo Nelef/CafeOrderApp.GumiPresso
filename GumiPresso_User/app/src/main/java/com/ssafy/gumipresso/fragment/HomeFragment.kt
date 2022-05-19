@@ -86,10 +86,6 @@ class HomeFragment : Fragment() {
         getCloudMessage()
         checkPermission()
 
-
-        binding.btnFcmPush.setOnClickListener {
-            userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
-        }
         binding.btnTestImg.setOnClickListener {
             openGalleryForImages()
         }
