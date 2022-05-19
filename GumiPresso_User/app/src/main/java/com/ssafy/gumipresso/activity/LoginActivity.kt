@@ -41,10 +41,14 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
             CONST.FRAG_LOGIN ->{
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left,R.anim.exit_to_right)
+                    .replace(R.id.fragment_container_login, LoginFragment()).commit()
             }
             CONST.FRAG_JOIN ->{
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, JoinFragment()).addToBackStack(null).commit()
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left,R.anim.exit_to_right)
+                    .replace(R.id.fragment_container_login, JoinFragment()).addToBackStack(null).commit()
             }
         }
     }

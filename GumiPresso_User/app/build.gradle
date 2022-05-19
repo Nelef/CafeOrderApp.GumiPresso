@@ -96,4 +96,7 @@ dependencies {
 
     //Naver
     implementation 'com.navercorp.nid:oauth:5.1.0' // jdk 11
+
+    // Background Animate
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
 }
