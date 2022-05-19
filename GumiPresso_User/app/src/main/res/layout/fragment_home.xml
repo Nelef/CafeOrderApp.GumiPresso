@@ -88,6 +88,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_notice_list" />
 
+        <Button
+            android:id="@+id/btn_fcm_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FCM 메시지 전송"
+            app:layout_constraintTop_toTopOf="@id/tv_recent_order_list"
+            app:layout_constraintStart_toEndOf="@id/tv_recent_order_list"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_recent_order"
             android:layout_width="match_parent"

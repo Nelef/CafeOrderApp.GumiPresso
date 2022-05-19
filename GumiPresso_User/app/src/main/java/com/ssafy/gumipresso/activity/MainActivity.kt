@@ -34,6 +34,7 @@ import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
 import com.ssafy.gumipresso.fragment.OrderFragment
+import com.ssafy.gumipresso.util.FCMTokenUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -163,6 +164,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 return@OnCompleteListener
             }
             Log.d(TAG, "onCreate: 새로운 등록 토큰: ${it.result}")
+            FCMTokenUtil().setFcmToken(it.result)
         })
         createNotiChannel("ssafy_id", "ssafy")
     }

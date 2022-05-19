@@ -23,4 +23,7 @@ interface UserService {
 
     @POST("/user/naver")
     suspend fun sendNaverToken(@Body token: String): Response<User>
+
+    @POST("/user/fcm")
+    suspend fun sendFCMPushMessgae(@Body map: Map<String, String>) : Response<Void>
 }

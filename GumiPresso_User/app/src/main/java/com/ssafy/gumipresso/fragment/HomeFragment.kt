@@ -16,6 +16,7 @@ import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentHomeBinding
 import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.RecentOrder
+import com.ssafy.gumipresso.util.FCMTokenUtil
 import com.ssafy.gumipresso.util.NoticeMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.NoticeViewModel
@@ -49,6 +50,10 @@ class HomeFragment : Fragment() {
         initViewModel()
         getUserFromPreferences()
         getCloudMessage()
+
+        binding.btnFcmPush.setOnClickListener {
+            userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
+        }
     }
 
     private fun initViewModel(){
