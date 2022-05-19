@@ -39,24 +39,23 @@
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginVertical="30dp"
             android:backgroundTint="@color/coffee_brown"
-            android:text="수정"
+            android:text="취소"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratingBar_dialog" />
+            app:layout_constraintEnd_toStartOf="@id/btn_confirm"
+            app:layout_constraintTop_toTopOf="@id/btn_confirm"
+            app:layout_constraintBottom_toBottomOf="@id/btn_confirm"/>
 
         <Button
             android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:backgroundTint="@color/coffee_brown"
-            android:text="취소"
+            android:text="확인"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@id/btn_cancel"
-            app:layout_constraintTop_toTopOf="@id/btn_cancel" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar_dialog"  />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
