@@ -84,25 +84,7 @@ class HomeFragment : Fragment() {
         initViewModel()
         getUserFromPreferences()
         getCloudMessage()
-
-        val permissionlistener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                //initView()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-                Toast.makeText(context,
-                    "스토리지에 접근 권한을 허가해주세요",
-                    Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-
-        TedPermission.create()
-            .setPermissionListener(permissionlistener)
-            .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
-            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .check()
+        checkPermission()
 
 
         binding.btnFcmPush.setOnClickListener {
@@ -129,6 +111,24 @@ class HomeFragment : Fragment() {
             val realUri = UriPathUtil().getPath(requireContext(), imageUri).toString()
             imageViewModel.uploadImage(realUri)
         }
+    }
+
+    private fun checkPermission(){
+        val permissionlistener = object : PermissionListener {
+            override fun onPermissionGranted() {
+            }
+            override fun onPermissionDenied(deniedPermissions: List<String>) {
+                Toast.makeText(context,
+                    "스토리지에 접근 권한을 허가해주세요",
+                    Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+        TedPermission.create()
+            .setPermissionListener(permissionlistener)
+            .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
+            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+            .check()
     }
 
     private fun initViewModel(){
