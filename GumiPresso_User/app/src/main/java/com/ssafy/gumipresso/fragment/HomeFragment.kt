@@ -19,6 +19,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,10 +41,7 @@ import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.util.FCMTokenUtil
 import com.ssafy.gumipresso.util.NoticeMessageUtil
 import com.ssafy.gumipresso.util.UriPathUtil
-import com.ssafy.gumipresso.viewmodel.CartViewModel
-import com.ssafy.gumipresso.viewmodel.NoticeViewModel
-import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
-import com.ssafy.gumipresso.viewmodel.UserViewModel
+import com.ssafy.gumipresso.viewmodel.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,6 +63,7 @@ class HomeFragment : Fragment() {
     private val noticeViewModel: NoticeViewModel by viewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
     private val cartViewModel: CartViewModel by activityViewModels()
+    private val imageViewModel: ImageViewModel by viewModels()
 
     private lateinit var orderList: List<RecentOrder>
     private lateinit var recentOrderAdapter: RecentOrderAdapter
@@ -113,80 +113,23 @@ class HomeFragment : Fragment() {
         }
     }
 
-    val REQUEST_CODE = 200
-
     fun openGalleryForImages() {
-
-        if (Build.VERSION.SDK_INT < 19) {
-            var intent = Intent()
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Choose Pictures")
-                , REQUEST_CODE
-            )
-        }
-        else { // For latest versions API LEVEL 19+
             var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE);
-        }
-
+            resultLauncher.launch(intent);
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val uriUtil = UriPathUtil()
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
-
-            // if multiple images are selected
-            if (data?.getClipData() != null) {
-                var count = data.clipData!!.itemCount
-
-                for (i in 0 .. count - 1) {
-                    var imageUri: Uri = data.clipData!!.getItemAt(i).uri
-                    Log.d(TAG, "onActivityResult: ${imageUri}")
-                    Log.d(TAG, "onActivityResult: ${uriUtil.getPath(requireContext(), imageUri)}")
-                }
-
-            } else if (data?.getData() != null) {
-                // if single image is selected
-
-                var imageUri: Uri = data.data!!
-                var realUri = uriUtil.getPath(requireContext(), imageUri)
-                //   iv_image.setImageURI(imageUri) Here you can assign the picked image uri to your imageview
-                Log.d(TAG, "onActivityResult: ${imageUri}")
-                Log.d(TAG, "onActivityResult: ${realUri}")
-                testRetrofit(realUri!!)
-            }
+    val resultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode == Activity.RESULT_OK){
+            val data = it.data!!
+            val imageUri = data.data!!
+            val realUri = UriPathUtil().getPath(requireContext(), imageUri).toString()
+            imageViewModel.uploadImage(realUri)
         }
     }
-
-    fun testRetrofit(path : String){
-
-
-        //creating a file
-        val file = File(path)
-        Log.d(TAG, "testRetrofit: $file")
-        var fileName = System.currentTimeMillis().toString()
-        fileName = fileName+".png"
-
-
-        var requestBody : RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file)
-        var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)
-
-
-
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.d(TAG, "testRetrofit: ${body.body}")
-            Retrofit.imageService.insertImage(body)
-        }
-
-    }
-
 
     private fun initViewModel(){
         userViewModel.user.observe(viewLifecycleOwner){

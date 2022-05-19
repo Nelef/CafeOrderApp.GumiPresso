@@ -32,8 +32,6 @@ public class ImageServiceImpl implements ImageService{
 		return repo.select(id);
 	}
 
-	@Value("${app.upload.dir:${user.home}}")
-	private String uploadDir;
 	@Override
 	public void fileUpload(MultipartFile multipartFile, String url){
         Path copyOfLocation = Paths.get(url);
