@@ -2,59 +2,41 @@ package com.ssafy.gumipresso.fragment
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.CalendarContract.Attendees.query
-import android.provider.DocumentsContract
-import android.provider.MediaStore
-import android.text.format.DateFormat
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
-import com.navercorp.nid.oauth.NidOAuthLoginState
+import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
-import com.ssafy.gumipresso.adapter.NoticeAdapter
+import com.ssafy.gumipresso.adapter.BannerAdapter
 import com.ssafy.gumipresso.adapter.RecentOrderAdapter
-import com.ssafy.gumipresso.common.ApplicationClass
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentHomeBinding
-import com.ssafy.gumipresso.model.Retrofit
 import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.util.FCMTokenUtil
-import com.ssafy.gumipresso.util.NoticeMessageUtil
 import com.ssafy.gumipresso.util.UriPathUtil
-import com.ssafy.gumipresso.viewmodel.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.internal.EMPTY_REQUEST
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
-import java.lang.Exception
-import java.util.*
-import kotlin.io.path.Path
+import com.ssafy.gumipresso.viewmodel.CartViewModel
+import com.ssafy.gumipresso.viewmodel.ImageViewModel
+import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
+import com.ssafy.gumipresso.viewmodel.UserViewModel
+
 
 private const val TAG ="HomeFragment"
 class HomeFragment : Fragment() {
@@ -66,6 +48,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var orderList: List<RecentOrder>
     private lateinit var recentOrderAdapter: RecentOrderAdapter
+
+    // 배너
+    private var bannerList = mutableListOf(R.drawable.banner1, R.drawable.banner2)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -93,6 +78,12 @@ class HomeFragment : Fragment() {
         binding.btnTestImg.setOnClickListener {
             openGalleryForImages()
         }
+
+        // 배너
+        binding.viewPager2.adapter = BannerAdapter(bannerList) // 어댑터 생성
+        binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL // 방향을 가로로
+
+        // 배너 끝
     }
 
     fun openGalleryForImages() {
@@ -178,5 +169,4 @@ class HomeFragment : Fragment() {
     private fun getUserFromPreferences(){
         userViewModel.getUserInfo()
     }
-
 }
