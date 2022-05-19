@@ -8,8 +8,8 @@ interface UserService {
     @POST("/admin/login")
     suspend fun loginAdmin(@Body user: User): Response<User>
 
-    @GET("/admin/{id}")
-    suspend fun getAdminUser(@Path("id")id: String): Response<User>
+    @GET("/admin/me")
+    suspend fun getAdminUser(): Response<User>
 
     @GET("/admin/join/{id}")
     suspend fun checkId(@Path("id")id: String): Response<Boolean>
