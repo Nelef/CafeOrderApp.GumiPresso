@@ -40,6 +40,24 @@ class UserViewModel: ViewModel() {
         }
     }
 
+    fun getAdminUser(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = Retrofit.userService.getAdminUser()
+                if(response.isSuccessful && response.body() != null){
+                    _user.postValue((response.body() as User))
+                    _loginSuccess.postValue(true)
+                }
+                else if(response.body() == null){
+                    _loginSuccess.postValue(false)
+                }
+            }catch (e: Exception){
+                _loginSuccess.postValue(false)
+                Log.d(TAG, "login: ${e.message}")
+            }
+        }
+    }
+
     private val _isUsedId = MutableLiveData<Boolean>()
     val isUsedId: LiveData<Boolean>
         get() = _isUsedId

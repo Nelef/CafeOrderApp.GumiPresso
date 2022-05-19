@@ -19,4 +19,13 @@
 		select count(id) from t_admin where id = #{id}
 	</select>	
 
+	<select id="selectOrderByCompleted" resultType="Order">
+		select * from t_order where completed = 'N'
+	</select>
+	
+	<select id="selectOrderDetailByOrderId" parameterType="String" resultType="OrderDetail">
+		select * from t_order_detail, t_product
+		where t_order_detail.order_id = #{orderId}
+		and t_order_detail.product_id = t_product.id
+	</select>	
 </mapper>

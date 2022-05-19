@@ -2,6 +2,7 @@ package com.ssafy.through.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.through.model.dto.Order;
+import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.service.AdminService;
 
@@ -49,15 +52,15 @@ public class AdminRestContoller {
 	}
 	
 	@ApiOperation(value = "로그인 중인 관리자 정보 return: User", response = User.class)
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getAdminUser(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	@GetMapping("/me")
+	public ResponseEntity<?> getAdminUser(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 	
 		Cookie[] cookies = request.getCookies();		
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("loginId")) {
 					String userId = cookie.getValue(); 					
-					User selectedUser = aService.getAdminUser(id);
+					User selectedUser = aService.getAdminUser(userId);
 					response.addCookie(cookie);
 					return new ResponseEntity<User>(selectedUser, HttpStatus.OK);
 				}
@@ -90,6 +93,15 @@ public class AdminRestContoller {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 				
+	}
+	
+	
+	@GetMapping("/order/completed")
+	public ResponseEntity<?> selectRecentOrderByCompleted(){
+		List<Order> orders = aService.selectOrderByCompleted();
+		List<RecentOrder> list = aService.convertOrdersToRecentOrder(orders);
+		
+		return new ResponseEntity<List<RecentOrder>>(list, HttpStatus.OK);
 	}
 	
 	

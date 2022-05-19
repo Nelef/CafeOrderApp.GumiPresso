@@ -1,9 +1,17 @@
 package com.ssafy.through.model.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.through.model.dto.AosOrderDetail;
+import com.ssafy.through.model.dto.AosOrderForm;
+import com.ssafy.through.model.dto.Order;
+import com.ssafy.through.model.dto.OrderDetail;
+import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.repo.AdminRepo;
 
@@ -33,4 +41,31 @@ public class AdminServiceImpl implements AdminService{
 	public int insertAdmin(User user) { 
 		return repo.insertAdmin(user);
 	}
+
+	@Override
+	public List<Order> selectOrderByCompleted() {
+		return repo.selectOrderByCompleted();
+	}
+
+	@Override
+	public List<OrderDetail> selectOrderDetailByOrderId(String orderId) {
+		return repo.selectOrderDetailByOrderId(orderId);
+	}
+
+	@Override
+	public List<RecentOrder> convertOrdersToRecentOrder(List<Order> orders) {
+		List<RecentOrder> list = new ArrayList<RecentOrder>();
+		List<OrderDetail> detailList;
+		for(int i = 0; i < orders.size(); i++) {
+			Order order = orders.get(i);
+			detailList = selectOrderDetailByOrderId(order.getoId().toString());
+			list.add(new RecentOrder(order.getoId(), order.getOrderTime(), order.getOrderTable(), 
+					order.getCompleted(), detailList));
+		}
+		
+		return list;
+	}
+	
+	
+	
 }
