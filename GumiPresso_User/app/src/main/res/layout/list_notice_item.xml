@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
 
     </data>
@@ -27,10 +28,22 @@
             android:layout_height="20dp"
             android:background="@drawable/indicator"
             android:backgroundTint="@color/coffee_brown"
-            android:text="@string/X"
+            android:text="×"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tv_notice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_notice" />
+
+        <LinearLayout
+            android:id="@+id/divider0"
+            style="@style/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_notice" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

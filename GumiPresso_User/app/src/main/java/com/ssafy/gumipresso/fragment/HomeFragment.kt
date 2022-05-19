@@ -27,14 +27,11 @@ private const val TAG ="HomeFragment"
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val userViewModel: UserViewModel by activityViewModels()
-    private val noticeViewModel: NoticeViewModel by viewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
     private val cartViewModel: CartViewModel by activityViewModels()
 
     private lateinit var orderList: List<RecentOrder>
     private lateinit var recentOrderAdapter: RecentOrderAdapter
-    private lateinit var noticeList: List<String>
-    private lateinit var noticeAdapter: NoticeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +46,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         getUserFromPreferences()
-        getCloudMessage()
+
+        binding.ivNotification.setOnClickListener {
+            (activity as MainActivity).movePage(CONST.FRAG_NOTI, null)
+        }
 
         binding.btnFcmPush.setOnClickListener {
             userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
@@ -63,13 +63,6 @@ class HomeFragment : Fragment() {
                 orderViewModel.getOrderList(userViewModel.user.value!!.id)
             }
         }
-        noticeViewModel.notice.observe(viewLifecycleOwner){
-            binding.homeNoticeViewModel = noticeViewModel
-            if(noticeViewModel.notice.value != null){
-                initNoticeAdapter()
-            }
-        }
-
         orderViewModel.recentOrderList.observe(viewLifecycleOwner){
             if(orderViewModel.recentOrderList.value != null){
                 binding.homeRecentOrderViewModel = orderViewModel
@@ -107,30 +100,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initNoticeAdapter(){
-        noticeList = noticeViewModel.notice.value as List<String>
-        noticeAdapter = NoticeAdapter(noticeList)
-        Log.d(TAG, "initNoticeAdapter: $noticeList")
-        noticeAdapter.onDeleteButtonClickListener = object : NoticeAdapter.OnDeleteButtonClick {
-            override fun onDeleteClick(view: View, position: Int) {
-                noticeViewModel.deleteNotice(position)
-                NoticeMessageUtil.setListToSharedPreference(noticeViewModel.notice.value as MutableList<String>)
-                initNoticeAdapter()
-                binding.homeNoticeViewModel = noticeViewModel
-            }
-        }
-        
-        binding.apply {
-            recyclerNoticeList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            recyclerNoticeList.adapter = noticeAdapter
-        }
-    }
-
     private fun getUserFromPreferences(){
         userViewModel.getUserInfo()
-    }
-    private fun getCloudMessage(){
-        noticeViewModel.getNoticeList()
     }
 
 }

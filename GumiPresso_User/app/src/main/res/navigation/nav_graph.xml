@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notiFragment"
+            app:destination="@id/notiFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -68,4 +71,9 @@
         android:name="com.ssafy.gumipresso.fragment.MapsFragment"
         android:label="MapsFragment"
         tools:layout="@layout/fragment_maps"/>
+    <fragment
+        android:id="@+id/notiFragment"
+        android:name="com.ssafy.gumipresso.fragment.NotiFragment"
+        android:label="NotiFragment"
+        tools:layout="@layout/fragment_noti"/>
 </navigation>

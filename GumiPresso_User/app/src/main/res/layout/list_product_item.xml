@@ -1,25 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="productViewModel"
             type="com.ssafy.gumipresso.viewmodel.ProductViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_marginTop="20dp">
 
-        <ImageView
-            android:id="@+id/iv_order_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/round_product"
-            loadImage="@{productViewModel.product.img}"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="6dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_order_img"
+                loadImage="@{productViewModel.product.img}"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/coffee10"
+                app:layout_constraintCircleRadius="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:text="@{productViewModel.product.name}"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/cardview_member"
+            app:layout_constraintTop_toTopOf="@id/cardview_member"
+            tools:text="아메리카노" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:text="@{productViewModel.product.price+` 원`}"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@id/cardview_member"
+            app:layout_constraintStart_toEndOf="@id/cardview_member"
+            tools:text="4500원" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

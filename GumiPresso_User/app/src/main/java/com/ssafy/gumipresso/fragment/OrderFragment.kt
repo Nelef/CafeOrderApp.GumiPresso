@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.ProductAdapter
 import com.ssafy.gumipresso.common.CONST
@@ -68,7 +69,7 @@ class OrderFragment: Fragment(){
             }
         }
         binding.recyclerProductList.apply {
-            layoutManager = GridLayoutManager(context, 3)
+            layoutManager = LinearLayoutManager (context)
             adapter = productAdapter
         }
 

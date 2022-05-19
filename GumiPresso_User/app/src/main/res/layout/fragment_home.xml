@@ -1,122 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="homeUserViewModel"
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
+
         <variable
             name="homeNoticeViewModel"
             type="com.ssafy.gumipresso.viewmodel.NoticeViewModel" />
+
         <variable
             name="homeRecentOrderViewModel"
             type="com.ssafy.gumipresso.viewmodel.RecentOrderViewModel" />
     </data>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
         tools:context=".fragment.HomeFragment">
 
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{homeUserViewModel.user.name +`님`}"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_title_greeting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="좋은 하루 보내세요."
-            android:textColor="@android:color/darker_gray"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
-
-        <TextView
-            android:id="@+id/tv_title_notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:text="알림판"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_greeting" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_notice_list"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/title_bar"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/button_non_color"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_notice" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_recent_no_notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="알림이 없습니다."
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:visibility="@{homeNoticeViewModel.notice.size > 0 ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/recycler_notice_list"
-            app:layout_constraintEnd_toEndOf="@id/recycler_notice_list"
-            app:layout_constraintStart_toStartOf="@id/recycler_notice_list"
-            app:layout_constraintTop_toTopOf="@id/recycler_notice_list" />
+            <TextView
+                android:id="@+id/tv_title_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/copperplate_gothic_bold"
+                android:text="GumiPresso"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_recent_order_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:text="최근 주문"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_notice_list" />
+            <ImageView
+                android:id="@+id/iv_notification"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_notification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_fcm_push"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="FCM 메시지 전송"
-            app:layout_constraintTop_toTopOf="@id/tv_recent_order_list"
-            app:layout_constraintStart_toEndOf="@id/tv_recent_order_list"
-            />
+            <LinearLayout
+                android:id="@+id/divider0"
+                style="@style/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_recent_order"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_recent_order_list" />
+            app:layout_constraintTop_toBottomOf="@id/title_bar">
 
-        <TextView
-            android:id="@+id/tv_recent_no_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="최근 주문한 내역이 없습니다."
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:visibility="@{homeRecentOrderViewModel.recentOrderList.size > 0? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/recycler_recent_order"
-            app:layout_constraintEnd_toEndOf="@id/recycler_recent_order"
-            app:layout_constraintStart_toStartOf="@id/recycler_recent_order"
-            app:layout_constraintTop_toTopOf="@id/recycler_recent_order" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="@{homeUserViewModel.user.name +`님 환영합니다.`}"
+                    android:textColor="@color/coffee_dark_brown"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/divider1"
+                    style="@style/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
+                <LinearLayout
+                    android:id="@+id/recycler_notice_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/button_non_color"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+                <TextView
+                    android:id="@+id/tv_recent_no_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="배너가 없습니다."
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="@{homeNoticeViewModel.notice.size > 0 ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/recycler_notice_list"
+                    app:layout_constraintEnd_toEndOf="@id/recycler_notice_list"
+                    app:layout_constraintStart_toStartOf="@id/recycler_notice_list"
+                    app:layout_constraintTop_toTopOf="@id/recycler_notice_list" />
+
+                <LinearLayout
+                    android:id="@+id/divider2"
+                    style="@style/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_notice_list" />
+
+                <TextView
+                    android:id="@+id/tv_recent_order_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_marginVertical="10dp"
+                    android:text="최근 주문"
+                    android:textColor="@color/coffee_dark_brown"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+                <Button
+                    android:id="@+id/btn_fcm_push"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FCM 메시지 전송"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_recent_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recent_order_list" />
+
+                <TextView
+                    android:id="@+id/tv_recent_no_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="최근 주문한 내역이 없습니다."
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="@{homeRecentOrderViewModel.recentOrderList.size > 0? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/recycler_recent_order"
+                    app:layout_constraintEnd_toEndOf="@id/recycler_recent_order"
+                    app:layout_constraintStart_toStartOf="@id/recycler_recent_order"
+                    app:layout_constraintTop_toTopOf="@id/recycler_recent_order" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

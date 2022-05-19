@@ -3,12 +3,12 @@
     android:shape="rectangle">
 
     <solid
-        android:color="@color/coffee_menu_back"/>
+        android:color="@color/white"/>
     <stroke
         android:width="2dp"
-        android:color="@color/coffee_brown" />
+        android:color="@color/coffee_point_red" />
 
-    <corners android:radius="10dp"/>
+    <corners android:radius="100dp"/>
 
 
 </shape>

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="homeUserViewModel"
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
+
         <variable
             name="recentOrderVM"
             type="com.ssafy.gumipresso.viewmodel.RecentOrderViewModel" />
+
         <variable
             name="gradeVM"
             type="com.ssafy.gumipresso.viewmodel.GradeViewModel" />
@@ -18,37 +23,52 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
         tools:context=".fragment.MyPageFragment">
 
-        <ImageView
-            android:id="@+id/iv_user"
-            android:layout_width="50dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/iv_title_bar"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/user"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_title_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/copperplate_gothic_bold"
+                android:text="MyPage"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_title_bar" />
+
+            <LinearLayout
+                android:id="@+id/divider0"
+                style="@style/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{homeUserViewModel.user.name +`님`}"
+            android:layout_margin="20dp"
+            android:text="@{homeUserViewModel.user.name}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/iv_user"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="안녕하세요."
-            android:textColor="@android:color/darker_gray"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_username"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_title_bar"
+            tools:text="Name" />
 
         <ImageView
             android:id="@+id/iv_logout"
@@ -59,73 +79,60 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_seeds"
-            loadImage="@{gradeVM.grade.img}"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginVertical="20dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/seeds"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_user" />
-
-        <TextView
-            android:id="@+id/tv_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/iv_seeds"
-            app:layout_constraintTop_toTopOf="@+id/iv_seeds"
-            app:text="@{gradeVM.grade.title +` `+ String.valueOf(gradeVM.grade.grade) + `단계`}" />
-
-        <TextView
-            android:id="@+id/tv_line"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_margin="10dp"
-            android:background="@android:color/darker_gray"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_level"
-            app:layout_constraintEnd_toStartOf="@+id/tv_level_size"
-            app:layout_constraintStart_toEndOf="@+id/tv_level"
-            app:layout_constraintTop_toTopOf="@+id/tv_level" />
-
-        <TextView
-            android:id="@+id/tv_level_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0/0"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_seeds"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_seeds"
-            app:text="@{gradeVM.grade.stamps+`/`+(gradeVM.grade.stamps+gradeVM.grade.remain)}" />
-
-        <TextView
-            android:id="@+id/tv_level_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_seeds"
-            app:text="@{`다음 레벨까지 ` +gradeVM.grade.remain +`잔 남았습니다.`}" />
-
-        <ImageView
-            android:id="@+id/iv_space"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/membershipLayout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginVertical="10dp"
-            android:src="@drawable/space"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_level_next" />
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_username">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loadImage="@{gradeVM.grade.img}" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@{gradeVM.grade.title +` `+ String.valueOf(gradeVM.grade.grade) + `단계`}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/membershipBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="혜택보기"
+                    android:textColor="@color/gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tv_order"
@@ -133,16 +140,18 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:text="주문내역"
+            android:layout_margin="20dp"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_space" />
+            app:layout_constraintTop_toBottomOf="@id/membershipLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_recent_order"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_order" />
@@ -159,7 +168,6 @@
             app:layout_constraintEnd_toEndOf="@id/recycler_recent_order"
             app:layout_constraintStart_toStartOf="@id/recycler_recent_order"
             app:layout_constraintTop_toTopOf="@id/recycler_recent_order" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

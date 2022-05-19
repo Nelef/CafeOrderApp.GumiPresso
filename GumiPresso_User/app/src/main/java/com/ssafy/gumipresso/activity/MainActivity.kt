@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     private val BEACON_MAJOR = "10004"
     private val BEACON_MINOR = "54480"
     private var STORE_INFO_POPUP = false
-    private var storeDistanceTV = "주변 카페를 찾는 중입니다."
+    private var storeDistanceTV = "Beacon Searching"
     private val region = Region(
         "estimote",
         Identifier.parse(BEACON_UUID),
@@ -147,6 +147,9 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 visibilityBottomNavBar(false)
                 navController.popBackStack()
             }
+            CONST.FRAG_NOTI ->{
+                navController.navigate(R.id.action_homeFragment_to_notiFragment)
+            }
             CONST.LOGOUT ->{
                 Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginActivity::class.java)
@@ -204,7 +207,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
         beaconManager.addRangeNotifier { beacons, region ->
             for (beacon in beacons) {
-                storeDistanceTV = "가맹점과의 거리 : ${String.format("%.2f", beacon.distance)}m"
+                storeDistanceTV = "${String.format("%.2f", beacon.distance)}m"
 
                 if (!STORE_INFO_POPUP) {
                     CoroutineScope(Dispatchers.Main).launch {

@@ -1,97 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewmodel"
             type="com.ssafy.gumipresso.viewmodel.CartViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="30dp"
         tools:context=".fragment.CartFragment">
 
-        <TextView
-            android:id="@+id/tv_shoppinglist_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="장바구니"
-            android:textColor="@color/coffee_point_red"
-            android:textSize="30sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <Button
-            android:id="@+id/btn_tstore"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:backgroundTint="@{viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
-            android:text="매장"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_tout"
-            app:layout_constraintTop_toTopOf="@id/tv_shoppinglist_title"
-            app:layout_constraintBottom_toBottomOf="@id/tv_shoppinglist_title"
-            />
-
-        <Button
-            android:id="@+id/btn_tout"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:backgroundTint="@{!viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
-            android:text="T-OUT"
-            android:textColor="@color/coffee_dark_brown"
-            android:textSize="16sp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/iv_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_shoppinglist_title"
-            app:layout_constraintBottom_toBottomOf="@id/tv_shoppinglist_title"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@drawable/icon_back"
+                app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_title_bar" />
+
+            <TextView
+                android:id="@+id/tv_title_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/copperplate_gothic_bold"
+                android:text="Cart"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_title_bar" />
+
+            <LinearLayout
+                android:id="@+id/divider0"
+                style="@style/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_product_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_shoppinglist_title" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toTopOf="@id/layout_order_button"
+            app:layout_constraintTop_toBottomOf="@+id/iv_title_bar"
+            tools:layout_editor_absoluteX="30dp" />
 
-        <TextView
-            android:id="@+id/tv_shoppinglist_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewmodel.totalCartQuantity}"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_order"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_shoppinglist_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewmodel.totalCartPrice}"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/btn_order"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="16dp"
-            />
-
-
-        <Button
-            android:id="@+id/btn_order"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_order_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/coffee_point_red"
-            android:text="주문하기"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_order_type">
+
+                <TextView
+                    android:id="@+id/tv_shoppinglist_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.totalCartQuantity}"
+                    android:textColor="@color/black"
+                    tools:text="5 개"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_shoppinglist_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@{viewmodel.totalCartPrice}"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="10,000 원" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_order_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="주문 방식을 선택해주세요."
+                android:padding="10dp"
+                app:layout_constraintBottom_toTopOf="@id/linear_button"
+                tools:layout_editor_absoluteX="35dp" />
+
+            <LinearLayout
+                android:id="@id/linear_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/btn_order">
+
+                <Button
+                    android:id="@+id/btn_tstore"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@{viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
+                    android:text="매장 테이블"
+                    android:textColor="@color/coffee_dark_brown" />
+
+                <Button
+                    android:id="@+id/btn_tout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@{!viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
+                    android:text="테이크 아웃"
+                    android:textColor="@color/coffee_dark_brown" />
+
+            </LinearLayout>
 
 
+            <Button
+                android:id="@+id/btn_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/coffee_point_red"
+                android:text="주문하기"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
