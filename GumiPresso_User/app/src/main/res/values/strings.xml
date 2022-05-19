@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GumiPresso</string>
+    <string name="X">X</string>
+    <string name="api_key">AIzaSyCA4aY3jQ1p_DswifMVo_BHjbSmacln5tg</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kakao_api_key">f61f45790d2ad64aa4991175816016be</string>
+</resources>

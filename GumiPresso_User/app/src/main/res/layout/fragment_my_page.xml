@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="homeUserViewModel"
+            type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
+        <variable
+            name="recentOrderVM"
+            type="com.ssafy.gumipresso.viewmodel.RecentOrderViewModel" />
+        <variable
+            name="gradeVM"
+            type="com.ssafy.gumipresso.viewmodel.GradeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        tools:context=".fragment.MyPageFragment">
+
+        <ImageView
+            android:id="@+id/iv_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/user"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{homeUserViewModel.user.name +`님`}"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_user"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="안녕하세요."
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_username"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+
+        <ImageView
+            android:id="@+id/iv_logout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_seeds"
+            loadImage="@{gradeVM.grade.img}"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/seeds"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_seeds"
+            app:layout_constraintTop_toTopOf="@+id/iv_seeds"
+            app:text="@{gradeVM.grade.title +` `+ String.valueOf(gradeVM.grade.grade) + `단계`}" />
+
+        <TextView
+            android:id="@+id/tv_line"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:layout_margin="10dp"
+            android:background="@android:color/darker_gray"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_level"
+            app:layout_constraintEnd_toStartOf="@+id/tv_level_size"
+            app:layout_constraintStart_toEndOf="@+id/tv_level"
+            app:layout_constraintTop_toTopOf="@+id/tv_level" />
+
+        <TextView
+            android:id="@+id/tv_level_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/0"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_seeds"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_seeds"
+            app:text="@{gradeVM.grade.stamps+`/`+(gradeVM.grade.stamps+gradeVM.grade.remain)}" />
+
+        <TextView
+            android:id="@+id/tv_level_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_seeds"
+            app:text="@{`다음 레벨까지 ` +gradeVM.grade.remain +`잔 남았습니다.`}" />
+
+        <ImageView
+            android:id="@+id/iv_space"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginVertical="10dp"
+            android:src="@drawable/space"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_level_next" />
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:text="주문내역"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_space" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_recent_order"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_order" />
+
+        <TextView
+            android:id="@+id/tv_recent_no_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최근 주문한 내역이 없습니다."
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/recycler_recent_order"
+            app:layout_constraintEnd_toEndOf="@id/recycler_recent_order"
+            app:layout_constraintStart_toStartOf="@id/recycler_recent_order"
+            app:layout_constraintTop_toTopOf="@id/recycler_recent_order" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

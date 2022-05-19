@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/orderFragment"
+        android:icon="@drawable/shopping_list"
+        android:title="Order"/>
+    <item
+        android:id="@+id/myPageFragment"
+        android:icon="@drawable/user"
+        android:title="Mypage"/>
+
+</menu>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.ssafy.gumipresso.viewmodel.CartViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        tools:context=".fragment.CartFragment">
+
+        <TextView
+            android:id="@+id/tv_shoppinglist_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장바구니"
+            android:textColor="@color/coffee_point_red"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_tstore"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:backgroundTint="@{viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
+            android:text="매장"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/btn_tout"
+            app:layout_constraintTop_toTopOf="@id/tv_shoppinglist_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_shoppinglist_title"
+            />
+
+        <Button
+            android:id="@+id/btn_tout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:backgroundTint="@{!viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
+            android:text="T-OUT"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_shoppinglist_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_shoppinglist_title"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_shoppinglist_title" />
+
+        <TextView
+            android:id="@+id/tv_shoppinglist_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.totalCartQuantity}"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_order"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_shoppinglist_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.totalCartPrice}"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/btn_order"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="16dp"
+            />
+
+
+        <Button
+            android:id="@+id/btn_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/coffee_point_red"
+            android:text="주문하기"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

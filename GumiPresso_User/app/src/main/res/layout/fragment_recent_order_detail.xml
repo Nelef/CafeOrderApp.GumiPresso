@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="orderDetailViewModel"
+            type="com.ssafy.gumipresso.viewmodel.RecentOrderDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        tools:context=".fragment.RecentOrderDetailFragment">
+
+        <TextView
+            android:id="@+id/tv_orderdetail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="주문상세"
+            android:textColor="@color/coffee_point_red"
+            android:textSize="30sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_orderdetail_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="주문완료"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_orderdetail_title" />
+
+        <TextView
+            android:id="@+id/tv_orderdetail_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{orderDetailViewModel.orderTime}"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_orderdetail_state" />
+
+        <TextView
+            android:id="@+id/tv_orderdetail_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{orderDetailViewModel.totalPrice}"
+            android:textColor="@color/coffee_dark_brown"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_orderdetail_date" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_orderdetail_price" />
+
+        <Button
+            android:id="@+id/btn_reorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다시 주문하기"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/coffee_point_red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

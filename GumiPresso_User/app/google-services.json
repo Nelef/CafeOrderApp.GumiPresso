@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "981847725224",
+    "project_id": "gumipresso",
+    "storage_bucket": "gumipresso.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981847725224:android:7ab5b281b468986e3ade9d",
+        "android_client_info": {
+          "package_name": "com.ssafy.gumipresso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981847725224-tfis29qol16gc9rj6cboj3emq2nrhr9q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ssafy.gumipresso",
+            "certificate_hash": "ba79fd3e2cb0d131ed8cdadc1d012323e8e6ced1"
+          }
+        },
+        {
+          "client_id": "981847725224-4nn6a7jllbs7g76rimccvq753e4tf9vg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM8gtt9ml0bnHgMhNbe8AkDqf2y6_5vLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981847725224-4nn6a7jllbs7g76rimccvq753e4tf9vg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

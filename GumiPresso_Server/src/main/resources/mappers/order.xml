@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.through.model.repo.OrderRepo">
+
+	<insert id="insert" parameterType="Order">
+		INSERT INTO t_order(user_id, order_table) 
+		VALUES (#{userId}, #{orderTable})
+	</insert>
+	
+	<select id="select" parameterType="String" resultType="Order">
+		select * from t_order
+		where user_id like #{id}		
+	</select>
+	<select id="search" resultType="Integer">
+		select o_id from t_order order by o_id desc limit 1
+	</select>
+
+	
+</mapper>
