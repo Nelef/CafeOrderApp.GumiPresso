@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        tools:context="fragment.LoginFragment">
+
+        <TextView
+            android:id="@+id/tv_lonin_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="관리자"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/coffee_light_gray"
+            app:layout_constraintBottom_toTopOf="@id/et_id"
+            android:layout_marginVertical="16dp"
+
+            />
+
+        <EditText
+            android:id="@+id/et_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/textview_regular"
+            android:hint="ID"
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/et_pw" />
+
+        <EditText
+            android:id="@+id/et_pw"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/textview_regular"
+            android:hint="PW"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linear_button" />
+
+        <LinearLayout
+            android:id="@+id/linear_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="3.5"
+                android:background="@drawable/button_regular"
+                android:text="관리자 로그인"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_join"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/button_regular"
+                android:text="관리자 등록"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -20,6 +20,16 @@ public class User {
 	
 
 	
+	public User(String id, String name, String pass) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.pass = pass;
+	}
+
+
+
+
 	public User(String id, String name) {
 		super();
 		this.id = id;
