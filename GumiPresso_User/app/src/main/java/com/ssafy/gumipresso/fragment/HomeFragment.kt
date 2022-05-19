@@ -89,6 +89,7 @@ class HomeFragment : Fragment() {
         binding.btnFcmPush.setOnClickListener {
             userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
         }
+
         binding.btnTestImg.setOnClickListener {
             openGalleryForImages()
         }

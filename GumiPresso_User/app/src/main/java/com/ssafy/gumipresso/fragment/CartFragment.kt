@@ -16,6 +16,7 @@ import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentCartBinding
 import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.User
+import com.ssafy.gumipresso.util.FCMTokenUtil
 import com.ssafy.gumipresso.util.NoticeMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
@@ -103,7 +104,7 @@ class CartFragment : Fragment() {
     private fun makeOrder(){
         cartViewModel.orderCart((userViewModel.user.value as User).id, userTable)
         userViewModel.getUserInfo()
-        NoticeMessageUtil.setMessageToSharedPreference("주문이 완료 되었습니다. $userTable")
+        userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "GumiPresso", "주문이 완료 되었습니다. - ${userTable}")
         Toast.makeText(context, "주문이 완료 되었습니다. $userTable", Toast.LENGTH_SHORT).show()
         (activity as MainActivity).movePage(CONST.FRAG_CART_TO_HOME, null)
     }
