@@ -150,6 +150,9 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             CONST.FRAG_NOTI ->{
                 navController.navigate(R.id.action_homeFragment_to_notiFragment)
             }
+            CONST.FRAG_REVIEW_WRITE ->{
+                navController.navigate(R.id.action_orderDetailFragment_to_reviewWriteFragment, bundleOf("product_id" to param))
+            }
             CONST.LOGOUT ->{
                 Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginActivity::class.java)

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CommentAdapter
+import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentOrderDetailBinding
 import com.ssafy.gumipresso.dialog.DialogComment
 import com.ssafy.gumipresso.dialog.DialogScore
@@ -50,8 +51,10 @@ class OrderDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productViewModel.getSelectProduct(arguments?.getString("product_id").toString())
-        commentViewModel.getComments(arguments?.getString("product_id").toString().toInt())
+        val productId = arguments?.getString("product_id").toString()
+
+        productViewModel.getSelectProduct(productId)
+        commentViewModel.getComments(productId.toInt())
 
         initViewModel()
 
@@ -78,24 +81,27 @@ class OrderDetailFragment : Fragment() {
                 }
             }
             btnAddComment.setOnClickListener {
-                val inputString = binding.etComment.text.toString().trim()
-                if(!inputString.isEmpty()){
-                    val dialogScore = DialogScore()
-                    dialogScore.apply {
-                        arguments = bundleOf("comment" to Comment(user.id, product.id, 0f, inputString))
-                        onClickConfirm = object : DialogScore.OnClickConfirmListener{
-                            override fun onClicked(comment: Comment) {
-                                insert(comment)
-                                binding.etComment.setText("")
-                            }
-                        }
-                    }
-                    dialogScore.show(parentFragmentManager, "DialogScore")
-                }
-                else{
-                    Toast.makeText(context, "코멘트를 입력해 주세요.", Toast.LENGTH_SHORT).show()
-                }
+                (activity as MainActivity).movePage(CONST.FRAG_REVIEW_WRITE, productId)
             }
+//            btnAddComment.setOnClickListener {
+//                val inputString = binding.etComment.text.toString().trim()
+//                if(!inputString.isEmpty()){
+//                    val dialogScore = DialogScore()
+//                    dialogScore.apply {
+//                        arguments = bundleOf("comment" to Comment(user.id, product.id, 0f, inputString))
+//                        onClickConfirm = object : DialogScore.OnClickConfirmListener{
+//                            override fun onClicked(comment: Comment) {
+//                                insert(comment)
+//                                binding.etComment.setText("")
+//                            }
+//                        }
+//                    }
+//                    dialogScore.show(parentFragmentManager, "DialogScore")
+//                }
+//                else{
+//                    Toast.makeText(context, "코멘트를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
         }
 
     }

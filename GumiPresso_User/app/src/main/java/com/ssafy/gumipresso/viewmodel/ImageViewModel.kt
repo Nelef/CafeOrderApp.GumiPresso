@@ -14,12 +14,15 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
+private const val TAG = "ImageViewModel"
 class ImageViewModel: ViewModel() {
 
     fun uploadImage(path : String){
         val file = File(path)
         var fileName = System.currentTimeMillis().toString()
         fileName = fileName+".png"
+
+        Log.d(TAG, "uploadImage: ")
 
         var requestBody : RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file)
         var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)

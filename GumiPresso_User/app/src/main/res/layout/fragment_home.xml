@@ -93,6 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="@{homeUserViewModel.user.name +`님 환영합니다.`}"
+                    tools:text="Name님 환영합니다."
                     android:textColor="@color/coffee_dark_brown"
                     android:textSize="25sp"
                     android:textStyle="bold"

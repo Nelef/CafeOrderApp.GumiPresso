@@ -159,7 +159,7 @@ class LoginFragment : Fragment() {
                     }
                     else -> { // Unknown
                         Toast.makeText(context, "기타 에러", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "kakaoLogin: ")
+                        Log.d(TAG, "kakaoLogin: $error")
                     }
                 }
             }

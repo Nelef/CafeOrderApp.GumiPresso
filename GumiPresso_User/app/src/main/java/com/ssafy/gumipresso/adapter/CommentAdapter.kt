@@ -17,6 +17,7 @@ class CommentAdapter(val commentList: List<Comment>, val frag: OrderDetailFragme
                 if(item.userId == userId){
                     btnMenuDelete.visibility = View.VISIBLE
                     btnMenuEdit.visibility = View.VISIBLE
+                    divider0.visibility = View.VISIBLE
                 }
                 btnMenuEdit.setOnClickListener {
                     onClickEdit.onClick(view, position)
