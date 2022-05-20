@@ -11,7 +11,11 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_notiFragment"
-            app:destination="@id/notiFragment" />
+            app:destination="@id/notiFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -20,13 +24,25 @@
         tools:layout="@layout/fragment_order">
         <action
             android:id="@+id/action_orderFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/cartFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_orderFragment_to_orderDetailFragment"
-            app:destination="@id/orderDetailFragment" />
+            app:destination="@id/orderDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_orderFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/recentOrderDetailFragment"
@@ -35,7 +51,11 @@
         tools:layout="@layout/fragment_recent_order_detail">
         <action
             android:id="@+id/action_recentOrderDetailFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/cartFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/orderDetailFragment"
@@ -44,13 +64,17 @@
         tools:layout="@layout/fragment_order_detail">
         <action
             android:id="@+id/action_orderDetailFragment_to_reviewWriteFragment"
-            app:destination="@id/reviewWriteFragment" />
+            app:destination="@id/reviewWriteFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.ssafy.gumipresso.fragment.CartFragment"
         android:label="CartFragment"
-        tools:layout="@layout/fragment_cart"/>
+        tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.ssafy.gumipresso.fragment.MyPageFragment"
@@ -58,24 +82,32 @@
         tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_recentOrderDetailFragment"
-            app:destination="@id/recentOrderDetailFragment" />
+            app:destination="@id/recentOrderDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_myPageFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/cartFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.ssafy.gumipresso.fragment.MapsFragment"
         android:label="MapsFragment"
-        tools:layout="@layout/fragment_maps"/>
+        tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/notiFragment"
         android:name="com.ssafy.gumipresso.fragment.NotiFragment"
         android:label="NotiFragment"
-        tools:layout="@layout/fragment_noti"/>
+        tools:layout="@layout/fragment_noti" />
     <fragment
         android:id="@+id/reviewWriteFragment"
         android:name="com.ssafy.gumipresso.fragment.ReviewWriteFragment"
         android:label="ReviewWriteFragment"
-        tools:layout="@layout/fragment_review_write"/>
+        tools:layout="@layout/fragment_review_write" />
 </navigation>

@@ -50,6 +50,7 @@ class OrderDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).visibilityBottomNavBar(true)
 
         val productId = arguments?.getString("product_id").toString()
 

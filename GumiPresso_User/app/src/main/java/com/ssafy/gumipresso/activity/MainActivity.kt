@@ -122,7 +122,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     fun movePage(page: CONST, param: String?) {
         when (page) {
             CONST.FRAG_ORDER_DETAIL -> {
-                visibilityBottomNavBar(true)
                 navController.navigate(
                     R.id.action_orderFragment_to_orderDetailFragment,
                     bundleOf("product_id" to param)
@@ -133,14 +132,12 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 navController.navigate(R.id.action_orderFragment_to_cartFragment)
             }
             CONST.FRAG_RECENT_ORDER_DETAIL_FROM_MYPAGE -> {
-                visibilityBottomNavBar(true)
                 navController.navigate(
                     R.id.action_myPageFragment_to_recentOrderDetailFragment,
                     bundleOf("order_id" to param)
                 )
             }
             CONST.FRAG_MAPS -> {
-                visibilityBottomNavBar(false)
                 navController.navigate(R.id.action_orderFragment_to_mapsFragment)
             }
             CONST.FRAG_CART_FROM_MYPAGE -> {

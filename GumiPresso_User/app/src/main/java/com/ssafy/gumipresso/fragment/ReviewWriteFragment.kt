@@ -1,5 +1,6 @@
 package com.ssafy.gumipresso.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +15,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CommentAdapter
@@ -67,7 +70,7 @@ class ReviewWriteFragment : Fragment() {
         }
 
         binding.btnInsertImage.setOnClickListener {
-            openGalleryForImages()
+            checkPermission()
         }
     }
 
@@ -114,4 +117,23 @@ class ReviewWriteFragment : Fragment() {
 //                imageViewModel.uploadImage(realUri)
             }
         }
+
+    private fun checkPermission(){
+        val permissionlistener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                openGalleryForImages()
+            }
+            override fun onPermissionDenied(deniedPermissions: List<String>) {
+                Toast.makeText(context,
+                    "스토리지에 접근 권한을 허가해주세요",
+                    Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+        TedPermission.create()
+            .setPermissionListener(permissionlistener)
+            .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
+            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+            .check()
+    }
 }

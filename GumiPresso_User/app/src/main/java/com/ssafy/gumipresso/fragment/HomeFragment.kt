@@ -59,7 +59,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         getUserFromPreferences()
-        checkPermission()
 
         binding.ivNotification.setOnClickListener {
             (activity as MainActivity).movePage(CONST.FRAG_NOTI, null)
@@ -73,24 +72,6 @@ class HomeFragment : Fragment() {
         binding.viewPager2.adapter = BannerAdapter(bannerList) // 어댑터 생성
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL // 방향을 가로로
         // 배너 끝
-    }
-
-    private fun checkPermission(){
-        val permissionlistener = object : PermissionListener {
-            override fun onPermissionGranted() {
-            }
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-                Toast.makeText(context,
-                    "스토리지에 접근 권한을 허가해주세요",
-                    Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        TedPermission.create()
-            .setPermissionListener(permissionlistener)
-            .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
-            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .check()
     }
 
     private fun initViewModel(){

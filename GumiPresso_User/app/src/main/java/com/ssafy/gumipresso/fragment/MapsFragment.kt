@@ -84,6 +84,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).visibilityBottomNavBar(true)
 
         init()
 
@@ -91,6 +92,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             (activity as MainActivity).visibilityBottomNavBar(false)
             (activity as MainActivity).navController.popBackStack()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as MainActivity).visibilityBottomNavBar(false)
     }
 
     private fun init() {

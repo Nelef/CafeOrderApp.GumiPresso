@@ -45,6 +45,7 @@ class RecentOrderDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).visibilityBottomNavBar(true)
 
         initViewModel()
         orderDetailViewModel.getRecentOrderDetail(arguments?.getString("order_id","").toString())
@@ -81,6 +82,11 @@ class RecentOrderDetailFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = recentOrderDetailAdapter
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).visibilityBottomNavBar(true)
     }
 
     override fun onDestroy() {

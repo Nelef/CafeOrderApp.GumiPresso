@@ -47,7 +47,6 @@ class NotiFragment : Fragment() {
         getCloudMessage()
 
         binding.ivBack.setOnClickListener {
-            (activity as MainActivity).visibilityBottomNavBar(false)
             (activity as MainActivity).navController.popBackStack()
         }
     }
