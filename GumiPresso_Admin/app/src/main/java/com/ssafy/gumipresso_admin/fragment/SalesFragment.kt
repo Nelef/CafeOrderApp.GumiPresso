@@ -27,11 +27,13 @@ class SalesFragment : Fragment() {
     private val salesViewModel: SalesViewModel by viewModels()
 
     private lateinit var timeFlag: String
+    private lateinit var typeFlag: String
     private lateinit var salesList: MutableList<Sales>
     private lateinit var dateDTO: DateDTO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         timeFlag = "year"
+        typeFlag = ""
     }
 
     override fun onCreateView(
@@ -49,6 +51,9 @@ class SalesFragment : Fragment() {
         initDatePicker()
         initViewModel()
 
+        binding.btnType.setOnClickListener {
+            salesViewModel.setTypeSelect()
+        }
         binding.constContent.setOnClickListener {
             salesViewModel.setFlagDatePickOpenValue()
         }
@@ -63,8 +68,6 @@ class SalesFragment : Fragment() {
                 timeFlag = flag
                 salesViewModel.setflagTabLayoutSelected(flag)
                 salesViewModel.setTitleText(flag)
-                salesViewModel.getSalesList(timeFlag, dateDTO)
-                binding.salesVM = salesViewModel
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
@@ -88,6 +91,13 @@ class SalesFragment : Fragment() {
         }
         salesViewModel.flagTabLayoutSelect.observe(viewLifecycleOwner){
             timeFlag = it
+            salesViewModel.getSalesList(timeFlag+typeFlag, dateDTO)
+            binding.salesVM = salesViewModel
+        }
+        salesViewModel.isTypeSelected.observe(viewLifecycleOwner){
+            typeFlag = if(it) "type" else ""
+            salesViewModel.getSalesList(timeFlag+typeFlag, dateDTO)
+            binding.salesVM = salesViewModel
         }
     }
 
@@ -105,7 +115,7 @@ class SalesFragment : Fragment() {
             dateDTO = DateDTO(year.toString(), (monthOfYear+1).toString(), dayOfMonth.toString())
             salesViewModel.setDateDtoItem(dateDTO)
             salesViewModel.setFlagDatePickOpenValue()
-            salesViewModel.getSalesList(timeFlag, dateDTO)
+
         }
         val calendar = Calendar.getInstance().apply {
             timeZone = TimeZone.getTimeZone("Asia/Seoul")

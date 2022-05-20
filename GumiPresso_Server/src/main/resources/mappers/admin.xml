@@ -42,7 +42,7 @@
 		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} group by DATE(`order_time`) order by order_time;
 	</select>
 	<select id="selectMonthType" parameterType ="DateDto" resultType="Sales">
-		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id YEAR(order_time) = #{year} and and MONTH(`order_time`) = #{month} group by DATE(`order_time`), type order by order_time;
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} group by DATE(`order_time`), type order by order_time;
 	</select>
 	<select id="selectDay" parameterType ="DateDto" resultType="Sales">
 		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, HOUR(order_time) as hour , sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(order_time) = #{month} and DAY(order_time) = #{day} group by HOUR(order_time) order by order_time;

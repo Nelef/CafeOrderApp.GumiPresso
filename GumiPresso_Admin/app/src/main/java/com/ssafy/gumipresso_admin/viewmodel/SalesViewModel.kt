@@ -82,4 +82,11 @@ class SalesViewModel: ViewModel() {
         }
         _selectTitleText.value = text
     }
+
+    private val _isTypeSelected = MutableLiveData<Boolean>(false)
+    val isTypeSelected : LiveData<Boolean>
+        get() = _isTypeSelected
+    fun setTypeSelect(){
+        _isTypeSelected.value = !_isTypeSelected.value!!
+    }
 }
