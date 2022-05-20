@@ -121,13 +121,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
     fun movePage(page: CONST, param: String?) {
         when (page) {
-            CONST.FRAG_RECENT_ORDER_DETAIL_FROM_HOME -> {
-                visibilityBottomNavBar(true)
-                navController.navigate(
-                    R.id.action_homeFragment_to_recentOrderDetailFragment,
-                    bundleOf("order_id" to param)
-                )
-            }
             CONST.FRAG_ORDER_DETAIL -> {
                 visibilityBottomNavBar(true)
                 navController.navigate(
@@ -156,10 +149,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             }
             CONST.FRAG_CART_FROM_RECENT_ORDER_DETAIL -> {
                 navController.navigate(R.id.action_recentOrderDetailFragment_to_cartFragment)
-            }
-            CONST.FRAG_CART_TO_HOME -> {
-                visibilityBottomNavBar(false)
-                navController.popBackStack()
             }
             CONST.FRAG_NOTI -> {
                 navController.navigate(R.id.action_homeFragment_to_notiFragment)

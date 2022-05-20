@@ -29,6 +29,7 @@ import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.databinding.FragmentMapsBinding
 import android.provider.Settings
+import com.ssafy.gumipresso.activity.MainActivity
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -85,6 +86,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         init()
+
+        binding.ivBack.setOnClickListener {
+            (activity as MainActivity).visibilityBottomNavBar(false)
+            (activity as MainActivity).navController.popBackStack()
+        }
     }
 
     private fun init() {

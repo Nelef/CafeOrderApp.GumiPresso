@@ -53,8 +53,6 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.ivLogout.setOnClickListener {
             ApplicationClass.userPrefs.edit().clear().commit()
             (activity as MainActivity).movePage(CONST.LOGOUT, null)

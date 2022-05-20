@@ -82,6 +82,9 @@ class ReviewWriteFragment : Fragment() {
             commentViewModel.setAverageRating()
             commentList = it
         }
+        binding.ivBack.setOnClickListener {
+            (activity as MainActivity).navController.popBackStack()
+        }
     }
 
     fun insert(comment: Comment) {

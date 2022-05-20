@@ -21,7 +21,8 @@ import com.ssafy.gumipresso.util.NoticeMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
-private const val TAG ="CartFragment"
+private const val TAG = "CartFragment"
+
 class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by activityViewModels()
@@ -40,12 +41,12 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        cartViewModel.totalCartPrice.observe(viewLifecycleOwner){
+        cartViewModel.totalCartPrice.observe(viewLifecycleOwner) {
             initAdapter()
         }
-        cartViewModel.isTakeOut.observe(viewLifecycleOwner){
+        cartViewModel.isTakeOut.observe(viewLifecycleOwner) {
             binding.viewmodel = cartViewModel
-            userTable = if(cartViewModel.isTakeOut.value as Boolean) "TakeOut" else "Here"
+            userTable = if (cartViewModel.isTakeOut.value as Boolean) "TakeOut" else "Here"
         }
         binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
@@ -60,16 +61,14 @@ class CartFragment : Fragment() {
         binding.apply {
             btnOrder.setOnClickListener {
                 var tag = (activity as MainActivity).TagMethod()
-                if(userTable == "TakeOut"){
+                if (userTable == "TakeOut") {
                     makeOrder()
-                }
-                else if(tag == null){
+                } else if (tag == null) {
                     requestNFC()
-                }
-                else if(!tag.isDigitsOnly()){
-                    Toast.makeText(context, "숫자만 입력 가능 합니다. \n현재 태그: ${tag}", Toast.LENGTH_SHORT).show()
-                }
-                else{
+                } else if (!tag.isDigitsOnly()) {
+                    Toast.makeText(context, "숫자만 입력 가능 합니다. \n현재 태그: ${tag}", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
                     userTable = "Table $tag"
                     makeOrder()
                 }
@@ -81,15 +80,19 @@ class CartFragment : Fragment() {
             btnTstore.setOnClickListener {
                 cartViewModel.setHereOrTogo(false)
             }
+            ivBack.setOnClickListener {
+                (activity as MainActivity).visibilityBottomNavBar(false)
+                (activity as MainActivity).navController.popBackStack()
+            }
         }
 
         initAdapter()
     }
 
-    private fun initAdapter(){
+    private fun initAdapter() {
         cartList = cartViewModel.cartList.value as List<Cart>
         cartAdapter = CartItemAdapter(cartList)
-        cartAdapter.onDeleteButtonClick = object : CartItemAdapter.OnDeleteButtonClick{
+        cartAdapter.onDeleteButtonClick = object : CartItemAdapter.OnDeleteButtonClick {
             override fun onClick(view: View, position: Int) {
                 cartViewModel.removeCartItem(position)
                 binding.viewmodel = cartViewModel
@@ -101,15 +104,20 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun makeOrder(){
+    private fun makeOrder() {
         cartViewModel.orderCart((userViewModel.user.value as User).id, userTable)
         userViewModel.getUserInfo()
-        userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "GumiPresso", "주문이 완료 되었습니다. - ${userTable}")
+        userViewModel.sendFCMPushMessage(
+            FCMTokenUtil().getFcmToken(),
+            "GumiPresso",
+            "주문이 완료 되었습니다. - ${userTable}"
+        )
         Toast.makeText(context, "주문이 완료 되었습니다. $userTable", Toast.LENGTH_SHORT).show()
-        (activity as MainActivity).movePage(CONST.FRAG_CART_TO_HOME, null)
+        (activity as MainActivity).visibilityBottomNavBar(false)
+        (activity as MainActivity).navController.popBackStack()
     }
 
-    private fun requestNFC(){
+    private fun requestNFC() {
         val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle("알림")
         builder.setMessage("Table NFC를 먼저 찍어주세요.")
@@ -122,5 +130,5 @@ class CartFragment : Fragment() {
         super.onDestroy()
         (activity as MainActivity).visibilityBottomNavBar(false)
     }
-    
+
 }

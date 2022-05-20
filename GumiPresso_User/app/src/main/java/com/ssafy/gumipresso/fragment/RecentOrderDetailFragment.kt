@@ -49,6 +49,10 @@ class RecentOrderDetailFragment : Fragment() {
         initViewModel()
         orderDetailViewModel.getRecentOrderDetail(arguments?.getString("order_id","").toString())
 
+        binding.ivBack.setOnClickListener {
+            (activity as MainActivity).visibilityBottomNavBar(false)
+            (activity as MainActivity).navController.popBackStack()
+        }
     }
 
     private fun initViewModel(){

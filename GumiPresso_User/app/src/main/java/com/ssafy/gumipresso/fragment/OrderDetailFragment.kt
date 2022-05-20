@@ -83,27 +83,11 @@ class OrderDetailFragment : Fragment() {
             btnAddComment.setOnClickListener {
                 (activity as MainActivity).movePage(CONST.FRAG_REVIEW_WRITE, productId)
             }
-//            btnAddComment.setOnClickListener {
-//                val inputString = binding.etComment.text.toString().trim()
-//                if(!inputString.isEmpty()){
-//                    val dialogScore = DialogScore()
-//                    dialogScore.apply {
-//                        arguments = bundleOf("comment" to Comment(user.id, product.id, 0f, inputString))
-//                        onClickConfirm = object : DialogScore.OnClickConfirmListener{
-//                            override fun onClicked(comment: Comment) {
-//                                insert(comment)
-//                                binding.etComment.setText("")
-//                            }
-//                        }
-//                    }
-//                    dialogScore.show(parentFragmentManager, "DialogScore")
-//                }
-//                else{
-//                    Toast.makeText(context, "코멘트를 입력해 주세요.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
+            binding.ivBack.setOnClickListener {
+                (activity as MainActivity).visibilityBottomNavBar(false)
+                (activity as MainActivity).navController.popBackStack()
+            }
         }
-
     }
 
     fun insert(comment: Comment){
