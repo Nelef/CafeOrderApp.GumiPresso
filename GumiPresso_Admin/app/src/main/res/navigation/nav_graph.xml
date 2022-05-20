@@ -11,4 +11,9 @@
         android:name="com.ssafy.gumipresso_admin.fragment.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/salesFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.SalesFragment"
+        android:label="fragment_sales"
+        tools:layout="@layout/fragment_sales" />
 </navigation>

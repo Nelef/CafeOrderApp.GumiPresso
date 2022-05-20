@@ -3,28 +3,55 @@ package com.ssafy.through.model.dto;
 import java.util.Date;
 
 public class Sales {
-	private String orderdate;
+	private String year;
+	private String month;
+	private String day;
+	private String hour;
 	private int total;
 	private String type;
 	public Sales() {
 		super();
 	}
-	public Sales(String orderdate, int total) {
+	public Sales(String year, String month, String day, String hour, int total, String type) {
 		super();
-		this.orderdate = orderdate;
-		this.total = total;
-	}
-	public Sales(String orderdate, int total, String type) {
-		super();
-		this.orderdate = orderdate;
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.hour = hour;
 		this.total = total;
 		this.type = type;
 	}
-	public String getOrderdate() {
-		return orderdate;
+	public Sales(String year, String month, String day, String hour, int total) {
+		super();
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.hour = hour;
+		this.total = total;
 	}
-	public void setOrderdate(String orderdate) {
-		this.orderdate = orderdate;
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getDay() {
+		return day;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
+	public String getHour() {
+		return hour;
+	}
+	public void setHour(String hour) {
+		this.hour = hour;
 	}
 	public int getTotal() {
 		return total;
@@ -41,8 +68,14 @@ public class Sales {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Sales [orderdate=");
-		builder.append(orderdate);
+		builder.append("Sales [year=");
+		builder.append(year);
+		builder.append(", month=");
+		builder.append(month);
+		builder.append(", day=");
+		builder.append(day);
+		builder.append(", hour=");
+		builder.append(hour);
 		builder.append(", total=");
 		builder.append(total);
 		builder.append(", type=");
@@ -50,5 +83,8 @@ public class Sales {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+	
 	
 }

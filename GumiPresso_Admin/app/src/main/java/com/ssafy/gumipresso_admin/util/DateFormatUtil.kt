@@ -2,6 +2,7 @@ package com.ssafy.gumipresso_amdin.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.ssafy.gumipresso_admin.model.dto.Sales
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -28,6 +29,13 @@ class DateFormatUtil {
             formmater.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
             return formmater.format(System.currentTimeMillis())
+        }
+        fun convertSalesData(sales: Sales): String{
+            var date = "${sales.year}년"
+            if(sales.month != null) date += " - ${sales.month}월"
+            if(sales.day != null) date += " - ${sales.day}일"
+            if(sales.hour != null) date += " ${sales.hour}시"
+            return date
         }
     }
 }

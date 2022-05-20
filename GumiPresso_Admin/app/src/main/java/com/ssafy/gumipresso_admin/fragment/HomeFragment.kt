@@ -15,8 +15,10 @@ import com.ssafy.gumipresso_admin.R
 import com.ssafy.gumipresso_admin.adapter.OrderAdapter
 import com.ssafy.gumipresso_admin.adapter.layoutmanager.LinearLayoutManagerWithScroller
 import com.ssafy.gumipresso_admin.databinding.FragmentHomeBinding
+import com.ssafy.gumipresso_admin.model.dto.DateDTO
 import com.ssafy.gumipresso_admin.model.dto.RecentOrder
 import com.ssafy.gumipresso_admin.viewmodel.OrderViewModel
+import com.ssafy.gumipresso_admin.viewmodel.SalesViewModel
 import com.ssafy.gumipresso_admin.viewmodel.UserViewModel
 import kotlin.math.log
 
@@ -44,6 +46,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
+
     }
 
     private fun initViewModel(){

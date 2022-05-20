@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="salesVM"
+            type="com.ssafy.gumipresso_admin.viewmodel.SalesViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="5dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_sales_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{salesVM.salesDate}"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            tools:text="2022-22-22" />
+
+        <TextView
+            android:id="@+id/tv_sales_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{salesVM.sales.total+` 원`}"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            tools:text="20000원" />
+
+        <TextView
+            android:id="@+id/tv_sales_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{salesVM.sales.type}"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:gravity="end"
+            android:visibility="@{salesVM.sales.type != null ? View.VISIBLE : View.GONE}"
+            tools:text="커피" />
+
+    </LinearLayout>
+</layout>
