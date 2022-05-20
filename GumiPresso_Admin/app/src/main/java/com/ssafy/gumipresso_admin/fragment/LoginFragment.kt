@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.ssafy.gumipresso_admin.activity.LoginActivity
 import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.common.CONST
 import com.ssafy.gumipresso_admin.databinding.FragmentLoginBinding
+import com.ssafy.gumipresso_admin.model.dto.DateDTO
 import com.ssafy.gumipresso_admin.model.dto.User
+import com.ssafy.gumipresso_admin.viewmodel.SalesViewModel
 import com.ssafy.gumipresso_admin.viewmodel.UserViewModel
 import kotlin.math.log
 
@@ -21,9 +24,14 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val userViewModel : UserViewModel by activityViewModels()
     private lateinit var user: User
-
+    private val salesViewModel: SalesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val user = ApplicationClass.userPrefs.getString("User","")
+        if(!user.equals("")){
+            Toast.makeText(context, "${user}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+            userViewModel.getAdminUser()
+        }
     }
 
     override fun onCreateView(

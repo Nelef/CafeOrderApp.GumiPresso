@@ -41,6 +41,11 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val user = ApplicationClass.userPrefs.getString("User","")
+        if(!user.equals("")){
+            userViewModel.getUserInfo()
+            Toast.makeText(context, "${user}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreateView(

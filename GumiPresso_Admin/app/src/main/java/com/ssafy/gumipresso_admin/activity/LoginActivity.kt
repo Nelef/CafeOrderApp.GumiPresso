@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.ssafy.gumipresso_admin.R
+import com.ssafy.gumipresso_admin.common.ApplicationClass.Companion.userPrefs
 import com.ssafy.gumipresso_admin.common.CONST
 import com.ssafy.gumipresso_admin.databinding.ActivityLoginBinding
 import com.ssafy.gumipresso_admin.fragment.JoinFragment
@@ -17,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
     }

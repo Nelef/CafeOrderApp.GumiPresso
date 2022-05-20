@@ -21,11 +21,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = userPrefs.getString("User","")
-        if(!user.equals("")){
-            Toast.makeText(this, "${user}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
-            movePage(CONST.ACTIVITY_MAIN)
-        }
+
         Log.d(TAG, "onCreate: ${Utility.getKeyHash(this)}")
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
     }
