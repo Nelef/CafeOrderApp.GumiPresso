@@ -32,8 +32,8 @@ class DateFormatUtil {
         }
         fun convertSalesData(sales: Sales): String{
             var date = "${sales.year}년"
-            if(sales.month != null) date += " - ${sales.month}월"
-            if(sales.day != null) date += " - ${sales.day}일"
+            if(sales.month != null) date += " ${sales.month}월"
+            if(sales.day != null) date += " ${sales.day}일"
             if(sales.hour != null) date += " ${sales.hour}시"
             return date
         }
