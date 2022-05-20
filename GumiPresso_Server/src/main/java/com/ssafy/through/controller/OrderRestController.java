@@ -23,6 +23,7 @@ import com.ssafy.through.model.dto.OrderForm;
 import com.ssafy.through.model.dto.Product;
 import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.Stamps;
+import com.ssafy.through.model.dto.Table;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.service.OrderDetailService;
 import com.ssafy.through.model.service.OrderService;
@@ -159,6 +160,23 @@ public class OrderRestController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		
 	}
+	
+	@GetMapping("/table")
+	public ResponseEntity<?> getTable(){
+		List<Table> list = oService.getTable();
+		return new ResponseEntity<List<Table>>(list,HttpStatus.OK);
+	}
+	@GetMapping("/table/{tableId}")
+	public ResponseEntity<?> getTable(@PathVariable int tableId){
+		int result = oService.updateTable(tableId);
+		if(result > 0) {
+			List<Table> list = oService.getTable();
+			return new ResponseEntity<List<Table>>(list,HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+	
+	
 
 //	@PostMapping("/test")
 //	public ResponseEntity<?> test(@RequestBody List<Product> orderForm){

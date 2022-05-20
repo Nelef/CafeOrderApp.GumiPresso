@@ -2,8 +2,10 @@ package com.ssafy.through.model.repo;
 
 import java.util.List;
 
+import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
 import com.ssafy.through.model.dto.OrderDetail;
+import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 
 public interface AdminRepo {
@@ -20,4 +22,11 @@ public interface AdminRepo {
 	List<OrderDetail> selectOrderDetailByOrderId(String orderId);
 	
 	int orderComplete(int orderId);
+	
+	List<Sales> selectYear(DateDTO date);
+	List<Sales> selectYearType(DateDTO date);
+	List<Sales> selectMonth(DateDTO date);
+	List<Sales> selectMonthType(DateDTO date);
+	List<Sales> selectDay(DateDTO date);
+	List<Sales> selectDayType(DateDTO date);
 }

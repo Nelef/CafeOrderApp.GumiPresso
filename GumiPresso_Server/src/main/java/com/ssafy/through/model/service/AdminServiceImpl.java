@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.through.model.dto.AosOrderDetail;
 import com.ssafy.through.model.dto.AosOrderForm;
+import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
 import com.ssafy.through.model.dto.OrderDetail;
 import com.ssafy.through.model.dto.RecentOrder;
+import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.repo.AdminRepo;
 
@@ -70,6 +72,37 @@ public class AdminServiceImpl implements AdminService{
 	public int orderComplete(int orderId) {		
 		return repo.orderComplete(orderId);
 	}
+
+	@Override
+	public List<Sales> selectYear(DateDTO date) {
+		return repo.selectYear(date);
+	}
+
+	@Override
+	public List<Sales> selectYearType(DateDTO date) {
+		return repo.selectYearType(date);
+	}
+
+	@Override
+	public List<Sales> selectMonth(DateDTO date) {
+		return repo.selectMonth(date);
+	}
+
+	@Override
+	public List<Sales> selectMonthType(DateDTO date) {
+		return repo.selectMonthType(date);
+	}
+
+	@Override
+	public List<Sales> selectDay(DateDTO date) {
+		return repo.selectDay(date);
+	}
+
+	@Override
+	public List<Sales> selectDayType(DateDTO date) {
+		return repo.selectDayType(date);
+	}
+	
 	
 	
 	

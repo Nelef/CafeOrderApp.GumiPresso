@@ -17,6 +17,13 @@
 	<select id="search" resultType="Integer">
 		select o_id from t_order order by o_id desc limit 1
 	</select>
+	
+	<select id="getTable" resultType="Table">
+		select * from t_table
+	</select>
+	<update id="updateTable" parameterType="Integer">
+		update t_table set state = NOT state where id = #{tableId}
+	</update>
 
 	
 </mapper>

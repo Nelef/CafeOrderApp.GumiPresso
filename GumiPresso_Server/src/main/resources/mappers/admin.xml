@@ -32,4 +32,24 @@
 		update t_order set completed = 'Y' where o_id = #{orderId}
 	</update>
 	
+	<select id="selectYear" parameterType ="DateDto" resultType="Sales">
+		select MONTH(`order_time`) as orderdate, sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(`order_time`) = #{year} group by MONTH(`order_time`) order by order_time;
+	</select>
+	<select id="selectYearType" parameterType ="DateDto" resultType="Sales">
+		select MONTH(`order_time`) as orderdate, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(`order_time`) = #{year} group by MONTH(`order_time`), type order by order_time;
+	</select>
+	<select id="selectMonth" parameterType ="DateDto" resultType="Sales">
+		select DATE(`order_time`) as orderdate, sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and MONTH(`order_time`) = #{month} group by DATE(`order_time`) order by order_time;
+	</select>
+	<select id="selectMonthType" parameterType ="DateDto" resultType="Sales">
+		select DATE(`order_time`) as orderdate, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and MONTH(`order_time`) = #{month} group by DATE(`order_time`), type order by order_time;
+	</select>
+	<select id="selectDay" parameterType ="DateDto" resultType="Sales">
+		select HOUR(order_time) as orderdate , sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(order_time) = #{month} and DAY(order_time) = #{day} group by HOUR(order_time) order by order_time;
+	</select>
+	<select id="selectDayType" parameterType ="DateDto" resultType="Sales">
+		select HOUR(`order_time`) as orderdate , sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} and DAY(`order_time`) = #{day} group by HOUR(`order_time`), type order by order_time;
+	</select>
+	
+	
 </mapper>

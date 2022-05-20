@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.through.model.dto.Order;
+import com.ssafy.through.model.dto.Table;
 import com.ssafy.through.model.repo.OrderRepo;
 
 @Service
@@ -31,5 +32,17 @@ public class OrderServiceImpl implements OrderService {
 	public int search() {
 		return repo.search();
 	}
+
+	@Override
+	public List<Table> getTable() {
+		return repo.getTable();
+	}
+
+	@Override
+	public int updateTable(int tableId) {
+		return repo.updateTable(tableId);
+	}
+	
+	
 
 }

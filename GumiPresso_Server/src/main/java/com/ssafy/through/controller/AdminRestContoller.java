@@ -2,6 +2,7 @@ package com.ssafy.through.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
 import com.ssafy.through.model.dto.RecentOrder;
+import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.service.AdminService;
 
@@ -112,6 +115,34 @@ public class AdminRestContoller {
 		List<RecentOrder> list = aService.convertOrdersToRecentOrder(orders);
 		
 		return new ResponseEntity<List<RecentOrder>>(list, HttpStatus.OK);
+	}
+	
+	@PostMapping("/order/{format}")
+	public ResponseEntity<?> getSales(@PathVariable String format, @RequestBody DateDTO date){
+		List<Sales> list = new ArrayList<Sales>();
+		System.out.println(date);
+		if(format.equals("year")) {
+			list = aService.selectYear(date);
+		}
+		else if(format.equals("yeartype")) {
+			list = aService.selectYearType(date);
+		}
+		else if(format.equals("month")) {
+			list = aService.selectMonth(date);
+		}
+		else if(format.equals("monthtype")) {
+			list = aService.selectMonthType(date);
+		}
+		else if(format.equals("day")) {
+			list = aService.selectDay(date);
+			System.out.println(list);
+		}
+		else if(format.equals("daytype")) {
+			list = aService.selectDayType(date);
+		}
+		System.out.println(list);
+		System.out.println(format);
+		return new ResponseEntity<List<Sales>>(list,HttpStatus.OK);		
 	}
 	
 	
