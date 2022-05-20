@@ -104,6 +104,25 @@ public class AdminRestContoller {
 		return new ResponseEntity<List<RecentOrder>>(list, HttpStatus.OK);
 	}
 	
+	@GetMapping("/order/completed/{id}")
+	public ResponseEntity<?> completeOrder(@PathVariable int id){
+		aService.orderComplete(id);
+		
+		List<Order> orders = aService.selectOrderByCompleted();
+		List<RecentOrder> list = aService.convertOrdersToRecentOrder(orders);
+		
+		return new ResponseEntity<List<RecentOrder>>(list, HttpStatus.OK);
+	}
 	
 	
 }
+
+
+
+
+
+
+
+
+
+

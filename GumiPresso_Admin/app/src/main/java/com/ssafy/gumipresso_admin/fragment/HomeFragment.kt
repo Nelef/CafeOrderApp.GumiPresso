@@ -52,6 +52,7 @@ class HomeFragment : Fragment() {
         }
         orderViewModel.orderList.observe(viewLifecycleOwner){
             binding.orderVM = orderViewModel
+            orderList = it
             initAdapter()
         }
         userViewModel.getAdminUser()
@@ -59,7 +60,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter(){
-        orderAdapter = OrderAdapter(orderViewModel.orderList.value as MutableList<RecentOrder>)
+        orderAdapter = OrderAdapter(orderList)
+        orderAdapter.onDoneButtonClickListener = object : OrderAdapter.OnDoneButtonClickListener{
+            override fun onDoneButtonClick(view: View, position: Int) {
+                orderViewModel.completeOrder(orderList[position].oId)
+            }
+        }
         binding.recyclerRecentOrder.apply {
             layoutManager = LinearLayoutManagerWithScroller(context, LinearLayoutManager.VERTICAL, false)
             adapter = orderAdapter

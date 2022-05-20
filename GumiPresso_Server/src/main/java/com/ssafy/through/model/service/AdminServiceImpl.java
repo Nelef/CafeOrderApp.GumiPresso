@@ -65,6 +65,13 @@ public class AdminServiceImpl implements AdminService{
 		
 		return list;
 	}
+
+	@Override
+	public int orderComplete(int orderId) {		
+		return repo.orderComplete(orderId);
+	}
+	
+	
 	
 	
 	

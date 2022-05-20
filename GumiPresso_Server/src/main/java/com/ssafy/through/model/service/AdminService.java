@@ -22,4 +22,6 @@ public interface AdminService {
 	List<OrderDetail> selectOrderDetailByOrderId(String orderId);
 
 	List<RecentOrder> convertOrdersToRecentOrder(List<Order> orders);
+	
+	int orderComplete(int orderId);
 }

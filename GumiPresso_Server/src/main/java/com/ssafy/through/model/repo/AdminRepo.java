@@ -18,4 +18,6 @@ public interface AdminRepo {
 	List<Order> selectOrderByCompleted();
 	 
 	List<OrderDetail> selectOrderDetailByOrderId(String orderId);
+	
+	int orderComplete(int orderId);
 }

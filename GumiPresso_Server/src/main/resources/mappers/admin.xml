@@ -28,4 +28,8 @@
 		where t_order_detail.order_id = #{orderId}
 		and t_order_detail.product_id = t_product.id
 	</select>	
+	<update id="orderComplete" parameterType="Integer">
+		update t_order set completed = 'Y' where o_id = #{orderId}
+	</update>
+	
 </mapper>

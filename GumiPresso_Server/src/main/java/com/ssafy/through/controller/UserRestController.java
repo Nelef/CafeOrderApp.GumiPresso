@@ -65,7 +65,7 @@ public class UserRestController {
 		if (selectedUser != null && selectedUser.getId().equals(user.getId())
 				&& selectedUser.getPass().equals(user.getPass())) {
 
-			Cookie cookie = new Cookie("loginId", URLEncoder.encode(selectedUser.getId(), "utf-8"));
+			Cookie cookie = new Cookie("loginId",selectedUser.getId());
 			cookie.setPath("/");
 			cookie.setMaxAge(10 * 60); // 초단위,. 600초
 			response.addCookie(cookie);
