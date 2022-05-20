@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.ProductAdapter
 import com.ssafy.gumipresso.common.CONST
@@ -38,14 +39,6 @@ class OrderFragment: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productViewModel.productList.observe(viewLifecycleOwner){
-            if(it != null){
-                productList = productViewModel.productList.value as List<Product>
-                initProductAdapter()
-            }
-        }
-        productViewModel.getProductList()
-
         binding.apply {
             tvMenuDistance.text = (activity as MainActivity).distanceMethod()
             ivMap.setOnClickListener {
@@ -55,6 +48,39 @@ class OrderFragment: Fragment(){
                 (activity as MainActivity).movePage(CONST.FRAG_CART_FROM_ORDER, null)
             }
         }
+
+        // 전체 메뉴
+        productViewModel.productList.observe(viewLifecycleOwner){
+            if(it != null){
+                productList = productViewModel.productList.value as List<Product>
+                initProductAdapter()
+            }
+        }
+        productViewModel.getProductList()
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab!!.position) {
+                    0 -> {
+                        // 전체 메뉴
+                        productViewModel.productList.observe(viewLifecycleOwner){
+                            if(it != null){
+                                productList = productViewModel.productList.value as List<Product>
+                                initProductAdapter()
+                            }
+                        }
+                        productViewModel.getProductList()
+                    }
+                    1 -> {
+                        // 즐겨찾기 메뉴
+                        productList = emptyList()
+                        initProductAdapter()
+                    }
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) { }
+            override fun onTabReselected(tab: TabLayout.Tab?) { }
+        })
     }
 
     fun tvMenuDistanceChange() {

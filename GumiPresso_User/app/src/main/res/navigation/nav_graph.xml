@@ -94,6 +94,13 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_myPageFragment_to_gradeFragment"
+            app:destination="@id/gradeFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -110,4 +117,9 @@
         android:name="com.ssafy.gumipresso.fragment.ReviewWriteFragment"
         android:label="ReviewWriteFragment"
         tools:layout="@layout/fragment_review_write" />
+    <fragment
+        android:id="@+id/gradeFragment"
+        android:name="com.ssafy.gumipresso.fragment.GradeFragment"
+        android:label="GradeFragment"
+        tools:layout="@layout/fragment_grade" />
 </navigation>

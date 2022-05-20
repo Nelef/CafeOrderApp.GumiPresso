@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="orderDetailViewModel"
             type="com.ssafy.gumipresso.viewmodel.RecentOrderDetailViewModel" />

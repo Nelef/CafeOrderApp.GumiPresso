@@ -33,10 +33,6 @@ class MyPageFragment : Fragment() {
     private lateinit var recentOrderAdapter: RecentOrderAdapter
     private lateinit var user: User
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +52,9 @@ class MyPageFragment : Fragment() {
         binding.ivLogout.setOnClickListener {
             ApplicationClass.userPrefs.edit().clear().commit()
             (activity as MainActivity).movePage(CONST.LOGOUT, null)
+        }
+        binding.membershipLayout.setOnClickListener {
+            (activity as MainActivity).movePage(CONST.FRAG_GRADE_FROM_MYPAGE, null)
         }
     }
 
@@ -106,6 +105,5 @@ class MyPageFragment : Fragment() {
             recyclerRecentOrder.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerRecentOrder.adapter = recentOrderAdapter
         }
-
     }
 }

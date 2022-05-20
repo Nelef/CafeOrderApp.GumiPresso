@@ -84,7 +84,7 @@ class OrderDetailFragment : Fragment() {
             btnAddComment.setOnClickListener {
                 (activity as MainActivity).movePage(CONST.FRAG_REVIEW_WRITE, productId)
             }
-            binding.ivBack.setOnClickListener {
+            ivBack.setOnClickListener {
                 (activity as MainActivity).visibilityBottomNavBar(false)
                 (activity as MainActivity).navController.popBackStack()
             }
@@ -145,7 +145,6 @@ class OrderDetailFragment : Fragment() {
             adapter = commentAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-
     }
 
     override fun onDestroy() {

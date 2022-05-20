@@ -150,6 +150,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             CONST.FRAG_NOTI -> {
                 navController.navigate(R.id.action_homeFragment_to_notiFragment)
             }
+            CONST.FRAG_GRADE_FROM_MYPAGE -> {
+                visibilityBottomNavBar(true)
+                navController.navigate(R.id.action_myPageFragment_to_gradeFragment)
+            }
             CONST.FRAG_REVIEW_WRITE -> {
                 navController.navigate(
                     R.id.action_orderDetailFragment_to_reviewWriteFragment,
