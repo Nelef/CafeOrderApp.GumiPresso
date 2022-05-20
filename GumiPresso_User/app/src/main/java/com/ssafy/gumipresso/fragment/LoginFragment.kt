@@ -233,6 +233,7 @@ class LoginFragment : Fragment() {
                     val user = mAuth!!.currentUser
                     val newUser = User(user!!.email!!, "", user.displayName!!, 0)
                     userViewModel.join(newUser)
+                    userViewModel.login(newUser)
                 }
 
             }

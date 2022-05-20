@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.gumipresso_admin.model.Retrofit
+import com.ssafy.gumipresso_admin.model.dto.OrderDetail
 import com.ssafy.gumipresso_admin.model.dto.RecentOrder
 import com.ssafy.gumipresso_amdin.util.DateFormatUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import java.lang.Exception
 
 private const val TAG ="OrderViewModel"
@@ -23,11 +25,23 @@ class OrderViewModel: ViewModel() {
             try {
                 val response = Retrofit.orderService.getOrderListByCompleted()
                 if(response.isSuccessful && response.body() != null){
-                    Log.d(TAG, "getOrderListByCompleted: ${response.body()}")
                     _orderList.postValue(response.body() as MutableList<RecentOrder>)
                 }
             }catch (e: Exception){
                 Log.d(TAG, "getOrderListByCompleted: ${e.message}")
+            }
+        }
+    }
+
+    fun completeOrder(orderId: Int){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = Retrofit.orderService.completeOrder(orderId)
+                if(response.isSuccessful && response.body() != null){
+                    _orderList.postValue(response.body() as MutableList<RecentOrder>)
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "completeOrder: ${e.message}")
             }
         }
     }
@@ -60,7 +74,7 @@ class OrderViewModel: ViewModel() {
         var price = 0
         for(i in detailList.indices){
             quantity += detailList[i].quantity
-            price += detailList[i].price
+            price += detailList[i].price * detailList[i].quantity
         }
         _totalPrice.value = "${price} 원"
         _totalQuantity.value = "총 ${quantity} 잔"
@@ -71,6 +85,21 @@ class OrderViewModel: ViewModel() {
         }
         _orderId.value = "주문번호: ${(_recentOrder.value as RecentOrder).oId}"
         _orderTime.value = DateFormatUtil.convertYYMMDDHHMM((_recentOrder.value as RecentOrder).orderTime)
+    }
+
+    private val _detailPrice = MutableLiveData<String>()
+    val detailPrice : LiveData<String>
+        get() = _detailPrice
+    private val _orderDetail = MutableLiveData<OrderDetail>()
+    val orderDetail : LiveData<OrderDetail>
+        get() = _orderDetail
+    fun setOrderDetailItem(orderDetail: OrderDetail){
+        _orderDetail.value = orderDetail
+        setDetailValue()
+    }
+    fun setDetailValue(){
+        val detail = _orderDetail.value as OrderDetail
+        _detailPrice.value = "${detail.price * detail.quantity} 원"
     }
 }
 

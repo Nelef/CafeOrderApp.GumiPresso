@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.set
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -38,7 +39,12 @@ class OrderAdapter(val list: MutableList<RecentOrder>): RecyclerView.Adapter<Ord
 
     override fun getItemCount() = list.size
 
-    class ViewHolder(val binding: ListItemOrderBinding, val list: MutableList<RecentOrder>) : RecyclerView.ViewHolder(binding.root) {
+    lateinit var onDoneButtonClickListener: OnDoneButtonClickListener
+    interface OnDoneButtonClickListener{
+        fun onDoneButtonClick(view: View, position: Int)
+    }
+
+    inner class ViewHolder(val binding: ListItemOrderBinding, val list: MutableList<RecentOrder>) : RecyclerView.ViewHolder(binding.root) {
 
 
         private var parentView: ConstraintLayout = binding.constSimple
@@ -59,6 +65,13 @@ class OrderAdapter(val list: MutableList<RecentOrder>): RecyclerView.Adapter<Ord
 
             binding.orderVM!!.setOrders(list[adapterPosition])
             binding.orderVM!!.getTotalValue()
+            val deatailAdapter =  OrderDetailAdapter(list[adapterPosition].recentOrderDetail)
+
+            binding.recyclerRecentDetail.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                adapter = deatailAdapter
+            }
+
             itemView[adapterPosition] = childViewWrap
             imageView[adapterPosition] = item_arrow
 
@@ -74,6 +87,13 @@ class OrderAdapter(val list: MutableList<RecentOrder>): RecyclerView.Adapter<Ord
                 )
             }
 
+            binding.btnOrderCheck.setOnClickListener {
+                onDoneButtonClickListener.onDoneButtonClick(it, adapterPosition)
+            }
+            binding.ivSimpleCheck.setOnClickListener {
+                onDoneButtonClickListener.onDoneButtonClick(it, adapterPosition)
+            }
+
             parentView.setOnClickListener {
                 TransitionManager.beginDelayedTransition(childViewWrap, AutoTransition())
 
@@ -82,6 +102,7 @@ class OrderAdapter(val list: MutableList<RecentOrder>): RecyclerView.Adapter<Ord
                         sparseArray[adapterPosition] = false
                         childViewWrap.visibility = View.GONE
                         collapseItem(childViewWrap, item_arrow)
+
                     }
 
                     View.GONE -> {
@@ -113,7 +134,7 @@ class OrderAdapter(val list: MutableList<RecentOrder>): RecyclerView.Adapter<Ord
             imageView.apply {
                 setImageDrawable(
                     this.context.resources.getDrawable(
-                        R.drawable.ic_arrow_up,
+                        R.drawable.ic_arrow_down,
                         null
                     )
                 )
