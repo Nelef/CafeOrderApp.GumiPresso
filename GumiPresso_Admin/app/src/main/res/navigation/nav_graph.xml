@@ -16,4 +16,8 @@
         android:name="com.ssafy.gumipresso_admin.fragment.SalesFragment"
         android:label="fragment_sales"
         tools:layout="@layout/fragment_sales" />
+    <fragment
+        android:id="@+id/manageFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.ManageFragment"
+        android:label="ManageFragment" />
 </navigation>

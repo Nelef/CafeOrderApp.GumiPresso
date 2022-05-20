@@ -210,9 +210,9 @@
                 android:id="@+id/tv_title_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="타입"
+                android:text="분류"
                 android:textSize="24sp"
-                android:gravity="center"
+                android:gravity="end"
                 android:layout_weight="1"
                 android:visibility="@{salesVM.isTypeSelected ? View.VISIBLE : View.GONE}"
                 />

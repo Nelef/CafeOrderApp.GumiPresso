@@ -99,6 +99,10 @@ class SalesFragment : Fragment() {
             salesViewModel.getSalesList(timeFlag+typeFlag, dateDTO)
             binding.salesVM = salesViewModel
         }
+        salesViewModel.dateDTO.observe(viewLifecycleOwner){
+            salesViewModel.getSalesList(timeFlag+typeFlag, dateDTO)
+            binding.salesVM = salesViewModel
+        }
     }
 
     private fun initAdapter(){
@@ -113,9 +117,8 @@ class SalesFragment : Fragment() {
     private fun initDatePicker(){
         binding.datePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
             dateDTO = DateDTO(year.toString(), (monthOfYear+1).toString(), dayOfMonth.toString())
-            salesViewModel.setDateDtoItem(dateDTO)
             salesViewModel.setFlagDatePickOpenValue()
-
+            salesViewModel.setDateDtoItem(dateDTO)
         }
         val calendar = Calendar.getInstance().apply {
             timeZone = TimeZone.getTimeZone("Asia/Seoul")
