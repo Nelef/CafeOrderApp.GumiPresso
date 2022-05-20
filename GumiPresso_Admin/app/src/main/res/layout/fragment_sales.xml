@@ -90,10 +90,22 @@
             >
 
             <TextView
+                android:id="@+id/tv_select_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{salesVM.dateDTO.toString()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginHorizontal="10dp"
+                tools:text="2022년 - 22월 - 22일"
+                />
+
+            <TextView
                 android:id="@+id/tv_show_date_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="날짜 선택"
+                android:text="@{salesVM.selectTitleText}"
                 android:textSize="20sp"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"

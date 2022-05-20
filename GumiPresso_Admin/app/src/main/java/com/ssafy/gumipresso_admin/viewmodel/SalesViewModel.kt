@@ -49,10 +49,37 @@ class SalesViewModel: ViewModel() {
         _salesDate.value = DateFormatUtil.convertSalesData(sales)
     }
 
-    private val _flagDatePickOpen = MutableLiveData<Boolean>(false)
+    private val _flagDatePickOpen = MutableLiveData<Boolean>(true)
     val flagDatePickOpen : LiveData<Boolean>
         get() = _flagDatePickOpen
     fun setFlagDatePickOpenValue(){
         _flagDatePickOpen.value = !_flagDatePickOpen.value!!
+    }
+
+    private val _flagTabLayoutSelect = MutableLiveData<String>("month")
+    val flagTabLayoutSelect: LiveData<String>
+        get() = _flagTabLayoutSelect
+    fun setflagTabLayoutSelected(flag: String){
+        _flagTabLayoutSelect.value = flag
+    }
+
+    private val _dateDTO = MutableLiveData<DateDTO>()
+    val dateDTO : LiveData<DateDTO>
+        get() = _dateDTO
+    fun setDateDtoItem(dateDTO: DateDTO){
+        _dateDTO.value = dateDTO
+    }
+
+    private val _selectTitleText = MutableLiveData<String>("년도 선택")
+    val selectTitleText : LiveData<String>
+        get() = _selectTitleText
+    fun setTitleText(selectedItem: String){
+        var text = ""
+        when(selectedItem){
+            "year" -> text = "년도 선택"
+            "month" -> text = "월 선택"
+            "day" -> text = "일 선택"
+        }
+        _selectTitleText.value = text
     }
 }
