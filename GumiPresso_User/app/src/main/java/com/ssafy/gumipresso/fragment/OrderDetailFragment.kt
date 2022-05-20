@@ -124,7 +124,6 @@ class OrderDetailFragment : Fragment() {
             commentList = it
             initAdapter()
         }
-
     }
     
     private fun initAdapter(){
