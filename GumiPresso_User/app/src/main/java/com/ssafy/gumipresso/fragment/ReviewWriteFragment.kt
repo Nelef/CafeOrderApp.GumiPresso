@@ -1,11 +1,15 @@
 package com.ssafy.gumipresso.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -21,16 +25,15 @@ import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.Comment
 import com.ssafy.gumipresso.model.dto.Product
 import com.ssafy.gumipresso.model.dto.User
-import com.ssafy.gumipresso.viewmodel.CartViewModel
-import com.ssafy.gumipresso.viewmodel.CommentViewModel
-import com.ssafy.gumipresso.viewmodel.ProductViewModel
-import com.ssafy.gumipresso.viewmodel.UserViewModel
+import com.ssafy.gumipresso.util.UriPathUtil
+import com.ssafy.gumipresso.viewmodel.*
 
 class ReviewWriteFragment : Fragment() {
     private lateinit var binding: FragmentReviewWriteBinding
     private val productViewModel: ProductViewModel by viewModels()
     private val commentViewModel: CommentViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val imageViewModel: ImageViewModel by viewModels()
 
     private lateinit var user: User
     private lateinit var product: Product
@@ -62,6 +65,10 @@ class ReviewWriteFragment : Fragment() {
                 Toast.makeText(context, "코멘트를 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.btnInsertImage.setOnClickListener {
+            openGalleryForImages()
+        }
     }
 
     private fun initViewModel() {
@@ -81,4 +88,27 @@ class ReviewWriteFragment : Fragment() {
         commentViewModel.insertComment(comment)
         Toast.makeText(requireContext(), "등록되었습니다", Toast.LENGTH_SHORT).show()
     }
+
+
+    fun openGalleryForImages() {
+        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+        resultLauncher.launch(intent);
+    }
+
+    val resultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data = it.data!!
+                val imageUri = data.data!!
+                val realUri = UriPathUtil().getPath(requireContext(), imageUri).toString()
+
+                // UI 이미지 설정
+                binding.ivReviewImage.setImageURI(imageUri)
+                // 이미지 전송
+//                imageViewModel.uploadImage(realUri)
+            }
+        }
 }

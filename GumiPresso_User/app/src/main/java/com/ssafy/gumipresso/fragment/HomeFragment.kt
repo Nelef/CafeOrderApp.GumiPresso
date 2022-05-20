@@ -37,17 +37,11 @@ import com.ssafy.gumipresso.viewmodel.ImageViewModel
 import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
-
 private const val TAG ="HomeFragment"
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
-    private val cartViewModel: CartViewModel by activityViewModels()
-    private val imageViewModel: ImageViewModel by viewModels()
-
-    private lateinit var orderList: List<RecentOrder>
-    private lateinit var recentOrderAdapter: RecentOrderAdapter
 
     // 배너
     private var bannerList = mutableListOf(R.drawable.banner1, R.drawable.banner2)
@@ -75,33 +69,10 @@ class HomeFragment : Fragment() {
             userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
         }
 
-        binding.btnTestImg.setOnClickListener {
-            openGalleryForImages()
-        }
-
         // 배너
         binding.viewPager2.adapter = BannerAdapter(bannerList) // 어댑터 생성
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL // 방향을 가로로
-
         // 배너 끝
-    }
-
-    fun openGalleryForImages() {
-            var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            resultLauncher.launch(intent);
-    }
-
-    val resultLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if(it.resultCode == Activity.RESULT_OK){
-            val data = it.data!!
-            val imageUri = data.data!!
-            val realUri = UriPathUtil().getPath(requireContext(), imageUri).toString()
-            imageViewModel.uploadImage(realUri)
-        }
     }
 
     private fun checkPermission(){
@@ -128,41 +99,6 @@ class HomeFragment : Fragment() {
                 binding.homeUserViewModel = userViewModel
                 orderViewModel.getOrderList(userViewModel.user.value!!.id)
             }
-        }
-        orderViewModel.recentOrderList.observe(viewLifecycleOwner){
-            if(orderViewModel.recentOrderList.value != null){
-                binding.homeRecentOrderViewModel = orderViewModel
-                orderList = orderViewModel.recentOrderList.value as List<RecentOrder>
-                initOrderAdapter()
-            }
-        }
-    }
-
-    private fun initOrderAdapter(){
-        recentOrderAdapter = RecentOrderAdapter(orderList, "home")
-        recentOrderAdapter.apply {
-            onCartIconClick = object : RecentOrderAdapter.OnCartIconClick {
-                override fun onClick(view: View, position: Int) {
-                    val recentOrder = (orderViewModel.recentOrderList.value as List<RecentOrder>)[position]
-                    val recentOrderDetailList = recentOrder.recentOrderDetail
-                    cartViewModel.clearCart()
-
-                    for(i in recentOrderDetailList.indices){
-                        val cart = Cart(recentOrderDetailList[i].productId, recentOrderDetailList[i].img, recentOrderDetailList[i].name, recentOrderDetailList[i].quantity, recentOrderDetailList[i].price, recentOrderDetailList[i].quantity * recentOrderDetailList[i].price, recentOrderDetailList[i].type)
-                        cartViewModel.addCart(cart)
-                    }
-                    (activity as MainActivity).movePage(CONST.FRAG_CART_FROM_HOME, null)
-                }
-            }
-            onOrderItemClick = object : RecentOrderAdapter.OnOrderItemClick {
-                override fun onClick(view: View, position: Int) {
-                    (activity as MainActivity).movePage(CONST.FRAG_RECENT_ORDER_DETAIL_FROM_HOME, orderList[position].oId.toString())
-                }
-            }
-        }
-        binding.apply {
-            recyclerRecentOrder.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            recyclerRecentOrder.adapter = recentOrderAdapter
         }
     }
 

@@ -11,7 +11,7 @@ import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
 
 private const val TAG = "RecentOrderAdapter"
 
-class RecentOrderAdapter(private val list: List<RecentOrder>, private val state: String) :
+class RecentOrderAdapter(private val list: List<RecentOrder>) :
     RecyclerView.Adapter<RecentOrderAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ListRecentOrderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,14 +21,6 @@ class RecentOrderAdapter(private val list: List<RecentOrder>, private val state:
 
         fun bind(listItem: RecentOrder, holder: ViewHolder, position: Int) {
             binding.apply {
-                when(state){
-                    "home"-> {
-                        ivCart.isVisible = true
-                    }
-                    "mypage" -> {
-                        tvPickup.isVisible = true
-                    }
-                }
                 orderViewModel!!.setRecentOrder(listItem)
                 listOrderlist.setOnClickListener {
                     onOrderItemClick.onClick(holder.itemView, position);

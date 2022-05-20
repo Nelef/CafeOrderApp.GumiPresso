@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ssafy.gumipresso.model.Retrofit
+import com.ssafy.gumipresso.model.dto.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,8 +24,6 @@ class ImageViewModel: ViewModel() {
         val file = File(path)
         var fileName = System.currentTimeMillis().toString()
         fileName = fileName+".png"
-
-        Log.d(TAG, "uploadImage: ")
 
         var requestBody : RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file)
         var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)

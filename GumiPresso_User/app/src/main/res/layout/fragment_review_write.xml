@@ -10,10 +10,6 @@
         <variable
             name="productVM"
             type="com.ssafy.gumipresso.viewmodel.ProductViewModel" />
-
-        <variable
-            name="commentVM"
-            type="com.ssafy.gumipresso.viewmodel.CommentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,7 +96,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <Button
-                            android:id="@+id/tv_star"
+                            android:id="@+id/btn_insert_image"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="20dp"
@@ -125,7 +121,7 @@
                             android:stepSize="1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_star" />
+                            app:layout_constraintTop_toBottomOf="@id/btn_insert_image" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 

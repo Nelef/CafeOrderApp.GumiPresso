@@ -19,4 +19,7 @@ object Retrofit {
     val imageService: ImageService by lazy {
         ApplicationClass.retrofit.create(ImageService::class.java)
     }
+    val tableService: TableService by lazy {
+        ApplicationClass.retrofit.create(TableService::class.java)
+    }
 }

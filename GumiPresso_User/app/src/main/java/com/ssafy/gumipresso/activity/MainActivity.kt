@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -39,9 +40,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
+import kotlin.concurrent.thread
 
 
-private const val TAG ="MainActivity"
+private const val TAG = "MainActivity"
+
 class MainActivity : AppCompatActivity(), BeaconConsumer {
     private lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
@@ -63,10 +66,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     // 비콘 변수 끝
 
     // 태그 변수
-    private lateinit var nfcAdapter: NfcAdapter
+    private var nfcAdapter: NfcAdapter? = null
     private lateinit var pIntent: PendingIntent
     private lateinit var filters: Array<IntentFilter>
-    private var tag:String? = null
+    private var tag: String? = null
     // 태그 변수 끝
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -76,7 +79,8 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         setContentView(binding.root)
 
         Log.d(TAG, "onCreate: ")
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_main) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container_main) as NavHostFragment
         navController = navHostFragment.navController
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
@@ -95,65 +99,78 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 //            startScan()
 //        }
 //        // 비콘 끝
-//
-//        // 태그
-//        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-//        if (nfcAdapter == null) {
-//            finish()
-//        }
-//        NFC_Tag()
+
+        // 태그
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        if (nfcAdapter == null) {
+            Toast.makeText(this, "이 기기는 NFC를 지원하지 않습니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            NFC_Tag()
+        }
+
 
     }
 
-    fun visibilityBottomNavBar(hide: Boolean){
-        if(hide){
+    fun visibilityBottomNavBar(hide: Boolean) {
+        if (hide) {
             binding.bottomNavigationView.visibility = View.GONE
-        }
-        else{
+        } else {
             binding.bottomNavigationView.visibility = View.VISIBLE
         }
     }
 
-    fun movePage(page: CONST, param: String?){
-        when(page){
-            CONST.FRAG_RECENT_ORDER_DETAIL_FROM_HOME ->{
+    fun movePage(page: CONST, param: String?) {
+        when (page) {
+            CONST.FRAG_RECENT_ORDER_DETAIL_FROM_HOME -> {
                 visibilityBottomNavBar(true)
-                navController.navigate(R.id.action_homeFragment_to_recentOrderDetailFragment, bundleOf("order_id" to param))
+                navController.navigate(
+                    R.id.action_homeFragment_to_recentOrderDetailFragment,
+                    bundleOf("order_id" to param)
+                )
             }
-            CONST.FRAG_ORDER_DETAIL ->{
+            CONST.FRAG_ORDER_DETAIL -> {
                 visibilityBottomNavBar(true)
-                navController.navigate(R.id.action_orderFragment_to_orderDetailFragment, bundleOf("product_id" to param))
+                navController.navigate(
+                    R.id.action_orderFragment_to_orderDetailFragment,
+                    bundleOf("product_id" to param)
+                )
             }
-            CONST.FRAG_CART_FROM_ORDER ->{
+            CONST.FRAG_CART_FROM_ORDER -> {
                 visibilityBottomNavBar(true)
                 navController.navigate(R.id.action_orderFragment_to_cartFragment)
             }
-            CONST.FRAG_RECENT_ORDER_DETAIL_FROM_MYPAGE ->{
+            CONST.FRAG_RECENT_ORDER_DETAIL_FROM_MYPAGE -> {
                 visibilityBottomNavBar(true)
-                navController.navigate(R.id.action_myPageFragment_to_recentOrderDetailFragment, bundleOf("order_id" to param))
+                navController.navigate(
+                    R.id.action_myPageFragment_to_recentOrderDetailFragment,
+                    bundleOf("order_id" to param)
+                )
             }
             CONST.FRAG_MAPS -> {
                 visibilityBottomNavBar(false)
                 navController.navigate(R.id.action_orderFragment_to_mapsFragment)
             }
-            CONST.FRAG_CART_FROM_HOME->{
+            CONST.FRAG_CART_FROM_MYPAGE -> {
                 visibilityBottomNavBar(true)
-                navController.navigate(R.id.action_homeFragment_to_cartFragment)
+                navController.navigate(R.id.action_myPageFragment_to_cartFragment)
             }
-            CONST.FRAG_CART_FROM_RECENT_ORDER_DETAIL->{
+            CONST.FRAG_CART_FROM_RECENT_ORDER_DETAIL -> {
                 navController.navigate(R.id.action_recentOrderDetailFragment_to_cartFragment)
             }
-            CONST.FRAG_CART_TO_HOME ->{
+            CONST.FRAG_CART_TO_HOME -> {
                 visibilityBottomNavBar(false)
                 navController.popBackStack()
             }
-            CONST.FRAG_NOTI ->{
+            CONST.FRAG_NOTI -> {
                 navController.navigate(R.id.action_homeFragment_to_notiFragment)
             }
-            CONST.FRAG_REVIEW_WRITE ->{
-                navController.navigate(R.id.action_orderDetailFragment_to_reviewWriteFragment, bundleOf("product_id" to param))
+            CONST.FRAG_REVIEW_WRITE -> {
+                navController.navigate(
+                    R.id.action_orderDetailFragment_to_reviewWriteFragment,
+                    bundleOf("product_id" to param)
+                )
             }
-            CONST.LOGOUT ->{
+            CONST.LOGOUT -> {
                 Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -165,7 +182,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getFirebaseToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
-            if(!it.isSuccessful){
+            if (!it.isSuccessful) {
                 Log.d(TAG, "onCreate: FCM 토큰 얻기 실패", it.exception)
                 return@OnCompleteListener
             }
@@ -180,7 +197,8 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(channelId, channelName, importance)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
 
@@ -341,13 +359,13 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     // 태그 포그라운드 모드 활성화
     override fun onResume() {
         super.onResume()
-//        nfcAdapter.enableForegroundDispatch(this, pIntent, filters, null)
+        nfcAdapter?.enableForegroundDispatch(this, pIntent, filters, null)
     }
 
     // 포그라운드 모드 비활성화
     override fun onPause() {
         super.onPause()
-//        nfcAdapter.disableForegroundDispatch(this)
+        nfcAdapter?.disableForegroundDispatch(this)
     }
 
 
@@ -372,11 +390,16 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             val recType = String(data)
 
             if (recType == "T") {
-                Toast.makeText(this, "태그 데이터 : ${String(payload, 3, payload.size - 3)}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "태그 데이터 : ${String(payload, 3, payload.size - 3)}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 tag = String(payload, 3, payload.size - 3)
             }
         }
     }
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         Log.e("INFO", "onNewIntent called...")

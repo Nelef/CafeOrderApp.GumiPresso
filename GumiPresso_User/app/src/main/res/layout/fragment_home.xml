@@ -68,14 +68,6 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btn_test_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이미지"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -93,12 +85,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="@{homeUserViewModel.user.name +`님 환영합니다.`}"
-                    tools:text="Name님 환영합니다."
                     android:textColor="@color/coffee_dark_brown"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Name님 환영합니다." />
 
                 <LinearLayout
                     android:id="@+id/divider1"
@@ -143,12 +135,12 @@
                     app:layout_constraintTop_toBottomOf="@id/recycler_notice_list" />
 
                 <TextView
-                    android:id="@+id/tv_recent_order_list"
+                    android:id="@+id/tv_table_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_marginVertical="10dp"
-                    android:text="최근 주문"
+                    android:text="자리 현황"
                     android:textColor="@color/coffee_dark_brown"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -163,27 +155,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_recent_order"
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_recent_order_list" />
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/icon_temp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_table_list"/>
 
-                <TextView
-                    android:id="@+id/tv_recent_no_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="최근 주문한 내역이 없습니다."
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:visibility="@{homeRecentOrderViewModel.recentOrderList.size > 0? View.GONE : View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="@id/recycler_recent_order"
-                    app:layout_constraintEnd_toEndOf="@id/recycler_recent_order"
-                    app:layout_constraintStart_toStartOf="@id/recycler_recent_order"
-                    app:layout_constraintTop_toTopOf="@id/recycler_recent_order" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

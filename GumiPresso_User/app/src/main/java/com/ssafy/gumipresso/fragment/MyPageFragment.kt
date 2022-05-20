@@ -13,8 +13,10 @@ import com.ssafy.gumipresso.adapter.RecentOrderAdapter
 import com.ssafy.gumipresso.common.ApplicationClass
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentMyPageBinding
+import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.model.dto.User
+import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.GradeViewModel
 import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
@@ -25,6 +27,7 @@ class MyPageFragment : Fragment() {
     private val gradeViewModel: GradeViewModel by viewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
+    private val cartViewModel: CartViewModel by activityViewModels()
 
     private lateinit var orderList: List<RecentOrder>
     private lateinit var recentOrderAdapter: RecentOrderAdapter
@@ -80,8 +83,21 @@ class MyPageFragment : Fragment() {
     }
 
     private fun initOrderAdapter(){
-        recentOrderAdapter = RecentOrderAdapter(orderList, "page")
+        recentOrderAdapter = RecentOrderAdapter(orderList)
         recentOrderAdapter.apply {
+            onCartIconClick = object : RecentOrderAdapter.OnCartIconClick {
+                override fun onClick(view: View, position: Int) {
+                    val recentOrder = (orderViewModel.recentOrderList.value as List<RecentOrder>)[position]
+                    val recentOrderDetailList = recentOrder.recentOrderDetail
+                    cartViewModel.clearCart()
+
+                    for(i in recentOrderDetailList.indices){
+                        val cart = Cart(recentOrderDetailList[i].productId, recentOrderDetailList[i].img, recentOrderDetailList[i].name, recentOrderDetailList[i].quantity, recentOrderDetailList[i].price, recentOrderDetailList[i].quantity * recentOrderDetailList[i].price, recentOrderDetailList[i].type)
+                        cartViewModel.addCart(cart)
+                    }
+                    (activity as MainActivity).movePage(CONST.FRAG_CART_FROM_MYPAGE, null)
+                }
+            }
             onOrderItemClick = object : RecentOrderAdapter.OnOrderItemClick {
                 override fun onClick(view: View, position: Int) {
                     (activity as MainActivity).movePage(CONST.FRAG_RECENT_ORDER_DETAIL_FROM_MYPAGE, orderList[position].oId.toString())
