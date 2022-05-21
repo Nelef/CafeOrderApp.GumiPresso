@@ -98,7 +98,7 @@ class OrderFragment: Fragment(){
             }
         }
         binding.recyclerProductList.apply {
-            layoutManager = GridLayoutManager(context, 5)
+            layoutManager = LinearLayoutManager(context)
             adapter = productAdapter
         }
     }
