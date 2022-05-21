@@ -7,11 +7,12 @@ import androidx.lifecycle.LiveData
 import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.model.dto.RecentOrderDetail
 import com.ssafy.gumipresso.util.DateFormatUtil
+import java.util.*
 
 
 @BindingAdapter("recentOrderName")
-fun recentOrderName(view: TextView, src: LiveData<RecentOrder>) {
-    val list = (src.value as RecentOrder).recentOrderDetail
+fun recentOrderName(view: TextView, src: List<RecentOrderDetail>) {
+    val list = src
     var totalQuantity = 0
     for(item in list){
         totalQuantity += item.quantity
@@ -20,8 +21,8 @@ fun recentOrderName(view: TextView, src: LiveData<RecentOrder>) {
     view.text = "${list[0].name} ${text}"
 }
 @BindingAdapter("recentOrderPrice")
-fun recentOrderPrice(view: TextView, src: LiveData<RecentOrder>){
-    val list = (src.value as RecentOrder).recentOrderDetail
+fun recentOrderPrice(view: TextView, src: List<RecentOrderDetail>){
+    val list = src
     var price = 0
     for(item in list){
         price += item.price * item.quantity
@@ -30,8 +31,8 @@ fun recentOrderPrice(view: TextView, src: LiveData<RecentOrder>){
 }
 
 @BindingAdapter("recentOrderDate")
-fun recentOrderDate(view: TextView, src: LiveData<RecentOrder>){
-    view.text = DateFormatUtil.convertYYMMDD((src.value as RecentOrder).orderTime)
+fun recentOrderDate(view: TextView, src: Date){
+    view.text = DateFormatUtil.convertYYMMDD(src)
 }
 
 @BindingAdapter("recentOrderQuantity")
@@ -39,13 +40,13 @@ fun recentOrderQuantity(view: TextView, src: LiveData<RecentOrderDetail>){
     view.text = (src.value as RecentOrderDetail).quantity.toString()
 }
 
-@BindingAdapter("recentOrderImage")
-fun recentOrderImage(view: ImageView, src: LiveData<RecentOrder>){
-    val packageName = "com.ssafy.gumipresso"
-    val s = "@drawable/${(src.value as RecentOrder).recentOrderDetail[0].img}"
-    val resId = view.resources.getIdentifier(s.substring(0, s.length-4), "drawable", packageName)
-    view.setImageResource(resId)
-}
+//@BindingAdapter("recentOrderImage")
+//fun recentOrderImage(view: ImageView, src: LiveData<RecentOrder>){
+//    val packageName = "com.ssafy.gumipresso"
+//    val s = "@drawable/${(src.value as RecentOrder).recentOrderDetail[0].img}"
+//    val resId = view.resources.getIdentifier(s.substring(0, s.length-4), "drawable", packageName)
+//    view.setImageResource(resId)
+//}
 
 @BindingAdapter("loadImage")
 fun loadImage(view: ImageView, src: String?){

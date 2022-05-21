@@ -9,11 +9,8 @@ import com.ssafy.gumipresso.viewmodel.RecentOrderDetailViewModel
 
 class RecentOrderDetailAdapter(val list: List<RecentOrderDetail>): RecyclerView.Adapter<RecentOrderDetailAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ListOrderDetailItemBinding): RecyclerView.ViewHolder(binding.root){
-        init {
-            binding.orderDetailViewModel = RecentOrderDetailViewModel()
-        }
         fun bind(item: RecentOrderDetail){
-            binding.orderDetailViewModel!!.setRecentOrderDetail(item)
+            binding.recentOrderDetail = item
         }
     }
 

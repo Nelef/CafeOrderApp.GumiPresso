@@ -49,6 +49,7 @@ class ProductViewModel: ViewModel() {
 
     fun setProductItem(product: Product){
         _product.value = product
+        Log.d(TAG, "onBindViewHolder: ${product.name}")
     }
 
     private val _quantity = MutableLiveData<Int>(0)

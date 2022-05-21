@@ -8,23 +8,35 @@ import com.ssafy.gumipresso.databinding.ListCommentItemBinding
 import com.ssafy.gumipresso.fragment.OrderDetailFragment
 import com.ssafy.gumipresso.model.dto.Comment
 
-class CommentAdapter(val commentList: List<Comment>, val frag: OrderDetailFragment, var userId: String): RecyclerView.Adapter<CommentAdapter.ViewHoler>(){
-    inner class ViewHoler(val binding: ListCommentItemBinding): RecyclerView.ViewHolder(binding.root){
+class CommentAdapter(
+    val commentList: List<Comment>,
+    val frag: OrderDetailFragment,
+    var userId: String
+) : RecyclerView.Adapter<CommentAdapter.ViewHoler>() {
 
-        fun bind(item: Comment, view: View, position: Int){
+    inner class ViewHoler(val binding: ListCommentItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: Comment) {
             binding.apply {
                 commentVM = item
-                if(item.userId == userId){
+                if (item.userId == userId) {
                     btnMenuDelete.visibility = View.VISIBLE
                     btnMenuEdit.visibility = View.VISIBLE
                     divider0.visibility = View.VISIBLE
                 }
-                btnMenuEdit.setOnClickListener {
-                    onClickEdit.onClick(view, position)
-                }
-                btnMenuDelete.setOnClickListener {
-                    onClickRemove.onClick(view, position)
-                }
+            }
+        }
+
+        fun bindClickListener(listener: OnClickEdit) {
+            binding.btnMenuEdit.setOnClickListener {
+                listener.onClick(it, adapterPosition)
+            }
+        }
+
+        fun bindClickListener(listener: OnClickRemove) {
+            binding.btnMenuDelete.setOnClickListener {
+                listener.onClick(it, adapterPosition)
             }
         }
     }
@@ -32,24 +44,27 @@ class CommentAdapter(val commentList: List<Comment>, val frag: OrderDetailFragme
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHoler {
         val listCommentItemBinding =
             ListCommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHoler(listCommentItemBinding)
+        return ViewHoler(listCommentItemBinding).apply {
+            bindClickListener(onClickRemove)
+            bindClickListener(onClickEdit)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHoler, position: Int) {
         val item = commentList[position]
-        holder.apply {
-            bind(item, holder.itemView, position)
-        }
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int = commentList.size
 
-    lateinit var onClickRemove: OnClickRemove
     lateinit var onClickEdit: OnClickEdit
-    interface OnClickRemove{
+    lateinit var onClickRemove: OnClickRemove
+
+    interface OnClickEdit {
         fun onClick(view: View, position: Int)
     }
-    interface OnClickEdit{
+
+    interface OnClickRemove {
         fun onClick(view: View, position: Int)
     }
 }

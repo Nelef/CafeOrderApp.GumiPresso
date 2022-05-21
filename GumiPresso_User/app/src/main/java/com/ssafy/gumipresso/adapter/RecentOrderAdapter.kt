@@ -13,21 +13,19 @@ private const val TAG = "RecentOrderAdapter"
 
 class RecentOrderAdapter(private val list: List<RecentOrder>) :
     RecyclerView.Adapter<RecentOrderAdapter.ViewHolder>() {
-    inner class ViewHolder(private val binding: ListRecentOrderItemBinding) :
+    class ViewHolder(private val binding: ListRecentOrderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.orderViewModel = RecentOrderViewModel()
+        fun bind(item: RecentOrder) {
+            binding.recentOrder = item
         }
-
-        fun bind(listItem: RecentOrder, holder: ViewHolder, position: Int) {
-            binding.apply {
-                orderViewModel!!.setRecentOrder(listItem)
-                listOrderlist.setOnClickListener {
-                    onOrderItemClick.onClick(holder.itemView, position);
-                }
-                ivCart.setOnClickListener {
-                    onCartIconClick.onClick(holder.itemView, position)
-                }
+        fun bindClickListener(listener: OnOrderItemClick) {
+            binding.listOrderlist.setOnClickListener {
+                listener.onClick(it, adapterPosition);
+            }
+        }
+        fun bindClickListener(listener: OnCartIconClick) {
+            binding.ivCart.setOnClickListener {
+                listener.onClick(it, adapterPosition);
             }
         }
     }
@@ -35,12 +33,15 @@ class RecentOrderAdapter(private val list: List<RecentOrder>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val listRecentOrderItemBinding =
             ListRecentOrderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(listRecentOrderItemBinding)
+        return ViewHolder(listRecentOrderItemBinding).apply {
+            bindClickListener(onOrderItemClick)
+            bindClickListener(onCartIconClick)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val listItem = list[position]
-        holder.bind(listItem, holder, position)
+        val item = list[position]
+        holder.bind(item)
     }
 
     lateinit var onOrderItemClick: OnOrderItemClick

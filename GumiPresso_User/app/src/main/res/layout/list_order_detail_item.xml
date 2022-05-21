@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="orderDetailViewModel"
-            type="com.ssafy.gumipresso.viewmodel.RecentOrderDetailViewModel" />
+            name="recentOrderDetail"
+            type="com.ssafy.gumipresso.model.dto.RecentOrderDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +27,7 @@
 
             <ImageView
                 android:id="@+id/iv_product_image"
-                loadImage="@{orderDetailViewModel.recentOrderDetail.img}"
+                loadImage="@{recentOrderDetail.img}"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:text="@{orderDetailViewModel.recentOrderDetail.name}"
+            android:text="@{recentOrderDetail.name}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="17dp"
             android:textStyle="bold"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            android:text="@{orderDetailViewModel.recentOrderDetail.quantity+ `잔`}"
+            android:text="@{recentOrderDetail.quantity+ `잔`}"
             android:textColor="@color/coffee_dark_brown"
             app:layout_constraintStart_toEndOf="@id/cardview_member"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:text="@{orderDetailViewModel.recentOrderDetail.quantity * orderDetailViewModel.recentOrderDetail.price +`원`}"
+            android:text="@{recentOrderDetail.quantity * recentOrderDetail.price +`원`}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="20sp"
             android:textStyle="bold"

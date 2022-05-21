@@ -5,7 +5,7 @@
 
         <variable
             name="cart"
-            type="com.ssafy.gumipresso.viewmodel.CartViewModel" />
+            type="com.ssafy.gumipresso.model.dto.Cart" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,7 +28,7 @@
 
             <ImageView
                 android:id="@+id/iv_product_image"
-                loadImage="@{cart.cart.menuImg}"
+                loadImage="@{cart.menuImg}"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:text="@{cart.cart.menuName}"
+            android:text="@{cart.menuName}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="17dp"
             android:textStyle="bold"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            android:text="@{cart.cart.menuCnt+ `잔`}"
+            android:text="@{cart.menuCnt+ `잔`}"
             android:textColor="@color/coffee_dark_brown"
             app:layout_constraintStart_toEndOf="@id/cardview_member"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:text="@{cart.cart.totalPrice +`원`}"
+            android:text="@{cart.totalPrice +`원`}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="20sp"
             android:textStyle="bold"

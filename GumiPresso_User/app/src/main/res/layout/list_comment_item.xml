@@ -3,19 +3,9 @@
 
     <data>
 
-        <import type="android.view.View" />
-
-        <variable
-            name="fragment"
-            type="com.ssafy.gumipresso.fragment.OrderDetailFragment" />
-
         <variable
             name="commentVM"
             type="com.ssafy.gumipresso.model.dto.Comment" />
-
-        <variable
-            name="userVM"
-            type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"

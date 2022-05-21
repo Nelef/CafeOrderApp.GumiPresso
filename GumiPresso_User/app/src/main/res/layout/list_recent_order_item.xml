@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="orderViewModel"
-            type="com.ssafy.gumipresso.viewmodel.RecentOrderViewModel" />
+            name="recentOrder"
+            type="com.ssafy.gumipresso.model.dto.RecentOrder" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,7 +33,7 @@
 
                 <ImageView
                     android:id="@+id/iv_product_image"
-                    recentOrderImage="@{orderViewModel.recentOrder}"
+                    loadImage="@{recentOrder.recentOrderDetail[0].img}"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:scaleType="centerCrop"
@@ -50,7 +50,7 @@
 
                     <TextView
                         android:id="@+id/tv_product_name"
-                        recentOrderName="@{orderViewModel.recentOrder}"
+                        recentOrderName="@{recentOrder.recentOrderDetail}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/coffee_dark_brown"
@@ -61,7 +61,7 @@
 
                     <TextView
                         android:id="@+id/tv_product_price"
-                        recentOrderPrice="@{orderViewModel.recentOrder}"
+                        recentOrderPrice="@{recentOrder.recentOrderDetail}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/coffee_dark_brown"
@@ -72,7 +72,7 @@
 
                     <TextView
                         android:id="@+id/tv_order_date"
-                        recentOrderDate="@{orderViewModel.recentOrder}"
+                        recentOrderDate="@{recentOrder.orderTime}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/coffee_dark_brown"

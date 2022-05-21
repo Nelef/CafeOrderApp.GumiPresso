@@ -9,16 +9,13 @@ import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.viewmodel.CartViewModel
 
 class CartItemAdapter(val cartList: List<Cart>): RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ListCartItemBinding): RecyclerView.ViewHolder(binding.root){
-        init {
-            binding.cart = CartViewModel()
+    class ViewHolder(val binding: ListCartItemBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(item: Cart){
+            binding.cart = item
         }
-        fun bind(item: Cart, view: View, position: Int){
-            binding.apply {
-                cart!!.setCartItem(item)
-                btnMenuDelete.setOnClickListener {
-                    onDeleteButtonClick.onClick(view, position)
-                }
+        fun bindClickListener(listener: OnDeleteButtonClick) {
+            binding.btnMenuDelete.setOnClickListener {
+                listener.onClick(it, adapterPosition)
             }
         }
     }
@@ -26,12 +23,14 @@ class CartItemAdapter(val cartList: List<Cart>): RecyclerView.Adapter<CartItemAd
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val listCartItemBinding =
             ListCartItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(listCartItemBinding)
+        return ViewHolder(listCartItemBinding).apply {
+            bindClickListener(onDeleteButtonClick)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = cartList[position]
-        holder.bind(item, holder.itemView, position)
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int = cartList.size
