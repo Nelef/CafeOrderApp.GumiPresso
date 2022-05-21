@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -118,8 +119,8 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
 
         // 테이블 정보 받기
         tableViewModel.getOrdertable()
-        tableViewModel.tableList.observe(this){
-            if(it != null){
+        tableViewModel.tableList.observe(this) {
+            if (it != null) {
                 tableList = tableViewModel.tableList.value as List<Table>
             }
         }
@@ -408,14 +409,18 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             if (recType == "T") {
                 // 사용중인 테이블이라면
                 val newTag = String(payload, 3, payload.size - 3)
-                if (tableList[newTag!!.toInt() - 1].state) {
+
+                if (!newTag.isDigitsOnly() || newTag!!.toInt() > 10 || newTag!!.toInt() < 1) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("알림")
+                    builder.setMessage("잘못된 Tag입니다. \n 1 ~ 10 숫자 Tag만 입력 가능 합니다. \n\n" + "인식된 Tag: ${newTag}")
+                    builder.setPositiveButton("확인") { dialog, _ -> dialog.cancel() }.show()
+                } else if (tableList[newTag!!.toInt() - 1].state) {
                     tag = newTag
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle("태그 발견")
                     builder.setMessage("$newTag 번 자리를 사용중입니다. 체크아웃할까요?")
-                    builder.setNegativeButton("취소") { dialog, _ ->
-                        dialog.cancel()
-                    }
+                    builder.setNegativeButton("취소") { dialog, _ -> dialog.cancel() }
                     builder.setPositiveButton("확인") { dialog, _ ->
                         Log.d(TAG, "processIntent: ${newTag!!.toInt()}")
                         tableViewModel.setOrdertable(newTag!!.toInt())
@@ -427,14 +432,13 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle("태그 발견")
                     builder.setMessage("$newTag 번 테이블 태그를 발견했습니다. 체크인할까요?")
-                    builder.setNegativeButton("취소") { dialog, _ ->
-                        dialog.cancel()
-                    }
+                    builder.setNegativeButton("취소") { dialog, _ -> dialog.cancel() }
                     builder.setPositiveButton("확인") { dialog, _ ->
                         Log.d(TAG, "processIntent: ${newTag!!.toInt()}")
                         tableViewModel.setOrdertable(newTag!!.toInt())
                         Log.d(TAG, "processIntent: ${tableList}")
-                        Toast.makeText(this, "환영합니다! 이제부터 테이블 주문을 할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "환영합니다! 이제부터 테이블 주문을 할 수 있습니다.", Toast.LENGTH_SHORT)
+                            .show()
                         tag = newTag
                     }.show()
                 }
