@@ -13,16 +13,16 @@ import java.lang.Exception
 
 private const val TAG = "TableViewModel"
 class TableViewModel : ViewModel() {
-    private val _table = MutableLiveData<Table>()
-    val table: LiveData<Table>
-        get() = _table
+    private val _tableList = MutableLiveData<List<Table>>()
+    val tableList: LiveData<List<Table>>
+        get() = _tableList
 
     fun setOrdertable(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.tableService.setOrdertable(id)
                 if(response.isSuccessful && response.body() != null){
-                    _table.postValue(response.body() as Table)
+                    _tableList.postValue(response.body() as List<Table>)
                 }
             }catch (e: Exception){
                 Log.d(TAG, "setOrdertable: ${e.message}")
@@ -35,10 +35,10 @@ class TableViewModel : ViewModel() {
             try {
                 val response = Retrofit.tableService.getOrdertableList()
                 if(response.isSuccessful && response.body() != null){
-                    _table.postValue(response.body() as Table)
+                    _tableList.postValue(response.body() as List<Table>)
                 }
             }catch (e: Exception){
-                Log.d(TAG, "setOrdertable: ${e.message}")
+                Log.d(TAG, "getOrdertable: ${e.message}")
             }
         }
     }

@@ -12,12 +12,8 @@
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
 
         <variable
-            name="homeNoticeViewModel"
-            type="com.ssafy.gumipresso.viewmodel.NoticeViewModel" />
-
-        <variable
-            name="homeRecentOrderViewModel"
-            type="com.ssafy.gumipresso.viewmodel.RecentOrderViewModel" />
+            name="table"
+            type="com.ssafy.gumipresso.model.dto.Table" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +64,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -104,12 +100,12 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/recycler_notice_list"
+                    android:id="@+id/cardview_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_margin="20dp"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="6dp"
+                    app:cardElevation="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider1">
 
@@ -132,7 +128,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_notice_list" />
+                    app:layout_constraintTop_toBottomOf="@id/cardview_banner" />
 
                 <TextView
                     android:id="@+id/tv_table_list"
@@ -155,15 +151,80 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_table_list"
+                    android:layout_margin="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/icon_temp"
                     app:layout_constraintTop_toBottomOf="@id/tv_table_list"/>
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardview_member1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_table_list">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/gumipresso_gray"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_can_use"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사용 가능"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintStart_toEndOf="@id/cardview_member1"
+                    app:layout_constraintTop_toTopOf="@id/cardview_member1"
+                    app:layout_constraintBottom_toBottomOf="@id/cardview_member1"/>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardview_member2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintStart_toEndOf="@id/tv_can_use"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_table_list">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/gumipresso_red"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_cant_use"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사용 불가능"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintStart_toEndOf="@id/cardview_member2"
+                    app:layout_constraintTop_toTopOf="@id/cardview_member2"
+                    app:layout_constraintBottom_toBottomOf="@id/cardview_member2"/>
+
+                <LinearLayout
+                    android:id="@+id/divider3"
+                    style="@style/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardview_member1" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

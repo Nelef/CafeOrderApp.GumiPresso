@@ -7,8 +7,8 @@ import retrofit2.http.Path
 
 interface TableService {
     @GET("/order/table")
-    suspend fun getOrdertableList(): Response<Table>
+    suspend fun getOrdertableList(): Response<List<Table>>
 
     @GET("/order/table/{tableId}")
-    suspend fun setOrdertable(@Path("tableId") tableId: Int): Response<Table>
+    suspend fun setOrdertable(@Path("tableId") tableId: Int): Response<List<Table>>
 }

@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -34,10 +35,13 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
+import com.ssafy.gumipresso.fragment.HomeFragment
 import com.ssafy.gumipresso.fragment.OrderFragment
+import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.util.SettingsUtil
 import com.ssafy.gumipresso.viewmodel.SettingViewModel
+import com.ssafy.gumipresso.viewmodel.TableViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,6 +54,9 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     private lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
     private val settingViewModel: SettingViewModel by viewModels()
+    private val tableViewModel: TableViewModel by viewModels()
+    private lateinit var tableList: List<Table>
+
     // 비콘 변수
     private lateinit var beaconManager: BeaconManager
     private val BEACON_UUID = "fda50693-a4e2-4fb1-afcf-c6eb07647825"
@@ -109,7 +116,13 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             NFC_Tag()
         }
 
-
+        // 테이블 정보 받기
+        tableViewModel.getOrdertable()
+        tableViewModel.tableList.observe(this){
+            if(it != null){
+                tableList = tableViewModel.tableList.value as List<Table>
+            }
+        }
     }
 
     fun visibilityBottomNavBar(hide: Boolean) {
@@ -167,7 +180,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 startActivity(intent)
                 finish()
             }
-            CONST.FRAG_SETTING ->{
+            CONST.FRAG_SETTING -> {
                 visibilityBottomNavBar(true)
                 navController.navigate(R.id.action_myPageFragment_to_settingsFragment)
             }
@@ -182,12 +195,12 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 return@OnCompleteListener
             }
             Log.d(TAG, "onCreate: 새로운 등록 토큰: ${it.result}")
-            if(SettingsUtil().getFirstRunCheck()){
+            if (SettingsUtil().getFirstRunCheck()) {
                 Toast.makeText(this, "처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
                 PushMessageUtil().setFcmToken(it.result)
                 SettingsUtil().setFirstRunCheck(false)
                 settingViewModel.insertFCMToken()
-            }else{
+            } else {
                 settingViewModel.updateFCMToken()
             }
 
@@ -393,12 +406,38 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
             val recType = String(data)
 
             if (recType == "T") {
-                Toast.makeText(
-                    this,
-                    "태그 데이터 : ${String(payload, 3, payload.size - 3)}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                tag = String(payload, 3, payload.size - 3)
+                // 사용중인 테이블이라면
+                val newTag = String(payload, 3, payload.size - 3)
+                if (tableList[newTag!!.toInt() - 1].state) {
+                    tag = newTag
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("태그 발견")
+                    builder.setMessage("$newTag 번 자리를 사용중입니다. 체크아웃할까요?")
+                    builder.setNegativeButton("취소") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    builder.setPositiveButton("확인") { dialog, _ ->
+                        Log.d(TAG, "processIntent: ${newTag!!.toInt()}")
+                        tableViewModel.setOrdertable(newTag!!.toInt())
+                        Toast.makeText(this, "이용해주셔서 감사합니다.", Toast.LENGTH_SHORT).show()
+                        tag = null
+                    }.show()
+                } // 사용가능한 테이블이라면
+                else {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("태그 발견")
+                    builder.setMessage("$newTag 번 테이블 태그를 발견했습니다. 체크인할까요?")
+                    builder.setNegativeButton("취소") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    builder.setPositiveButton("확인") { dialog, _ ->
+                        Log.d(TAG, "processIntent: ${newTag!!.toInt()}")
+                        tableViewModel.setOrdertable(newTag!!.toInt())
+                        Log.d(TAG, "processIntent: ${tableList}")
+                        Toast.makeText(this, "환영합니다! 이제부터 테이블 주문을 할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                        tag = newTag
+                    }.show()
+                }
             }
         }
     }

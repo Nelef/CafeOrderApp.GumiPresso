@@ -1,9 +1,13 @@
 package com.ssafy.gumipresso.adapter.bindingadapter
 
+import android.graphics.Color
+import android.text.style.BackgroundColorSpan
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
+import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.model.dto.RecentOrderDetail
 import com.ssafy.gumipresso.util.DateFormatUtil
@@ -68,5 +72,19 @@ fun toAnonymous(view: TextView, src: String) {
         view.text = src.slice(IntRange(0, 3)) + "***"
     } else {
         view.text = src + "***"
+    }
+}
+
+@BindingAdapter("toString")
+fun toString(view: TextView, src: Int) {
+    view.text = src.toString()
+}
+
+@BindingAdapter("tableUse")
+fun tableUse(view: ConstraintLayout, src: Boolean) {
+    if(src){
+        view.setBackgroundResource(R.color.gumipresso_red)
+    } else {
+        view.setBackgroundResource(R.color.gumipresso_gray)
     }
 }

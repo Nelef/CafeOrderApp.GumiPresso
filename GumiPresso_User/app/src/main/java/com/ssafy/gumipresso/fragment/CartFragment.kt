@@ -72,12 +72,13 @@ class CartFragment : Fragment() {
                     } else if (tag == null) {
                         requestNFC()
                     } else if (!tag.isDigitsOnly()) {
-                        Toast.makeText(
-                            context,
-                            "숫자Tag만 입력 가능 합니다. \n현재 Tag: ${tag}",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        val builder = AlertDialog.Builder(requireActivity())
+                        builder.setTitle("알림")
+                        builder.setMessage("잘못된 Tag입니다. 숫자 Tag만 입력 가능 합니다. \n" +
+                                "현재 Tag: ${tag}")
+                        builder.setPositiveButton("확인") { dialog, _ ->
+                            dialog.cancel()
+                        }.show()
                     } else {
                         userTable = "Table $tag"
                         makeOrder()

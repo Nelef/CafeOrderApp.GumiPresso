@@ -34,7 +34,6 @@ class ProductAdapter(val list: List<Product>): RecyclerView.Adapter<ProductAdapt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.bind(item)
-        //holder.itemView.setOnClickListener { onProductItemClick.onClick(holder.itemView, position) }
     }
 
     override fun getItemCount(): Int = list.size
