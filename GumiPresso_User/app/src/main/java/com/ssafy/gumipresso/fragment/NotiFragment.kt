@@ -6,23 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.NoticeAdapter
-import com.ssafy.gumipresso.adapter.RecentOrderAdapter
-import com.ssafy.gumipresso.common.CONST
-import com.ssafy.gumipresso.databinding.FragmentHomeBinding
 import com.ssafy.gumipresso.databinding.FragmentNotiBinding
-import com.ssafy.gumipresso.model.dto.Cart
-import com.ssafy.gumipresso.model.dto.RecentOrder
-import com.ssafy.gumipresso.util.FCMTokenUtil
 import com.ssafy.gumipresso.util.NoticeMessageUtil
-import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.NoticeViewModel
-import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
-import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 private const val TAG ="NotiFragment"
 class NotiFragment : Fragment() {

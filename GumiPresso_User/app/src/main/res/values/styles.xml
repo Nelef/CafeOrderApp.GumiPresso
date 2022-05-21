@@ -13,4 +13,8 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
+
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/coffee_brown</item>
+    </style>
 </resources>

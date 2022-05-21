@@ -2,7 +2,7 @@ package com.ssafy.gumipresso.util
 
 import com.ssafy.gumipresso.common.ApplicationClass
 
-class FCMTokenUtil {
+class PushMessageUtil {
 
     fun setFcmToken(token: String){
         ApplicationClass.fcmTokenPrefs.edit().putString("Token", token).apply()
@@ -11,4 +11,6 @@ class FCMTokenUtil {
     fun getFcmToken(): String{
         return ApplicationClass.fcmTokenPrefs.getString("Token","").toString()
     }
+
+
 }
