@@ -51,5 +51,14 @@
 		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, HOUR(`order_time`) as hour, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} and DAY(`order_time`) = #{day} group by HOUR(`order_time`), type order by order_time;
 	</select>
 	
+	<insert id="insertFCMTokenUser" parameterType ="hashMap">
+		insert into t_fcm_token(user_id, token) values(#{userId}, #{token})
+	</insert>
+	<update id="updateFCMTokenUser" parameterType ="hashMap">
+		update t_fcm_token set token = #{token} where user_id = #{userId}
+	</update>
+	<select id="selectAllToken" resultType="String">
+		select token from t_fcm_token
+	</select>
 	
 </mapper>

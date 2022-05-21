@@ -19,5 +19,22 @@
     <fragment
         android:id="@+id/manageFragment"
         android:name="com.ssafy.gumipresso_admin.fragment.ManageFragment"
-        android:label="ManageFragment" />
+        android:label="ManageFragment" >
+        <action
+            android:id="@+id/action_manageFragment_to_pushMessageFragment"
+            app:destination="@id/pushMessageFragment" />
+        <action
+            android:id="@+id/action_manageFragment_to_menuEditFragment"
+            app:destination="@id/menuEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pushMessageFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.manage.PushMessageFragment"
+        android:label="fragment_push_message"
+        tools:layout="@layout/fragment_push_message" />
+    <fragment
+        android:id="@+id/menuEditFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.manage.MenuEditFragment"
+        android:label="fragment_menu_edit"
+        tools:layout="@layout/fragment_menu_edit" />
 </navigation>

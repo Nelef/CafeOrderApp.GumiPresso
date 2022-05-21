@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.service.AdminService;
+import com.ssafy.through.model.service.FCMUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -145,7 +147,34 @@ public class AdminRestContoller {
 		return new ResponseEntity<List<Sales>>(list,HttpStatus.OK);		
 	}
 	
+	@PostMapping("/fcm/insert")
+	public ResponseEntity<?> insertFCMTokenUser(@RequestBody Map<String, String> map){
+		int result = aService.insertFCMTokenUser(map);
+		if(result > 0) {
+			return new ResponseEntity<Void>(HttpStatus.OK); 
+		}
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
 	
+	@PostMapping("/fcm/update")
+	public ResponseEntity<?> updateFCMTokenUser(@RequestBody Map<String, String> map){
+		int result = aService.updateFCMTokenUser(map);
+		if(result > 0) {
+			return new ResponseEntity<Void>(HttpStatus.OK); 
+		}
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping("/fcm")
+	public ResponseEntity<?> selectAllToken(@RequestBody String message){
+		List<String> tokenList = aService.selectAllToken();
+		FCMUtil fcmUtil = new FCMUtil();
+		fcmUtil.send_FCM_All(tokenList, message);
+		if(tokenList != null) {
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
 }
 
 

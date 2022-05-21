@@ -16,4 +16,7 @@ interface UserService {
 
     @POST("/admin/join")
     suspend fun insertAdmin(@Body user: User): Response<User>
+
+    @POST("/admin/fcm")
+    suspend fun sendFCMPushMessgae(@Body map: Map<String, String>) : Response<Void>
 }

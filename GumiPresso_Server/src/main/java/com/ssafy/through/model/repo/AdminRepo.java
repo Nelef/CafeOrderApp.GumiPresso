@@ -1,6 +1,7 @@
 package com.ssafy.through.model.repo;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
@@ -29,4 +30,8 @@ public interface AdminRepo {
 	List<Sales> selectMonthType(DateDTO date);
 	List<Sales> selectDay(DateDTO date);
 	List<Sales> selectDayType(DateDTO date);
+	
+	int insertFCMTokenUser(Map<String, String> map);
+	int updateFCMTokenUser(Map<String, String> map);
+	List<String> selectAllToken(); 
 }
