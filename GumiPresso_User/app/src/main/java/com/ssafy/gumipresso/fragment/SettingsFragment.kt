@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.databinding.FragmentSettingsBinding
-import com.ssafy.gumipresso.viewmodel.UserViewModel
+import com.ssafy.gumipresso.viewmodel.SettingViewModel
+
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
-    private val userViewModel: UserViewModel by activityViewModels()
+    private val settingViewModel : SettingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,26 +27,26 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        userViewModel.getPushState()
-        userViewModel.getAutoLogin()
+        settingViewModel.getPushState()
+        settingViewModel.getAutoLogin()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        userViewModel.getAutoLogin()
-        userViewModel.getPushState()
+        settingViewModel.getAutoLogin()
+        settingViewModel.getPushState()
 
         binding.apply {
             btnAutologin.setOnClickListener{
-                userViewModel.setAutoLogin()
+                settingViewModel.setAutoLogin()
             }
             btnPushAll.setOnClickListener {
-                userViewModel.setPushAll()
+                settingViewModel.setPushAll()
             }
             btnPushPersonal.setOnClickListener {
-                userVM!!.setPushPersonal()
+                settingVM!!.setPushPersonal()
             }
             ivBack.setOnClickListener {
                 (activity as MainActivity).navController.popBackStack()
@@ -53,14 +55,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initViewModel(){
-        userViewModel.autoLoginState.observe(viewLifecycleOwner){
-            binding.userVM = userViewModel
+        settingViewModel.autoLoginState.observe(viewLifecycleOwner){
+            binding.settingVM = settingViewModel
         }
-        userViewModel.pushStateAll.observe(viewLifecycleOwner){
-            binding.userVM = userViewModel
+        settingViewModel.pushStateAll.observe(viewLifecycleOwner){
+            binding.settingVM = settingViewModel
         }
-        userViewModel.pushStatePersonal.observe(viewLifecycleOwner){
-            binding.userVM = userViewModel
+        settingViewModel.pushStatePersonal.observe(viewLifecycleOwner){
+            binding.settingVM = settingViewModel
         }
 
     }
