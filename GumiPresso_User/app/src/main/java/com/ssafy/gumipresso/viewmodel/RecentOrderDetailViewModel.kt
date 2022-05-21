@@ -41,7 +41,7 @@ class RecentOrderDetailViewModel: ViewModel() {
         for(recentOrderDetail in (_recentOrder.value as RecentOrder).recentOrderDetail){
             totalPrice += recentOrderDetail.price * recentOrderDetail.quantity
         }
-        _totalPrice.postValue("$totalPrice 원")
+        _totalPrice.value = "$totalPrice 원"
     }
 
     private val _recentOrderDetail = MutableLiveData<RecentOrderDetail>()
@@ -55,7 +55,7 @@ class RecentOrderDetailViewModel: ViewModel() {
     val orderTime : LiveData<String>
         get() = _orderTime
     fun setOrderTimeToString(){
-        _orderTime.postValue(DateFormatUtil.convertYYMMDDHHMM(_recentOrder.value!!.orderTime))
+        _orderTime.value = (DateFormatUtil.convertYYMMDDHHMM(_recentOrder.value!!.orderTime))
     }
 
 }

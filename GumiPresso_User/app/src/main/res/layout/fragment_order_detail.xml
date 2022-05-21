@@ -209,7 +209,7 @@
                     android:id="@+id/tv_menu_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{productVM.product.price +`원`}"
+                    android:text="@{productVM.product.price * productVM.quantity +`원`}"
                     android:textColor="@color/coffee_dark_brown"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_menu_price_title"
