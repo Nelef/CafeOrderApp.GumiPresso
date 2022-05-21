@@ -42,5 +42,5 @@ public interface AdminService {
 	
 	int insertProduct(Product product);
 	int updateProduct(Product product);
-	int deleteProduct(Product product);
+	int deleteProduct(int id);
 }

@@ -19,8 +19,14 @@ interface ProductService {
     @PUT("admin/product")
     suspend fun updateProduct(@Body product: Product): Response<Void>
 
-    @DELETE("admin/product")
-    suspend fun deleteProduct(@Body product: Product): Response<Void>
+    @DELETE("admin/product/{id}")
+    suspend fun deleteProduct(@Path("id")id: Int): Response<Void>
+
+    @GET("/product/")
+    suspend fun getProductList(): Response<List<Product>>
+
+    @GET("/product/select/{product_id}")
+    suspend fun getProduct(@Path("product_id") productId: String): Response<Product>
 
 
 }

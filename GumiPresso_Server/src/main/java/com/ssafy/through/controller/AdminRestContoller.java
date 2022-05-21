@@ -211,11 +211,9 @@ public class AdminRestContoller {
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@DeleteMapping("/product")
-	public ResponseEntity<?> deleteProduct(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
-		Gson gson = new Gson();
-		Product product = gson.fromJson(json, Product.class);
-		int result = aService.deleteProduct(product);
+	@DeleteMapping("/product/{id}")
+	public ResponseEntity<?> deleteProduct(@PathVariable int id){		
+		int result = aService.deleteProduct(id);
 		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}

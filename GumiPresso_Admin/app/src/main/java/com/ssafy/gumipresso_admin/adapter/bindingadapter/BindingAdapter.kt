@@ -14,5 +14,4 @@ fun loadImage(view: ImageView, src: String?) {
         .load(Uri.parse("http://ssafymobile.iptime.org:7890/images/${src}"))
         .error(R.drawable.icon_empty_image)
         .into(view)
-
 }

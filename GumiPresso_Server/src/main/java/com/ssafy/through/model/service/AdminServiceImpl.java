@@ -131,8 +131,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int deleteProduct(Product product) {
-		return repo.deleteProduct(product);
+	public int deleteProduct(int id) {
+		return repo.deleteProduct(id);
 	}
 	
 	

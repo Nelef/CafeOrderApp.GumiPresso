@@ -36,5 +36,6 @@
         android:id="@+id/menuEditFragment"
         android:name="com.ssafy.gumipresso_admin.fragment.manage.MenuEditFragment"
         android:label="fragment_menu_edit"
-        tools:layout="@layout/fragment_menu_edit" />
+        tools:layout="@layout/fragment_menu_edit" >
+    </fragment>
 </navigation>
