@@ -5,17 +5,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:background="@color/white"
-        android:padding="30dp"
         tools:context=".dialog.DialogComment">
 
         <TextView
             android:id="@+id/tv_dialog_titls"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="수정할 코멘트"
+            android:text="리뷰 수정"
             android:textColor="@color/coffee_dark_brown"
-            android:textSize="18sp"
+            android:textSize="25sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +38,7 @@
             android:id="@+id/et_dialog_comment"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/coffee_dark_brown"
             android:gravity="center"
             android:textColor="@color/coffee_brown"

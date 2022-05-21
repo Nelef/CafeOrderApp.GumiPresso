@@ -30,7 +30,7 @@
             <ImageView
                 android:id="@+id/iv_review_image"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/icon_empty_image"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,9 @@
                 android:id="@+id/tv_comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:minHeight="40dp"
                 android:text="@{commentVM.comment}"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="15sp"
@@ -49,6 +50,42 @@
                 app:layout_constraintStart_toEndOf="@id/iv_review_image"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="리뷰" />
+
+            <LinearLayout
+                android:id="@+id/divider"
+                style="@style/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_review_image"
+                app:layout_constraintTop_toBottomOf="@id/tv_comment" />
+
+            <TextView
+                android:id="@+id/iv_user_name"
+                toAnonymous="@{commentVM.userId}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@id/iv_review_image"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                tools:text="User" />
+
+            <RatingBar
+                android:id="@+id/ratingBar_user"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:max="5"
+                android:progressTint="@color/coffee_point_red"
+                android:rating="@{commentVM.rating}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_user_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_user_name" />
 
             <LinearLayout
                 android:id="@+id/divider0"
@@ -60,7 +97,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_comment" />
+                app:layout_constraintTop_toBottomOf="@id/iv_user_name" />
 
             <Button
                 android:id="@+id/btn_menu_edit"

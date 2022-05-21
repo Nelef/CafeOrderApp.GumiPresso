@@ -14,29 +14,30 @@ import java.util.*
 fun recentOrderName(view: TextView, src: List<RecentOrderDetail>) {
     val list = src
     var totalQuantity = 0
-    for(item in list){
+    for (item in list) {
         totalQuantity += item.quantity
     }
-    val text = if(list.size > 1) "외 ${totalQuantity - 1} 잔" else "${totalQuantity} 잔"
+    val text = if (list.size > 1) "외 ${totalQuantity - 1} 잔" else "${totalQuantity} 잔"
     view.text = "${list[0].name} ${text}"
 }
+
 @BindingAdapter("recentOrderPrice")
-fun recentOrderPrice(view: TextView, src: List<RecentOrderDetail>){
+fun recentOrderPrice(view: TextView, src: List<RecentOrderDetail>) {
     val list = src
     var price = 0
-    for(item in list){
+    for (item in list) {
         price += item.price * item.quantity
     }
     view.text = "${price}원"
 }
 
 @BindingAdapter("recentOrderDate")
-fun recentOrderDate(view: TextView, src: Date){
+fun recentOrderDate(view: TextView, src: Date) {
     view.text = DateFormatUtil.convertYYMMDD(src)
 }
 
 @BindingAdapter("recentOrderQuantity")
-fun recentOrderQuantity(view: TextView, src: LiveData<RecentOrderDetail>){
+fun recentOrderQuantity(view: TextView, src: LiveData<RecentOrderDetail>) {
     view.text = (src.value as RecentOrderDetail).quantity.toString()
 }
 
@@ -49,14 +50,23 @@ fun recentOrderQuantity(view: TextView, src: LiveData<RecentOrderDetail>){
 //}
 
 @BindingAdapter("loadImage")
-fun loadImage(view: ImageView, src: String?){
+fun loadImage(view: ImageView, src: String?) {
     val packageName = "com.ssafy.gumipresso"
     val s = "@drawable/${src}"
-    val resId = view.resources.getIdentifier(s.substring(0, s.length-4), "drawable", packageName)
+    val resId = view.resources.getIdentifier(s.substring(0, s.length - 4), "drawable", packageName)
     view.setImageResource(resId)
 }
 
 @BindingAdapter("rating")
-fun rating(view: TextView, src: Float?){
+fun rating(view: TextView, src: Float?) {
     view.text = "%.1f".format(src)
+}
+
+@BindingAdapter("toAnonymous")
+fun toAnonymous(view: TextView, src: String) {
+    if (src.length >= 4) {
+        view.text = src.slice(IntRange(0, 3)) + "***"
+    } else {
+        view.text = src + "***"
+    }
 }

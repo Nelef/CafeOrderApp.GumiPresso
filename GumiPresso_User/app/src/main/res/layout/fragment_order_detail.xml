@@ -21,108 +21,178 @@
         android:layout_height="match_parent"
         tools:context=".fragment.MenuDetailFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/iv_title_bar"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:src="@drawable/icon_back"
-                app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_title_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/copperplate_gothic_bold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_title_bar"
-                app:text="@{productVM.product.name}"
-                tools:text="아메리카노" />
-
-            <LinearLayout
-                android:id="@+id/divider0"
-                style="@style/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_add"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_title_bar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_menu_img"
-                    loadImage="@{productVM.product.img}"
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/coffee1" />
+                    android:background="@color/white"
+                    app:collapsedTitleGravity="center|center_horizontal"
+                    app:contentScrim="@android:color/transparent"
+                    app:expandedTitleGravity="bottom|center"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <ImageView
+                        android:id="@+id/menuImage"
+                        loadImage="@{productVM.product.img}"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginBottom="90dp"
+                        android:background="@color/white"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseMode="none"
+                        app:layout_collapseParallaxMultiplier="0.3" />
+
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:contentInsetStart="0dp"
+                        android:contentInsetLeft="0dp"
+                        android:gravity="center_horizontal"
+                        app:contentInsetLeft="0dp"
+                        app:contentInsetStart="0dp"
+                        app:contentInsetStartWithNavigation="0dp"
+                        app:layout_collapseMode="pin"
+                        app:title="@{productVM.product.name}"
+                        app:titleMarginEnd="50dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:id="@+id/iv_back"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:src="@drawable/icon_back" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_collapseMode="none">
+
+                        <RatingBar
+                            android:id="@+id/ratingBar_menu_detail"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            android:isIndicator="true"
+                            android:max="5"
+                            android:layout_marginBottom="5dp"
+                            android:progressTint="@color/coffee_point_red"
+                            android:rating="@{commentVM.avgRating}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_score"
+                            rating="@{commentVM.commentList.size() > 0 ? commentVM.avgRating : 0f}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/coffee_brown"
+                            app:layout_constraintBottom_toBottomOf="@id/ratingBar_menu_detail"
+                            app:layout_constraintStart_toEndOf="@id/ratingBar_menu_detail"
+                            app:layout_constraintTop_toTopOf="@id/ratingBar_menu_detail"
+                            tools:text="5.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="160dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/divider1"
+                        style="@style/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <Button
+                        android:id="@+id/btn_add_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/button_go_order"
+                        android:text="리뷰 등록"
+                        android:textColor="@color/coffee_dark_brown"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+                    <TextView
+                        android:id="@+id/tv_order_detail_no_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_margin="20dp"
+                        android:text="등록된 댓글이 없습니다."
+                        android:visibility="@{commentVM.commentList.size() > 0 ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_add_comment" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_add_comment" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_order_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/btn_add">
 
                 <TextView
-                    android:id="@+id/tv_menu_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_menu_quantity_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="수량"
                     android:textColor="@color/coffee_dark_brown"
-                    android:textSize="40sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_menu_img"
-                    app:text="@{productVM.product.name}"
-                    tools:text="아메리카노" />
-
-                <TextView
-                    android:id="@+id/tv_score"
-                    rating="@{commentVM.commentList.size() > 0 ? commentVM.avgRating : 0f}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/coffee_brown"
-                    app:layout_constraintStart_toEndOf="@id/ratingBar_menu_detail"
-                    app:layout_constraintTop_toBottomOf="@id/tv_menu_name"
-                    tools:text="5.0" />
-
-                <RatingBar
-                    android:id="@+id/ratingBar_menu_detail"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:isIndicator="true"
-                    android:max="5"
-                    android:progressTint="@color/coffee_point_red"
-                    android:rating="@{commentVM.avgRating}"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_score"
-                    app:layout_constraintStart_toStartOf="@id/tv_menu_name"
-                    app:layout_constraintTop_toTopOf="@id/tv_score" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_menu_price_title"
@@ -131,29 +201,19 @@
                     android:layout_marginTop="20dp"
                     android:text="가격"
                     android:textColor="@color/coffee_dark_brown"
-                    app:layout_constraintStart_toStartOf="@+id/tv_menu_name"
-                    app:layout_constraintTop_toBottomOf="@id/tv_score" />
-
-                <TextView
-                    android:id="@+id/tv_menu_quantity_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:text="수량"
-                    android:textColor="@color/coffee_dark_brown"
-                    app:layout_constraintStart_toStartOf="@+id/tv_menu_name"
-                    app:layout_constraintTop_toBottomOf="@id/tv_menu_price_title" />
-
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_menu_quantity_title" />
 
                 <TextView
                     android:id="@+id/tv_menu_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
                     android:text="@{productVM.product.price +`원`}"
                     android:textColor="@color/coffee_dark_brown"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_menu_price_title" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_menu_price_title"
+                    tools:text="000 원" />
 
                 <ImageView
                     android:id="@+id/btn_minus"
@@ -182,76 +242,23 @@
                     android:id="@+id/btn_plus"
                     android:layout_width="30dp"
                     android:layout_height="40dp"
-                    android:layout_marginRight="30dp"
                     android:src="@drawable/add"
                     app:layout_constraintBottom_toBottomOf="@id/tv_menu_quantity_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_menu_quantity_title"
                     app:tint="@color/coffee_point_red" />
 
-                <LinearLayout
-                    android:id="@+id/divider1"
-                    style="@style/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_plus" />
-
-
-                <Button
-                    android:id="@+id/btn_add_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/button_go_order"
-                    android:text="리뷰 등록"
-                    android:textColor="@color/coffee_dark_brown"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider1" />
-
-                <LinearLayout
-                    android:id="@+id/divider2"
-                    style="@style/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_add_comment" />
-
-                <TextView
-                    android:id="@+id/tv_order_detail_no_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_margin="20dp"
-                    android:text="등록된 댓글이 없습니다."
-                    android:visibility="@{commentVM.commentList.size() > 0 ? View.GONE : View.VISIBLE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider2" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintHeight_max="500dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btn_add_comment" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/coffee_point_red"
-            android:text="담기"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/coffee_point_red"
+                android:text="담기"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
