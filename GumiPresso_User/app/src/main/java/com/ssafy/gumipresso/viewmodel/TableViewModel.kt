@@ -17,6 +17,20 @@ class TableViewModel : ViewModel() {
     val tableList: LiveData<List<Table>>
         get() = _tableList
 
+    private val _table = MutableLiveData<Table>()
+    val table : LiveData<Table>
+        get() = _table
+    fun setTableItem(table: Table){
+        _table.value = table
+    }
+
+    private val _flagTableChange = MutableLiveData<Boolean>(false)
+    val flagTableChange : LiveData<Boolean>
+        get() = _flagTableChange
+    fun setflagTableState(){
+        Log.d(TAG, "setflagTableState: ")
+        _flagTableChange.value = !_flagTableChange.value!!
+    }
     fun setOrdertable(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -36,6 +50,7 @@ class TableViewModel : ViewModel() {
                 val response = Retrofit.tableService.getOrdertableList()
                 if(response.isSuccessful && response.body() != null){
                     _tableList.postValue(response.body() as List<Table>)
+                    setflagTableState()
                 }
             }catch (e: Exception){
                 Log.d(TAG, "getOrdertable: ${e.message}")

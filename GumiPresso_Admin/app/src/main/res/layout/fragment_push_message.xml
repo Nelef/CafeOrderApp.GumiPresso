@@ -53,13 +53,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:text="푸시 메시지 보내기"
+                android:text="알림 메시지 전송"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Text Field" />
+                />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/iv_logout"

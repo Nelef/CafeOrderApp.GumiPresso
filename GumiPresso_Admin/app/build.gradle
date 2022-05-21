@@ -66,8 +66,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Cookie
-    testImplementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.2.1")
 
     // Background Animate
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
+
+    // TedPermission
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
 }

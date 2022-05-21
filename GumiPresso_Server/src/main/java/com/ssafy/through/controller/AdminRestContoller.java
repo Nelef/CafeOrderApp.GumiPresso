@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
@@ -175,6 +177,14 @@ public class AdminRestContoller {
 		}
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@PostMapping("/product/insert")
+	public ResponseEntity<?> insertProduct(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestBody Map<String, String> map){
+		System.out.println(map);
+		System.out.println(imageFile);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
 }
 
 

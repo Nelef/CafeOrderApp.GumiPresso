@@ -29,7 +29,7 @@ class ImageViewModel: ViewModel() {
         var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)
 
         CoroutineScope(Dispatchers.IO).launch {
-            Retrofit.imageService.insertImage(body)
+//            Retrofit.imageService.insertImage(body)
         }
     }
 }

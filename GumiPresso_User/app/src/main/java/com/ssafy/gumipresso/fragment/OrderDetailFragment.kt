@@ -77,7 +77,7 @@ class OrderDetailFragment : Fragment() {
                     Toast.makeText(context, "수량을 추가해 주세요.", Toast.LENGTH_SHORT).show()
                 } else {
                     val cart = Cart(
-                        product.id,
+                        product.id!!,
                         product.img,
                         product.name,
                         quantity,

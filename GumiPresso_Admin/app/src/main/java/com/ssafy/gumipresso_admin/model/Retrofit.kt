@@ -1,6 +1,7 @@
 package com.ssafy.gumipresso_admin.model
 
 import com.ssafy.gumipresso_admin.common.ApplicationClass
+import com.ssafy.gumipresso_admin.model.service.ImageService
 import com.ssafy.gumipresso_admin.model.service.OrderService
 import com.ssafy.gumipresso_admin.model.service.SalesService
 import com.ssafy.gumipresso_admin.model.service.UserService
@@ -14,5 +15,8 @@ object Retrofit {
     }
     val salesService: SalesService by lazy {
         ApplicationClass.retrofit.create(SalesService::class.java)
+    }
+    val imageService: ImageService by lazy {
+        ApplicationClass.retrofit.create(ImageService::class.java)
     }
 }

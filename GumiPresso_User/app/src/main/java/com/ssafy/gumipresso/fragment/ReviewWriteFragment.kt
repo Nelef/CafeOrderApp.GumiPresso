@@ -42,6 +42,7 @@ class ReviewWriteFragment : Fragment() {
     private lateinit var product: Product
     private lateinit var commentList: MutableList<Comment>
 
+    private var imageUrl = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,7 +63,7 @@ class ReviewWriteFragment : Fragment() {
         binding.btnAddComment.setOnClickListener {
             val inputString = binding.etComment.text.toString().trim()
             if (!inputString.isEmpty()) {
-                insert(Comment(user.id, product.id, binding.ratingBarDialog.rating, inputString))
+                insert(Comment(user.id, product.id!!, binding.ratingBarDialog.rating, inputString))
                 (activity as MainActivity).navController.popBackStack()
             } else {
                 Toast.makeText(context, "코멘트를 입력해 주세요.", Toast.LENGTH_SHORT).show()
@@ -92,6 +93,9 @@ class ReviewWriteFragment : Fragment() {
 
     fun insert(comment: Comment) {
         commentViewModel.insertComment(comment)
+        if(imageUrl.isNotEmpty()){
+            imageViewModel.uploadImage(imageUrl)
+        }
         Toast.makeText(requireContext(), "등록되었습니다", Toast.LENGTH_SHORT).show()
     }
 
@@ -109,12 +113,8 @@ class ReviewWriteFragment : Fragment() {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data = it.data!!
                 val imageUri = data.data!!
-                val realUri = UriPathUtil().getPath(requireContext(), imageUri).toString()
-
-                // UI 이미지 설정
+                imageUrl = UriPathUtil().getPath(requireContext(), imageUri).toString()
                 binding.ivReviewImage.setImageURI(imageUri)
-                // 이미지 전송
-//                imageViewModel.uploadImage(realUri)
             }
         }
 

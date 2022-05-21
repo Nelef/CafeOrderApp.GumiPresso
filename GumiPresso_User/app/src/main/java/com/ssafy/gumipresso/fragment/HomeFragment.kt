@@ -31,10 +31,10 @@ class HomeFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
     private val settingViewModel: SettingViewModel by viewModels()
-    private val tableViewModel: TableViewModel by viewModels()
+    private val tableViewModel: TableViewModel by activityViewModels()
 
     private lateinit var tableAdapter: TableAdapter
-    private lateinit var tableList: List<Table>
+    private var tableList = listOf<Table>()
 
     // 배너
     private var bannerList = mutableListOf(R.drawable.banner1, R.drawable.banner2)
@@ -79,6 +79,12 @@ class HomeFragment : Fragment() {
         tableViewModel.tableList.observe(viewLifecycleOwner){
             if(it != null){
                 tableList = tableViewModel.tableList.value as List<Table>
+                initTableAdapter()
+            }
+        }
+        tableViewModel.flagTableChange.observe(viewLifecycleOwner){
+            Log.d(TAG, "initViewModel: flageTableChange")
+            if(tableList.isNotEmpty()){
                 initTableAdapter()
             }
         }
