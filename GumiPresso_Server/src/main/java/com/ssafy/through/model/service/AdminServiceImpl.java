@@ -2,6 +2,7 @@ package com.ssafy.through.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,6 +102,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<Sales> selectDayType(DateDTO date) {
 		return repo.selectDayType(date);
+	}
+
+	@Override
+	public int insertFCMTokenUser(Map<String, String> map) {
+		return repo.insertFCMTokenUser(map);
+	}
+
+	@Override
+	public int updateFCMTokenUser(Map<String, String> map) {
+		return repo.updateFCMTokenUser(map);
+	}
+
+	@Override
+	public List<String> selectAllToken() {
+		return repo.selectAllToken();
 	}
 	
 	

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.gumipresso.model.Retrofit
 import com.ssafy.gumipresso.model.dto.User
+import com.ssafy.gumipresso.util.PushMessageUtil
+import com.ssafy.gumipresso.util.SettingsUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -142,8 +144,5 @@ class UserViewModel: ViewModel() {
             }
         }
     }
-
-
-
 
 }

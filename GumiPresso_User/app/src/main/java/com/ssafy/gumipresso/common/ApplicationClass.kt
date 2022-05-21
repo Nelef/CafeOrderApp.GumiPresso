@@ -20,6 +20,10 @@ class ApplicationClass: Application() {
         lateinit var noticePrefs : SharedPreferences
         lateinit var cookiePrefs : SharedPreferences
         lateinit var fcmTokenPrefs: SharedPreferences
+        lateinit var pushStateAll: SharedPreferences
+        lateinit var pushStatePersonal: SharedPreferences
+        lateinit var autoLoginState: SharedPreferences
+        lateinit var firstRunCheck: SharedPreferences
 
     }
     override fun onCreate() {
@@ -42,5 +46,10 @@ class ApplicationClass: Application() {
         noticePrefs = getSharedPreferences("CloudMessage", MODE_PRIVATE)
         cookiePrefs = getSharedPreferences("Cookie", MODE_PRIVATE)
         fcmTokenPrefs = getSharedPreferences("FcmToken", MODE_PRIVATE)
+        pushStateAll = getSharedPreferences("PushStateAll", MODE_PRIVATE)
+        pushStatePersonal = getSharedPreferences("PushStatePersonal", MODE_PRIVATE)
+        autoLoginState = getSharedPreferences("AutoLogin", MODE_PRIVATE)
+        firstRunCheck = getSharedPreferences("FirstRun", MODE_PRIVATE)
+
     }
 }

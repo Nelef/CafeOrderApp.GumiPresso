@@ -12,12 +12,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CartItemAdapter
-import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentCartBinding
 import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.User
-import com.ssafy.gumipresso.util.FCMTokenUtil
-import com.ssafy.gumipresso.util.NoticeMessageUtil
+import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
@@ -120,7 +118,7 @@ class CartFragment : Fragment() {
         cartViewModel.orderCart((userViewModel.user.value as User).id, userTable)
         userViewModel.getUserInfo()
         userViewModel.sendFCMPushMessage(
-            FCMTokenUtil().getFcmToken(),
+            PushMessageUtil().getFcmToken(),
             "GumiPresso",
             "주문이 완료 되었습니다. - ${userTable}"
         )

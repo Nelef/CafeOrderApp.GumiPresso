@@ -6,7 +6,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -35,12 +34,11 @@ import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
 import com.ssafy.gumipresso.fragment.OrderFragment
-import com.ssafy.gumipresso.util.FCMTokenUtil
+import com.ssafy.gumipresso.util.PushMessageUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
-import kotlin.concurrent.thread
 
 
 private const val TAG = "MainActivity"
@@ -166,6 +164,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 startActivity(intent)
                 finish()
             }
+            CONST.FRAG_SETTING ->{
+                visibilityBottomNavBar(true)
+                navController.navigate(R.id.action_myPageFragment_to_settingsFragment)
+            }
         }
     }
 
@@ -177,7 +179,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 return@OnCompleteListener
             }
             Log.d(TAG, "onCreate: 새로운 등록 토큰: ${it.result}")
-            FCMTokenUtil().setFcmToken(it.result)
+            PushMessageUtil().setFcmToken(it.result)
         })
         createNotiChannel("ssafy_id", "ssafy")
     }

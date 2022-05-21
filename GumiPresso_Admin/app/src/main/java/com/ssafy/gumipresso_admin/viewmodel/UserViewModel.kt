@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.gumipresso_admin.model.Retrofit
 import com.ssafy.gumipresso_admin.model.dto.User
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -85,6 +86,19 @@ class UserViewModel: ViewModel() {
                 _user.postValue(response.body() as User)
             }catch (e: Exception){
                 Log.d(TAG, "join: ${e.message}")
+            }
+        }
+    }
+
+    fun sendFCMPushMessage(title: String, content: String){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                var map = mutableMapOf<String, String>()
+                map.put("title", title)
+                map.put("content", content)
+                Retrofit.userService.sendFCMPushMessgae(map)
+            }catch (e: Exception){
+
             }
         }
     }

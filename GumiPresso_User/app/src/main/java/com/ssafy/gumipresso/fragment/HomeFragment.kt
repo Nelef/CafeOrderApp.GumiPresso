@@ -1,39 +1,22 @@
 package com.ssafy.gumipresso.fragment
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.BannerAdapter
-import com.ssafy.gumipresso.adapter.RecentOrderAdapter
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentHomeBinding
-import com.ssafy.gumipresso.model.dto.Cart
-import com.ssafy.gumipresso.model.dto.RecentOrder
-import com.ssafy.gumipresso.util.FCMTokenUtil
-import com.ssafy.gumipresso.util.UriPathUtil
-import com.ssafy.gumipresso.viewmodel.CartViewModel
-import com.ssafy.gumipresso.viewmodel.ImageViewModel
+import com.ssafy.gumipresso.util.PushMessageUtil
+import com.ssafy.gumipresso.util.SettingsUtil
 import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
@@ -58,20 +41,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        getUserFromPreferences()
+        userViewModel.getUserInfo()
 
         binding.ivNotification.setOnClickListener {
             (activity as MainActivity).movePage(CONST.FRAG_NOTI, null)
         }
 
         binding.btnFcmPush.setOnClickListener {
-            userViewModel.sendFCMPushMessage(FCMTokenUtil().getFcmToken(), "gd", "doiododo")
+            userViewModel.sendFCMPushMessage(PushMessageUtil().getFcmToken(), "gd", "doiododo")
         }
 
         // 배너
         binding.viewPager2.adapter = BannerAdapter(bannerList) // 어댑터 생성
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL // 방향을 가로로
         // 배너 끝
+        if(SettingsUtil().getFirstRunCheck()){
+            Toast.makeText(context, "처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
+            SettingsUtil().setFirstRunCheck(false)
+        }
     }
 
     private fun initViewModel(){
@@ -81,9 +68,5 @@ class HomeFragment : Fragment() {
                 orderViewModel.getOrderList(userViewModel.user.value!!.id)
             }
         }
-    }
-
-    private fun getUserFromPreferences(){
-        userViewModel.getUserInfo()
     }
 }

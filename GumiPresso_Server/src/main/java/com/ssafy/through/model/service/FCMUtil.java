@@ -1,6 +1,7 @@
 package com.ssafy.through.model.service;
 
 import java.io.FileInputStream;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,12 @@ import com.google.firebase.messaging.Message;
 
 @Component
 public class FCMUtil {
+	private final String MESSAGE_TITLE = "GumiPresso";
+	public void send_FCM_All(List<String>list,String message) {
+		for(int i = 0; i < list.size(); i++) {
+			send_FCM(list.get(i), MESSAGE_TITLE, message);
+		}
+	}
 
 	public void send_FCM(String tokenId, String title, String content) {
 		try {
