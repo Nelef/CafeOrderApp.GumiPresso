@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -35,6 +36,8 @@ import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
 import com.ssafy.gumipresso.fragment.OrderFragment
 import com.ssafy.gumipresso.util.PushMessageUtil
+import com.ssafy.gumipresso.util.SettingsUtil
+import com.ssafy.gumipresso.viewmodel.SettingViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,7 +49,7 @@ private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), BeaconConsumer {
     private lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
-
+    private val settingViewModel: SettingViewModel by viewModels()
     // 비콘 변수
     private lateinit var beaconManager: BeaconManager
     private val BEACON_UUID = "fda50693-a4e2-4fb1-afcf-c6eb07647825"
@@ -179,7 +182,15 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 return@OnCompleteListener
             }
             Log.d(TAG, "onCreate: 새로운 등록 토큰: ${it.result}")
-            PushMessageUtil().setFcmToken(it.result)
+            if(SettingsUtil().getFirstRunCheck()){
+                Toast.makeText(this, "처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
+                PushMessageUtil().setFcmToken(it.result)
+                SettingsUtil().setFirstRunCheck(false)
+                settingViewModel.insertFCMToken()
+            }else{
+                settingViewModel.updateFCMToken()
+            }
+
         })
         createNotiChannel("ssafy_id", "ssafy")
     }

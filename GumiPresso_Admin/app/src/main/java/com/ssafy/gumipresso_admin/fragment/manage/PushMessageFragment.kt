@@ -47,6 +47,7 @@ class PushMessageFragment : Fragment() {
                     setPositiveButton("전송"){ dialog, _ ->
                         userViewModel.sendFCMPushMessage("GumiPresso", etMassage.text.toString())
                         Toast.makeText(context, "전송 되었습니다", Toast.LENGTH_SHORT).show()
+                        etMassage.setText("")
                     }
                     setNegativeButton("취소", null)
                 }.show()

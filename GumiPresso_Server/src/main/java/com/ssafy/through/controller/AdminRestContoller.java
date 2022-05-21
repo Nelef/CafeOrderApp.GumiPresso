@@ -166,10 +166,10 @@ public class AdminRestContoller {
 	}
 	
 	@PostMapping("/fcm")
-	public ResponseEntity<?> selectAllToken(@RequestBody String message){
+	public ResponseEntity<?> sendMessageAll(@RequestBody Map<String, String> map){
 		List<String> tokenList = aService.selectAllToken();
 		FCMUtil fcmUtil = new FCMUtil();
-		fcmUtil.send_FCM_All(tokenList, message);
+		fcmUtil.send_FCM_All(tokenList, map);
 		if(tokenList != null) {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}

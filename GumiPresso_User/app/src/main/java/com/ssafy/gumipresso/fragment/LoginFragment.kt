@@ -31,6 +31,7 @@ import com.ssafy.gumipresso.common.ApplicationClass
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentLoginBinding
 import com.ssafy.gumipresso.model.dto.User
+import com.ssafy.gumipresso.util.SettingsUtil
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 private const val TAG ="LoginFragment"
@@ -42,7 +43,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         val user = ApplicationClass.userPrefs.getString("User","")
-        if(!user.equals("")){
+        if(!user.equals("") && SettingsUtil().getAutoLoginState()){
             userViewModel.getUserInfo()
             Toast.makeText(context, "${user}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
         }

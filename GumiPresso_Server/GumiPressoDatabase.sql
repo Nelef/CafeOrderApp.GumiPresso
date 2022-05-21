@@ -59,19 +59,25 @@ create table t_comment(
 
 create table t_image(
 	id integer auto_increment primary key,
-    name varchar(100),
+    name varchar(50),
     url varchar(100)
 );
 
 create table t_admin(
 	id varchar(30) primary key not null,
     pass varchar(30) not null,
-    name varchar(100)
+    name varchar(30)
 );
 
 create table t_table(
 	id int primary key auto_increment not null,
     state boolean not null default false
+);
+
+create table t_fcm_token(
+	user_id varchar(30) primary key not null,
+    token varchar(250),
+    state varchar(10) default "true"
 );
 insert into t_table(state) value(false); 
 insert into t_table(state) value(false); 

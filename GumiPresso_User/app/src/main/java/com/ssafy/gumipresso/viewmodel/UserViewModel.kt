@@ -132,15 +132,17 @@ class UserViewModel: ViewModel() {
     }
 
     fun sendFCMPushMessage(token: String, title: String, content: String){
-        viewModelScope.launch(Dispatchers.IO){
-            try {
-                var map = mutableMapOf<String, String>()
-                map.put("token", token)
-                map.put("title", title)
-                map.put("content", content)
-                Retrofit.userService.sendFCMPushMessgae(map)
-            }catch (e: Exception){
+        if(SettingsUtil().getPushStatePersonal()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    var map = mutableMapOf<String, String>()
+                    map.put("token", token)
+                    map.put("title", title)
+                    map.put("content", content)
+                    Retrofit.userService.sendFCMPushMessgae(map)
+                } catch (e: Exception) {
 
+                }
             }
         }
     }

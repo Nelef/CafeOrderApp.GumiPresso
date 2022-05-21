@@ -26,4 +26,11 @@ interface UserService {
 
     @POST("/user/fcm")
     suspend fun sendFCMPushMessgae(@Body map: Map<String, String>) : Response<Void>
+
+    @POST("/admin/fcm/insert")
+    suspend fun insertFCMTokenUser(@Body map: Map<String, String>) : Response<Void>
+
+    @POST("/admin/fcm/update")
+    suspend fun updateFCMTokenUser(@Body map: Map<String, String>) : Response<Void>
+
 }

@@ -15,9 +15,11 @@ import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.BannerAdapter
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentHomeBinding
+import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.util.SettingsUtil
 import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
+import com.ssafy.gumipresso.viewmodel.SettingViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 private const val TAG ="HomeFragment"
@@ -25,6 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
+    private val settingViewModel: SettingViewModel by viewModels()
 
     // 배너
     private var bannerList = mutableListOf(R.drawable.banner1, R.drawable.banner2)
@@ -55,10 +58,7 @@ class HomeFragment : Fragment() {
         binding.viewPager2.adapter = BannerAdapter(bannerList) // 어댑터 생성
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL // 방향을 가로로
         // 배너 끝
-        if(SettingsUtil().getFirstRunCheck()){
-            Toast.makeText(context, "처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
-            SettingsUtil().setFirstRunCheck(false)
-        }
+
     }
 
     private fun initViewModel(){
@@ -66,6 +66,8 @@ class HomeFragment : Fragment() {
             if(userViewModel.user.value != null){
                 binding.homeUserViewModel = userViewModel
                 orderViewModel.getOrderList(userViewModel.user.value!!.id)
+
+
             }
         }
     }

@@ -52,13 +52,13 @@
 	</select>
 	
 	<insert id="insertFCMTokenUser" parameterType ="hashMap">
-		insert into t_fcm_token(user_id, token) values(#{userId}, #{token})
+		insert into t_fcm_token(user_id, token, state) values(#{userId}, #{token}, #{state})
 	</insert>
 	<update id="updateFCMTokenUser" parameterType ="hashMap">
-		update t_fcm_token set token = #{token} where user_id = #{userId}
+		update t_fcm_token set token = #{token}, state = #{state} where user_id = #{userId}
 	</update>
 	<select id="selectAllToken" resultType="String">
-		select token from t_fcm_token
+		select token from t_fcm_token where state = "true"
 	</select>
 	
 </mapper>

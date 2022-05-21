@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.databinding.FragmentSettingsBinding
 import com.ssafy.gumipresso.viewmodel.SettingViewModel
+import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 
 class SettingsFragment : Fragment() {
@@ -41,12 +43,15 @@ class SettingsFragment : Fragment() {
         binding.apply {
             btnAutologin.setOnClickListener{
                 settingViewModel.setAutoLogin()
+                Toast.makeText(context, "자동 로그인 설정이 변경 되었습니다", Toast.LENGTH_SHORT).show()
             }
             btnPushAll.setOnClickListener {
                 settingViewModel.setPushAll()
+                Toast.makeText(context, "전체 알림 설정이 변경 되었습니다", Toast.LENGTH_SHORT).show()
             }
             btnPushPersonal.setOnClickListener {
                 settingVM!!.setPushPersonal()
+                Toast.makeText(context, "알림 설정이 변경 되었습니다", Toast.LENGTH_SHORT).show()
             }
             ivBack.setOnClickListener {
                 (activity as MainActivity).navController.popBackStack()
