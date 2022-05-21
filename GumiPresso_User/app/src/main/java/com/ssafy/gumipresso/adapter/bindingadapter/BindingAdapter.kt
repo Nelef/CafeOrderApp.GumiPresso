@@ -1,12 +1,14 @@
 package com.ssafy.gumipresso.adapter.bindingadapter
 
 import android.graphics.Color
+import android.net.Uri
 import android.text.style.BackgroundColorSpan
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
+import com.bumptech.glide.Glide
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.model.dto.RecentOrderDetail
@@ -55,10 +57,10 @@ fun recentOrderQuantity(view: TextView, src: LiveData<RecentOrderDetail>) {
 
 @BindingAdapter("loadImage")
 fun loadImage(view: ImageView, src: String?) {
-    val packageName = "com.ssafy.gumipresso"
-    val s = "@drawable/${src}"
-    val resId = view.resources.getIdentifier(s.substring(0, s.length - 4), "drawable", packageName)
-    view.setImageResource(resId)
+    Glide.with(view.context)
+        .load(Uri.parse("http://ssafymobile.iptime.org:7890/images/${src}"))
+        .error(R.drawable.icon_empty_image)
+        .into(view)
 }
 
 @BindingAdapter("rating")

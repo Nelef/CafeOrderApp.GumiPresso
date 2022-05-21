@@ -99,4 +99,8 @@ dependencies {
 
     // Background Animate
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 }
