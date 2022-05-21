@@ -71,13 +71,18 @@ class CartViewModel: ViewModel() {
         return -1
     }
     
-    private val _totalCartPrice = MutableLiveData<String>()
-    val totalCartPrice : LiveData<String>
+    private val _totalCartPrice = MutableLiveData<Int>()
+    val totalCartPrice : LiveData<Int>
         get() = _totalCartPrice
 
-    private val _totalCartQuantity = MutableLiveData<String>()
-    val totalCartQuantity: LiveData<String>
+    private val _totalCartQuantity = MutableLiveData<Int>()
+    val totalCartQuantity: LiveData<Int>
         get() = _totalCartQuantity
+
+    init {
+        _totalCartPrice.value = 0
+        _totalCartQuantity.value = 0
+    }
 
     fun setCartTotalValue(){
         var quantity = 0;
@@ -86,8 +91,8 @@ class CartViewModel: ViewModel() {
             quantity += cart.menuCnt
             price += cart.totalPrice
         }
-        _totalCartPrice.postValue("총 ${price} 원 ")
-        _totalCartQuantity.postValue("총 ${quantity} 잔")
+        _totalCartPrice.value = price
+        _totalCartQuantity.value= quantity
     }
 
     private val _cart = MutableLiveData<Cart>()

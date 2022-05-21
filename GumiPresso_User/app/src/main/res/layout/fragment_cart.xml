@@ -88,17 +88,17 @@
                     android:id="@+id/tv_shoppinglist_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewmodel.totalCartQuantity}"
+                    android:text="@{`총 `+viewmodel.totalCartQuantity.toString()+`개`}"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="5 개" />
+                    tools:text="총 5개" />
 
                 <TextView
                     android:id="@+id/tv_shoppinglist_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewmodel.totalCartPrice}"
+                    android:text="@{viewmodel.totalCartPrice.toString()+` 원`}"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

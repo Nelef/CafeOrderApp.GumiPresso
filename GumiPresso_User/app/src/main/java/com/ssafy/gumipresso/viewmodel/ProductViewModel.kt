@@ -52,7 +52,7 @@ class ProductViewModel: ViewModel() {
         Log.d(TAG, "onBindViewHolder: ${product.name}")
     }
 
-    private val _quantity = MutableLiveData<Int>(0)
+    private val _quantity = MutableLiveData<Int>(1)
     val quantity: LiveData<Int>
         get() = _quantity
     fun setOrderQuantity(flag: Boolean){
@@ -63,7 +63,7 @@ class ProductViewModel: ViewModel() {
             }
             // -
             false ->{
-                if(_quantity.value as Int > 0)
+                if(_quantity.value as Int > 1)
                 _quantity.postValue((_quantity.value as Int) - 1)
             }
 

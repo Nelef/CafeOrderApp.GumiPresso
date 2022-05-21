@@ -58,19 +58,31 @@ class CartFragment : Fragment() {
 
         binding.apply {
             btnOrder.setOnClickListener {
-                var tag = (activity as MainActivity).TagMethod()
-                if (userTable == "TakeOut") {
-                    makeOrder()
-                } else if (tag == null) {
-                    requestNFC()
-                } else if (!tag.isDigitsOnly()) {
-                    Toast.makeText(context, "숫자만 입력 가능 합니다. \n현재 태그: ${tag}", Toast.LENGTH_SHORT)
-                        .show()
+                if (cartViewModel.totalCartPrice.value == 0) {
+                    val builder = AlertDialog.Builder(requireActivity())
+                    builder.setTitle("알림")
+                    builder.setMessage("커피를 먼저 담아주세요.")
+                    builder.setPositiveButton("확인") { dialog, _ ->
+                        dialog.cancel()
+                    }.show()
                 } else {
-                    userTable = "Table $tag"
-                    makeOrder()
+                    var tag = (activity as MainActivity).TagMethod()
+                    if (userTable == "TakeOut") {
+                        makeOrder()
+                    } else if (tag == null) {
+                        requestNFC()
+                    } else if (!tag.isDigitsOnly()) {
+                        Toast.makeText(
+                            context,
+                            "숫자Tag만 입력 가능 합니다. \n현재 Tag: ${tag}",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    } else {
+                        userTable = "Table $tag"
+                        makeOrder()
+                    }
                 }
-
             }
             btnTout.setOnClickListener {
                 cartViewModel.setHereOrTogo(true)
