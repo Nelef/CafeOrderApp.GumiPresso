@@ -1,10 +1,7 @@
 package com.ssafy.gumipresso_admin.model
 
 import com.ssafy.gumipresso_admin.common.ApplicationClass
-import com.ssafy.gumipresso_admin.model.service.ImageService
-import com.ssafy.gumipresso_admin.model.service.OrderService
-import com.ssafy.gumipresso_admin.model.service.SalesService
-import com.ssafy.gumipresso_admin.model.service.UserService
+import com.ssafy.gumipresso_admin.model.service.*
 
 object Retrofit {
     val userService : UserService by lazy {
@@ -16,7 +13,7 @@ object Retrofit {
     val salesService: SalesService by lazy {
         ApplicationClass.retrofit.create(SalesService::class.java)
     }
-    val imageService: ImageService by lazy {
-        ApplicationClass.retrofit.create(ImageService::class.java)
+    val productService: ProductService by lazy {
+        ApplicationClass.retrofit.create(ProductService::class.java)
     }
 }

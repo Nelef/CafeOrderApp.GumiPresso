@@ -61,4 +61,14 @@
 		select token from t_fcm_token where state = "true"
 	</select>
 	
+	<insert id="insertProduct">
+		INSERT INTO t_product (name, type, price, img) VALUES (#{name}, #{type}, #{price}, #{img})
+	</insert>
+	<update id="updateProduct">
+		update t_product set name = #{name}, type = #{type}, price = #{price}, img = #{img} where id=#{id}
+	</update>
+	<delete id="deleteProduct">
+		delete from t_product where id = #{id}
+	</delete>
+	
 </mapper>

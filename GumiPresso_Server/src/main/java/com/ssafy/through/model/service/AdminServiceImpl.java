@@ -13,6 +13,7 @@ import com.ssafy.through.model.dto.AosOrderForm;
 import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
 import com.ssafy.through.model.dto.OrderDetail;
+import com.ssafy.through.model.dto.Product;
 import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
@@ -117,6 +118,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<String> selectAllToken() {
 		return repo.selectAllToken();
+	}
+
+	@Override
+	public int insertProduct(Product product) {
+		return repo.insertProduct(product);
+	}
+
+	@Override
+	public int updateProduct(Product product) {
+		return repo.updateProduct(product);
+	}
+
+	@Override
+	public int deleteProduct(Product product) {
+		return repo.deleteProduct(product);
 	}
 	
 	

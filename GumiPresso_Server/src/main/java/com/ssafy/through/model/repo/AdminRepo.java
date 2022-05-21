@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
 import com.ssafy.through.model.dto.OrderDetail;
+import com.ssafy.through.model.dto.Product;
 import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 
@@ -34,4 +35,7 @@ public interface AdminRepo {
 	int insertFCMTokenUser(Map<String, String> map);
 	int updateFCMTokenUser(Map<String, String> map);
 	List<String> selectAllToken(); 
+	int insertProduct(Product product);
+	int updateProduct(Product product);
+	int deleteProduct(Product product);
 }

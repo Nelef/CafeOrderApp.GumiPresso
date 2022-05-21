@@ -35,7 +35,7 @@ public class ImageRestController {
 		System.out.println("####");
 		String fileName = imageFile.getOriginalFilename();
 		String url = "C:/SSAFY/final_gumi0607_10/GumiPresso_Server/src/main/resources/image/"+fileName;
-		iService.fileUpload(imageFile, url);
+		iService.fileUpload(imageFile);
 		iService.insert(new ImageFile(fileName, url));
 
 		return new ResponseEntity<Void>(HttpStatus.OK);

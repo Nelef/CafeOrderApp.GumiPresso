@@ -3,6 +3,7 @@ package com.ssafy.through.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +26,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.ssafy.through.model.dto.DateDTO;
 import com.ssafy.through.model.dto.Order;
+import com.ssafy.through.model.dto.Product;
 import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.service.AdminService;
 import com.ssafy.through.model.service.FCMUtil;
+import com.ssafy.through.model.service.ImageService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +47,8 @@ import io.swagger.annotations.ApiOperation;
 public class AdminRestContoller {
 	@Autowired
 	private AdminService aService;
+	@Autowired
+	private ImageService iService;
 	
 	@ApiOperation(value = "로그인 버튼 클릭시 -> 로그인 할 유저 정보 return: User", response = User.class)
 	@PostMapping("/login")
@@ -178,11 +185,39 @@ public class AdminRestContoller {
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@PostMapping("/product/insert")
-	public ResponseEntity<?> insertProduct(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestBody Map<String, String> map){
-		System.out.println(map);
-		System.out.println(imageFile);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+	@PostMapping("/product")
+	public ResponseEntity<?> insertProduct(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
+		Gson gson = new Gson();
+		Product product = gson.fromJson(json, Product.class);
+		iService.fileUpload(imageFile);
+		int result = aService.insertProduct(product);
+		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+	@PutMapping("/product/image")
+	public ResponseEntity<?> updateProductImage(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
+		Gson gson = new Gson();
+		Product product = gson.fromJson(json, Product.class);
+		iService.fileUpload(imageFile);
+		int result = aService.updateProduct(product);
+		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@PutMapping("/product")
+	public ResponseEntity<?> updateProduct(@RequestBody Product product){	
+		int result = aService.updateProduct(product);
+		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@DeleteMapping("/product")
+	public ResponseEntity<?> deleteProduct(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
+		Gson gson = new Gson();
+		Product product = gson.fromJson(json, Product.class);
+		int result = aService.deleteProduct(product);
+		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 
 }
