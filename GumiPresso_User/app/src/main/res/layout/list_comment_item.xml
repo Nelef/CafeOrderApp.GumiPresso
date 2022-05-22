@@ -5,7 +5,7 @@
 
         <variable
             name="commentVM"
-            type="com.ssafy.gumipresso.model.dto.Comment" />
+            type="com.ssafy.gumipresso.viewmodel.CommentViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/icon_empty_image"
+                loadImage="@{commentVM.comment.img}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +43,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:minHeight="40dp"
-                android:text="@{commentVM.comment}"
+                android:text="@{commentVM.comment.comment}"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
                 android:layout_marginRight="10dp"
                 android:max="5"
                 android:progressTint="@color/coffee_point_red"
-                android:rating="@{commentVM.rating}"
+                android:rating="@{commentVM.comment.rating}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_user_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_user_name" />

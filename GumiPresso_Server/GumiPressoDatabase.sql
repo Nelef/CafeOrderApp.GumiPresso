@@ -53,6 +53,7 @@ create table t_comment(
     product_id integer not null,
     rating float not null default 1,
     comment varchar(200),
+    img varchar(100),
     constraint fk_comment_user foreign key(user_id) references t_user(id) on delete cascade,
     constraint fk_comment_product foreign key(product_id) references t_product(id) on delete cascade
 );
@@ -128,7 +129,7 @@ commit;
 --  ('ssafy09', 8, 9, '수제 자몽에이드라 그런지 맛나요.'),
 --  ('ssafy10', 10, 10, '초코칩 쿠키 먹으로 여기 옵니다.')
 
--- select * from t_user;
+ -- select * from t_user;
 -- select * from t_product;
 -- select * from t_order, t_order_detail where t_order.o_id = t_order_detail.order_id;
 -- select o_id from t_order order by o_id desc limit 1;
@@ -137,6 +138,8 @@ commit;
 -- select * from t_image;
 -- select * from t_table;
 -- select * from t_fcm_token;
+-- select * from t_comment;
+
 
 
 

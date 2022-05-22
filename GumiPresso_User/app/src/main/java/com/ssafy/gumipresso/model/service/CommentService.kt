@@ -19,6 +19,11 @@ interface CommentService {
     @DELETE("/comment/{id}")
     suspend fun deleteComment(@Path("id")id: Int): Response<MutableList<Comment>>
 
+    @Multipart
     @POST("/comment/image")
-    suspend fun insertCommentImage(@Part imageFile: MultipartBody.Part, @Part("product") product: RequestBody): Response<MutableList<Comment>>
+    suspend fun insertCommentImage(@Part imageFile: MultipartBody.Part, @Part("comment") product: RequestBody): Response<MutableList<Comment>>
+
+    @Multipart
+    @PUT("/comment/image")
+    suspend fun updateCommentImage(@Part imageFile: MultipartBody.Part, @Part("comment") product: RequestBody): Response<MutableList<Comment>>
 }

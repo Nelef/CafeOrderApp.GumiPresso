@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.gumipresso.databinding.ListCommentItemBinding
 import com.ssafy.gumipresso.fragment.OrderDetailFragment
 import com.ssafy.gumipresso.model.dto.Comment
+import com.ssafy.gumipresso.viewmodel.CommentViewModel
 
 class CommentAdapter(
     val commentList: List<Comment>,
@@ -16,10 +17,12 @@ class CommentAdapter(
 
     inner class ViewHoler(val binding: ListCommentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+        init {
+            binding.commentVM = CommentViewModel()
+        }
         fun bind(item: Comment) {
             binding.apply {
-                commentVM = item
+                commentVM!!.setCommentItem(item)
                 if (item.userId == userId) {
                     btnMenuDelete.visibility = View.VISIBLE
                     btnMenuEdit.visibility = View.VISIBLE

@@ -6,7 +6,7 @@ import com.ssafy.through.model.dto.ImageFile;
 
 public interface ImageService {
 	int insert(ImageFile imageFile);
-	ImageFile select(int id);
-	void fileUpload(MultipartFile multipartFile);
+	ImageFile select(int id);	
 	void deleteFile(String imageFileName);
+	void fileUpload(MultipartFile multipartFile, String flag);
 }

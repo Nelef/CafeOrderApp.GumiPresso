@@ -100,11 +100,6 @@ class OrderDetailFragment : Fragment() {
         }
     }
 
-    fun insert(comment: Comment) {
-        commentViewModel.insertComment(comment)
-        Toast.makeText(requireContext(), "등록되었습니다", Toast.LENGTH_SHORT).show()
-    }
-
     private fun initViewModel() {
         user = userViewModel.user.value as User
 
