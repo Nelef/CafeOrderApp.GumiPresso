@@ -7,15 +7,8 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@color/coffee_brown</item>
-    </style>
-
-    <style name="divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">?android:attr/listDivider</item>
-    </style>
-
-    <style name="Color1SwitchStyle">
-        <item name="colorControlActivated">@color/coffee_brown</item>
+        <item name="android:windowSplashScreenBackground">@color/coffee_brown</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
     </style>
 </resources>
