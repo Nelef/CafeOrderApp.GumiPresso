@@ -1,6 +1,8 @@
 package com.ssafy.gumipresso.model.service
 
 import com.ssafy.gumipresso.model.dto.Comment
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -16,4 +18,7 @@ interface CommentService {
 
     @DELETE("/comment/{id}")
     suspend fun deleteComment(@Path("id")id: Int): Response<MutableList<Comment>>
+
+    @POST("/comment/image")
+    suspend fun insertCommentImage(@Part imageFile: MultipartBody.Part, @Part("product") product: RequestBody): Response<MutableList<Comment>>
 }

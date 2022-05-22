@@ -8,4 +8,5 @@ public interface ImageService {
 	int insert(ImageFile imageFile);
 	ImageFile select(int id);
 	void fileUpload(MultipartFile multipartFile);
+	void deleteFile(String imageFileName);
 }
