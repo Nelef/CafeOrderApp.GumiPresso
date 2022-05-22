@@ -93,7 +93,6 @@ class OrderFragment : Fragment() {
                         1 -> {
                             // 즐겨찾기 메뉴
                             productViewModel.getProductList()
-//                            initProductAdapter()
                         }
                         2 ->{
                             productViewModel.selectProductOrderByRating()
@@ -108,7 +107,6 @@ class OrderFragment : Fragment() {
                                 binding.radioRating.isChecked = true
                                 radioGroup.visibility = View.GONE
                             }
-                            productViewModel.getProductList()
                         }
                     }
                 }

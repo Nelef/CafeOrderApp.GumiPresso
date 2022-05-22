@@ -5,8 +5,11 @@
 
     <data>
 
+        <import type="android.graphics.Color" />
         <import type="android.view.View" />
-
+        <variable
+            name="noticeVM"
+            type="com.ssafy.gumipresso.viewmodel.NoticeViewModel" />
         <variable
             name="homeUserViewModel"
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
@@ -52,6 +55,19 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_notice_exist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알림이 있습니다!"
+                android:textSize="12sp"
+                android:textColor="@color/coffee_point_red"
+                android:visibility="@{noticeVM.notice.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_notification"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <LinearLayout
                 android:id="@+id/divider0"
@@ -142,14 +158,6 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider2" />
-
-                <Button
-                    android:id="@+id/btn_fcm_push"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FCM 메시지 전송"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_table_list"

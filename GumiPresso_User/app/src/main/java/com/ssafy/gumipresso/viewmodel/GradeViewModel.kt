@@ -52,7 +52,6 @@ class GradeViewModel: ViewModel() {
             grade.img = "coffee_tree.png"
             grade.grade = 5
         }
-        Log.d(TAG, "getUserGrade: $grade")
         _grade.postValue(grade)
     }
 

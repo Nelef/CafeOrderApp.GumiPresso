@@ -20,17 +20,14 @@ import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentHomeBinding
 import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil
-import com.ssafy.gumipresso.viewmodel.RecentOrderViewModel
-import com.ssafy.gumipresso.viewmodel.SettingViewModel
-import com.ssafy.gumipresso.viewmodel.TableViewModel
-import com.ssafy.gumipresso.viewmodel.UserViewModel
+import com.ssafy.gumipresso.viewmodel.*
 
 private const val TAG ="HomeFragment"
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
-    private val settingViewModel: SettingViewModel by viewModels()
+    private val noticeViewModel: NoticeViewModel by viewModels()
     private val tableViewModel: TableViewModel by activityViewModels()
 
     private lateinit var tableAdapter: TableAdapter
@@ -53,12 +50,9 @@ class HomeFragment : Fragment() {
         initViewModel()
         userViewModel.getUserInfo()
 
+
         binding.ivNotification.setOnClickListener {
             (activity as MainActivity).movePage(CONST.FRAG_NOTI, null)
-        }
-
-        binding.btnFcmPush.setOnClickListener {
-            userViewModel.sendFCMPushMessage(PushMessageUtil().getFcmToken(), "gd", "doiododo")
         }
 
         // 배너
@@ -69,6 +63,10 @@ class HomeFragment : Fragment() {
     }
 
     fun initViewModel(){
+        noticeViewModel.getNoticeList()
+        noticeViewModel.notice.observe(viewLifecycleOwner){
+            binding.noticeVM = noticeViewModel
+        }
         userViewModel.user.observe(viewLifecycleOwner){
             if(userViewModel.user.value != null){
                 binding.homeUserViewModel = userViewModel

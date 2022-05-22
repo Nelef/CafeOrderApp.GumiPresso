@@ -14,7 +14,6 @@ class ProductAdapter(val list: List<Product>): RecyclerView.Adapter<ProductAdapt
     class ViewHolder(private val binding: ListProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Product) {
             binding.product = item
-            Log.d(TAG, "bind: $item")
         }
         fun bindClickListener(listener: OnProductItemClick) {
             binding.root.setOnClickListener {

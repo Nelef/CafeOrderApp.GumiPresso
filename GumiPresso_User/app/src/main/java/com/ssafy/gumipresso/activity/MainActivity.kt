@@ -193,7 +193,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 Log.d(TAG, "onCreate: FCM 토큰 얻기 실패", it.exception)
                 return@OnCompleteListener
             }
-            Log.d(TAG, "onCreate: 새로운 등록 토큰: ${it.result}")
             if (SettingsUtil().getFirstRunCheck()) {
                 Toast.makeText(this, "처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
                 PushMessageUtil().setFcmToken(it.result)

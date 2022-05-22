@@ -20,8 +20,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        Log.d(TAG, "onCreate: ${Utility.getKeyHash(this)}")
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_login, LoginFragment()).commit()
     }
@@ -32,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                Log.d(TAG, "movePage: $intent")
                 startActivity(intent)
                 overridePendingTransition(R.anim.activity_anim_enter, R.anim.activity_anim_exit);
                 finish()
