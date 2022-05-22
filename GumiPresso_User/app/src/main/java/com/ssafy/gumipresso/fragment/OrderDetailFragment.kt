@@ -36,6 +36,7 @@ class OrderDetailFragment : Fragment() {
     private lateinit var commentList: MutableList<Comment>
     private lateinit var user: User
     private lateinit var product: Product
+    private lateinit var productId: String
     private var isFavorite = false
 
     override fun onCreateView(
@@ -52,9 +53,7 @@ class OrderDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).visibilityBottomNavBar(true)
 
-        val productId = arguments?.getString("product_id").toString()
-
-        initViewModel(productId)
+        initViewModel()
 
         binding.apply {
             commentVM = commentViewModel
@@ -119,7 +118,9 @@ class OrderDetailFragment : Fragment() {
         }
     }
 
-    private fun initViewModel(productId:String) {
+    private fun initViewModel() {
+        productId = arguments?.getString("product_id").toString()
+
         productViewModel.getSelectProduct(productId)
         commentViewModel.getComments(productId.toInt())
         user = userViewModel.user.value as User

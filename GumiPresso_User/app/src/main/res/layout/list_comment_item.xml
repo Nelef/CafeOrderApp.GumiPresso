@@ -27,14 +27,23 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
-            <ImageView
-                android:id="@+id/iv_review_image"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_img"
                 android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:adjustViewBounds="true"
-                loadImage="@{commentVM.comment.img}"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_review_image"
+                    loadImage="@{commentVM.comment.img}"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tv_comment"
@@ -43,11 +52,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:minHeight="40dp"
+                android:layout_marginTop="5dp"
                 android:text="@{commentVM.comment.comment}"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_review_image"
+                app:layout_constraintStart_toEndOf="@id/cardview_img"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="리뷰" />
 
@@ -60,17 +70,17 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_review_image"
+                app:layout_constraintStart_toEndOf="@id/cardview_img"
                 app:layout_constraintTop_toBottomOf="@id/tv_comment" />
 
             <TextView
                 android:id="@+id/iv_user_name"
-                toAnonymous="@{commentVM.userId}"
+                toAnonymous="@{commentVM.comment.userId}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@id/iv_review_image"
+                app:layout_constraintStart_toEndOf="@id/cardview_img"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:text="User" />
 

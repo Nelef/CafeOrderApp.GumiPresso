@@ -85,7 +85,6 @@ class OrderFragment : Fragment() {
                                 initProductAdapter()
                             }
                         }
-
                         productList = productList.filter{
                             favoriteViewModel.favoriteList.value?.contains(it.name) ?: false
                         }

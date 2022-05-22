@@ -1,17 +1,14 @@
 package com.ssafy.gumipresso.adapter.bindingadapter
 
-import android.graphics.Color
 import android.net.Uri
-import android.text.style.BackgroundColorSpan
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ssafy.gumipresso.R
-import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.model.dto.RecentOrderDetail
 import com.ssafy.gumipresso.util.DateFormatUtil
 import java.util.*
@@ -71,6 +68,7 @@ fun rating(view: TextView, src: Float?) {
 
 @BindingAdapter("toAnonymous")
 fun toAnonymous(view: TextView, src: String) {
+    Log.d("TAG", "toAnonymous: $src")
     if (src.length >= 4) {
         view.text = src.slice(IntRange(0, 3)) + "***"
     } else {

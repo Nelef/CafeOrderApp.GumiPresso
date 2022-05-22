@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.isDigitsOnly
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -36,7 +35,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
-import com.ssafy.gumipresso.fragment.HomeFragment
 import com.ssafy.gumipresso.fragment.OrderFragment
 import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil

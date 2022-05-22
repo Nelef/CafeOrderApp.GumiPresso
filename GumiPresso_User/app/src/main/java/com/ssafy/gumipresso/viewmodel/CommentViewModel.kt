@@ -48,13 +48,6 @@ class CommentViewModel: ViewModel() {
         }
     }
 
-    private val _userId = MutableLiveData<String>("")
-    val userId : LiveData<String>
-        get() = _userId
-    fun setUserIdBind(userId: String){
-        _userId.value = userId
-    }
-
     private val _avgRating = MutableLiveData<Float>(0f)
     val avgRating: LiveData<Float>
         get() = _avgRating
