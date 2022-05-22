@@ -11,5 +11,13 @@
 	<select id="search" resultType="Product">
 		select * from t_product
 	</select>
+	
+	<select id="selectProductOrderByRating" resultType="Product">
+		select t_product.id, name, type, price, t_product.img from t_product, t_comment where t_product.id = product_id group by name order by avg(rating) desc;
+	</select>
+	
+	<select id="selectProductOrderByQuantity" resultType="Product">
+		select id, name, type, price, img from t_product, t_order_detail where id = product_id group by id order by sum(quantity) desc;
+	</select>
 
 </mapper>

@@ -31,7 +31,7 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
-    private val GPSViewModel: GPSViewModel by viewModels()
+    private val gpsViewModel: GPSViewModel by activityViewModels()
 
     private lateinit var cartAdapter: CartItemAdapter
     private lateinit var cartList: List<Cart>
@@ -60,7 +60,10 @@ class CartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkGPSPermission()
+        gpsViewModel.location?.observe(viewLifecycleOwner){
+
+            binding.gpsVM = gpsViewModel
+        }
 
         userTable = "T/O"
         binding.viewmodel = cartViewModel
@@ -117,7 +120,7 @@ class CartFragment : Fragment() {
     }
 
     private fun makeOrder() {
-        checkGPSPermission()
+
         cartViewModel.orderCart((userViewModel.user.value as User).id, userTable)
         userViewModel.getUserInfo()
         userViewModel.sendFCMPushMessage(
@@ -145,35 +148,5 @@ class CartFragment : Fragment() {
     }
 
 
-    private fun checkGPSPermission(){
-        val permissionlistener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                GPSViewModel.setLocationRepository(requireContext())
-                GPSViewModel.enableLocationServices()
-                GPSViewModel.locationRepository?.let { it ->
-                    it.observe(viewLifecycleOwner) { location ->
-                        location?.let {
-                            GPSViewModel.setLocationItem(it)
-                        }
-                    }
-                }
 
-                GPSViewModel.location?.observe(viewLifecycleOwner){
-                    Log.d(TAG, "onViewCreated: $it")
-                    GPSViewModel.getArrivalTime()
-                }
-            }
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-                Toast.makeText(context,
-                    "도착시간 계산을 위한 위치 정보 사용에 동의해 주세요",
-                    Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        TedPermission.create()
-            .setPermissionListener(permissionlistener)
-            .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
-            .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-            .check()
-    }
 }

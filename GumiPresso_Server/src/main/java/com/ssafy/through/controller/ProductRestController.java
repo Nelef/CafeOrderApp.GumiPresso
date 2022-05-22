@@ -64,4 +64,16 @@ public class ProductRestController {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 	}
+	
+	@GetMapping("/rating")
+	public ResponseEntity<?> selectProductOrderByRating(){
+		List<Product> products = pService.selectProductOrderByRating();
+		return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+	}
+	
+	@GetMapping("/quantity")
+	public ResponseEntity<?> selectProductOrderByQuantity(){
+		List<Product> products = pService.selectProductOrderByQuantity();
+		return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+	}
 }

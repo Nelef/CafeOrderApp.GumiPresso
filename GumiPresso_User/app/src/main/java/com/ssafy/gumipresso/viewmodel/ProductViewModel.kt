@@ -69,4 +69,29 @@ class ProductViewModel: ViewModel() {
 
         }
     }
+
+    fun selectProductOrderByRating(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = Retrofit.productService.selectProductOrderByRating()
+                if(response.isSuccessful && response.body() != null){
+                    _productList.postValue(response.body() as List<Product>)
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "getProductList: ${e.message}")
+            }
+        }
+    }
+    fun selectProductOrderByQuantity(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = Retrofit.productService.selectProductOrderByQuantity()
+                if(response.isSuccessful && response.body() != null){
+                    _productList.postValue(response.body() as List<Product>)
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "getProductList: ${e.message}")
+            }
+        }
+    }
 }

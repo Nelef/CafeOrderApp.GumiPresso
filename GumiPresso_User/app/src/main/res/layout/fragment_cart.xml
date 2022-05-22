@@ -6,6 +6,9 @@
     <data>
 
         <variable
+            name="gpsVM"
+            type="com.ssafy.gumipresso.viewmodel.GPSViewModel" />
+        <variable
             name="viewmodel"
             type="com.ssafy.gumipresso.viewmodel.CartViewModel" />
     </data>
@@ -83,6 +86,25 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_order_type">
+
+                <TextView
+                    android:id="@+id/tv_distnace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`매장과의 거리: `+ gpsVM.distanceToStore}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="매장과의 거리: 5Km"
+                    app:layout_constraintBottom_toTopOf="@id/tv_shoppinglist_quantity"/>
+
+                <TextView
+                    android:id="@+id/tv_arrival_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`예상 도착 시간: `+ gpsVM.arrivalTime}"
+                    tools:text="예상 도착 시간: 55"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tv_shoppinglist_price"
+                    />
 
                 <TextView
                     android:id="@+id/tv_shoppinglist_quantity"

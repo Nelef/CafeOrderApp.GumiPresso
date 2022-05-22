@@ -54,11 +54,15 @@ class GPSViewModel:ViewModel() {
     val arrivalTime: LiveData<String>
         get() = _arrivalTime
 
-    fun getArrivalTime(){
+    private val _distanceToStore = MutableLiveData<String>("매장과의 거리 계산중")
+    val distanceToStore: LiveData<String>
+        get() = _distanceToStore
+
+
+    fun getLocationInfo(){
         val location = _location!!.value as Location
         viewModelScope.launch(Dispatchers.IO){
             val client = OkHttpClient()
-
             val format = TMapDTO(
                 RoutesInfo(
                     Departure("03", location.latitude.toString(), location.longitude.toString(),"출발지"),
@@ -79,6 +83,7 @@ class GPSViewModel:ViewModel() {
 
             val receiveForm = Gson().fromJson(responseBody.toString(),ReceiveForm::class.java)
             _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
+            _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
         }
     }
 }
