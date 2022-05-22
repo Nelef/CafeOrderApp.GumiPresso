@@ -134,4 +134,9 @@
         android:name="com.ssafy.gumipresso.fragment.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.ssafy.gumipresso.fragment.PayFragment"
+        android:label="fragment_pay"
+        tools:layout="@layout/fragment_pay" />
 </navigation>

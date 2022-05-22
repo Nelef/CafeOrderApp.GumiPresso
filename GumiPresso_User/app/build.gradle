@@ -106,4 +106,11 @@ dependencies {
 
     // Android 12 스플래시 이미지
     implementation "androidx.core:core-splashscreen:1.0.0-beta02"
+
+    // QR 코드 생성
+    implementation('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }
+    implementation 'com.google.zxing:core:3.3.0'
+
+    // 생체인증
+    implementation 'androidx.biometric:biometric:1.0.1'
 }
