@@ -33,13 +33,7 @@ public class ImageServiceImpl implements ImageService{
 	}
 
 	@Override
-	public void fileUpload(MultipartFile multipartFile, String flag){
-		String URL = FILE_URL;
-		if(flag.equals("product")) {
-			URL += "/products/";
-		}else if(flag.equals("comment")) {
-			URL += "/comment";
-		}
+	public void fileUpload(MultipartFile multipartFile){
         Path copyOfLocation = Paths.get(FILE_URL+multipartFile.getOriginalFilename());
         try {
             Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);

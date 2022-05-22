@@ -77,7 +77,7 @@ class ProductViewModel: ViewModel() {
 
     fun insertProduct(name: String, price: Int, type: String, imageUrl: String) {
         val file = File(imageUrl)
-        var fileName = System.currentTimeMillis().toString()
+        var fileName = "products/" + System.currentTimeMillis().toString()
         fileName = fileName+".png"
 
         var requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
@@ -96,7 +96,7 @@ class ProductViewModel: ViewModel() {
     fun updateProduct(product: Product, imageUrl: String?){
         if(imageUrl != null){
             val file = File(imageUrl)
-            var fileName = System.currentTimeMillis().toString()+".png"
+            var fileName = "products/" + System.currentTimeMillis().toString()+".png"
             var requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
             var body : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)
             val json = Gson().toJson(product)

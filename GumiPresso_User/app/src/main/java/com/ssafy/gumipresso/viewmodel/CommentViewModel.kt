@@ -80,7 +80,7 @@ class CommentViewModel: ViewModel() {
                 Log.d(TAG, "insertComment: $imageUrl")
                 if(imageUrl != null) {
                     val file = File(imageUrl)
-                    var fileName = System.currentTimeMillis().toString() + ".png"
+                    var fileName = "comments/" + System.currentTimeMillis().toString() + ".png"
                     comment.img = fileName
                     var requestBody: RequestBody =
                         RequestBody.create("image/*".toMediaTypeOrNull(), file)
@@ -132,7 +132,7 @@ class CommentViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO){
             try {
                 val file = File(imageUrl)
-                var fileName = System.currentTimeMillis().toString() + ".png"
+                var fileName = "products/" + System.currentTimeMillis().toString() + ".png"
                 var requestBody: RequestBody =
                     RequestBody.create("image/*".toMediaTypeOrNull(), file)
                 var imageBody: MultipartBody.Part =

@@ -64,7 +64,7 @@ public class CommentRestController {
 		Gson gson = new Gson();
 		Comment comment = gson.fromJson(json, Comment.class);
 		System.out.println(comment);
-		iService.fileUpload(imageFile, "comment");
+		iService.fileUpload(imageFile);
 		int result = cService.insert(comment);
 		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -85,7 +85,7 @@ public class CommentRestController {
 	public ResponseEntity<?> updateCommentImage(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
 		Gson gson = new Gson();
 		Comment comment = gson.fromJson(json, Comment.class);
-		iService.fileUpload(imageFile, "comment");
+		iService.fileUpload(imageFile);
 		int result = cService.update(comment);
 		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -95,7 +95,7 @@ public class CommentRestController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteComment(@PathVariable("id") Integer id){
 		int productId = cService.select(id).getProductId();
-		int result = cService.delete(id);
+		int result = cService.delete(id);		
 		if(result > 0) {
 			List<Comment> comments = cService.search(productId);
 			if(comments != null) {

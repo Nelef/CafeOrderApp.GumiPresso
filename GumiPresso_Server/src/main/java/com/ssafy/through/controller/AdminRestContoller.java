@@ -189,7 +189,7 @@ public class AdminRestContoller {
 	public ResponseEntity<?> insertProduct(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
 		Gson gson = new Gson();
 		Product product = gson.fromJson(json, Product.class);
-		iService.fileUpload(imageFile, "product");
+		iService.fileUpload(imageFile);
 		int result = aService.insertProduct(product);
 		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -201,7 +201,7 @@ public class AdminRestContoller {
 		System.out.println(product);
 		iService.deleteFile(product.getImg());
 		product.setImg(imageFile.getOriginalFilename());		
-		iService.fileUpload(imageFile, "product");
+		iService.fileUpload(imageFile);
 		int result = aService.updateProduct(product);
 		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);

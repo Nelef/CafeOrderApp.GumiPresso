@@ -91,16 +91,16 @@ insert into t_table(state) value(false);
 insert into t_table(state) value(false); 
 insert into t_table(state) value(false); 
 
-INSERT INTO t_product (name, type, price, img) VALUES ('아메리카노', 'coffee', 4100, 'coffee1.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('카페라떼', 'coffee', 4500, 'coffee2.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('카라멜 마끼아또', 'coffee', 4800, 'coffee3.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('카푸치노', 'coffee', 4800, 'coffee4.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('모카라떼', 'coffee', 4800, 'coffee5.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('민트라떼', 'coffee', 4300, 'coffee6.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('화이트 모카라떼', 'coffee', 4800, 'coffee7.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('자몽에이드', 'coffee', 5100, 'coffee8.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('레몬에이드', 'coffee', 5100, 'coffee9.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('초코칩 쿠키', 'cookie', 1500, 'cookie.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('아메리카노', 'coffee', 4100, '/products/coffee1.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('카페라떼', 'coffee', 4500, '/products/coffee2.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('카라멜 마끼아또', 'coffee', 4800, '/products/coffee3.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('카푸치노', 'coffee', 4800, '/products/coffee4.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('모카라떼', 'coffee', 4800, '/products/coffee5.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('민트라떼', 'coffee', 4300, '/products/coffee6.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('화이트 모카라떼', 'coffee', 4800, '/products/coffee7.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('자몽에이드', 'coffee', 5100, '/products/coffee8.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('레몬에이드', 'coffee', 5100, '/products/coffee9.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('초코칩 쿠키', 'cookie', 1500, '/products/cookie.png');
 commit;
 
 
