@@ -26,4 +26,15 @@ public class ProductServiceImpl implements ProductService {
 		return repo.search();
 	}
 
+	@Override
+	public List<Product> selectProductOrderByRating() {
+		return repo.selectProductOrderByRating();
+	}
+
+	@Override
+	public List<Product> selectProductOrderByQuantity() {
+		return repo.selectProductOrderByQuantity();
+	}
+	
+	
 }

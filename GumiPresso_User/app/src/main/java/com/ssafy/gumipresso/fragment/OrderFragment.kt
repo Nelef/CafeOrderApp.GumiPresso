@@ -19,6 +19,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.ProductAdapter
+import com.ssafy.gumipresso.adapter.bindingadapter.rating
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentOrderBinding
 import com.ssafy.gumipresso.model.dto.Product
@@ -70,44 +71,61 @@ class OrderFragment : Fragment() {
         productViewModel.productList.observe(viewLifecycleOwner) {
             if (it != null) {
                 productList = productViewModel.productList.value as List<Product>
+                if(binding.tabLayout.getTabAt(1)!!.isSelected){
+                    productList = productList.filter{
+                        favoriteViewModel.favoriteList.value?.contains(it.name) ?: false
+                    }
+                }
                 initProductAdapter()
             }
         }
         productViewModel.getProductList()
 
         // 탭(전체메뉴, 선호메뉴)
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab!!.position) {
-                    0 -> {
-                        // 전체 메뉴
-                        productViewModel.productList.observe(viewLifecycleOwner) {
-                            if (it != null) {
-                                productList = productViewModel.productList.value as List<Product>
-                                initProductAdapter()
-                            }
+        binding.apply {
+            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab!!.position) {
+                        0 -> {
+                            // 전체 메뉴
+                            productViewModel.getProductList()
                         }
-                        productViewModel.getProductList()
-                    }
-                    1 -> {
-                        // 즐겨찾기 메뉴
-                        productViewModel.productList.observe(viewLifecycleOwner) {
-                            if (it != null) {
-                                productList = productViewModel.productList.value as List<Product>
-                                initProductAdapter()
-                            }
+                        1 -> {
+                            // 즐겨찾기 메뉴
+                            productViewModel.getProductList()
+//                            initProductAdapter()
                         }
-                        productList = productList.filter{
-                            favoriteViewModel.favoriteList.value?.contains(it.name) ?: false
+                        2 ->{
+                            productViewModel.selectProductOrderByRating()
+                            binding.radioGroup.visibility = View.VISIBLE
                         }
-                        initProductAdapter()
                     }
                 }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    when(tab!!.position){
+                        2 -> {
+                            binding.apply {
+                                binding.radioRating.isChecked = true
+                                radioGroup.visibility = View.GONE
+                            }
+                            productViewModel.getProductList()
+                        }
+                    }
+                }
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            })
+            binding.radioRating.isChecked = true
+            radioQuanity.setOnCheckedChangeListener { buttonView, isChecked ->
+                if(isChecked){
+                    productViewModel.selectProductOrderByQuantity()
+                }
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+            radioRating.setOnCheckedChangeListener { buttonView, isChecked ->
+                if(isChecked){
+                    productViewModel.selectProductOrderByRating()
+                }
+            }
+        }
     }
 
     fun tvMenuDistanceChange() {

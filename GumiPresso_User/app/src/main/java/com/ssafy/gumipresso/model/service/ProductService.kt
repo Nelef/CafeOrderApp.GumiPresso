@@ -11,4 +11,10 @@ interface ProductService {
 
     @GET("/product/select/{product_id}")
     suspend fun getProduct(@Path("product_id") productId: String): Response<Product>
+
+    @GET("/product/rating")
+    suspend fun selectProductOrderByRating(): Response<List<Product>>
+
+    @GET("/product/quantity")
+    suspend fun selectProductOrderByQuantity(): Response<List<Product>>
 }

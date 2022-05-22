@@ -9,4 +9,7 @@ public interface ProductService {
 	Product select(String id);
 
 	List<Product> search();
+	
+	List<Product> selectProductOrderByRating();
+	List<Product> selectProductOrderByQuantity();
 }
