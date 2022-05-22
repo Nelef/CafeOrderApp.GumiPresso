@@ -43,6 +43,15 @@ public class ImageServiceImpl implements ImageService{
         }
 
     }
+
+	@Override
+	public void deleteFile(String imageFileName) {
+		String path = FILE_URL+imageFileName;
+		File file = new File(path);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
 	
 	
 	

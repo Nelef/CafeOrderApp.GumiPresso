@@ -7,8 +7,8 @@
 
 	<insert id="insert" parameterType="Comment">
 		insert into t_comment
-		(user_id, product_id, rating, comment) values (#{userId},
-		#{productId}, #{rating}, #{comment})
+		(user_id, product_id, rating, comment, img) values (#{userId},
+		#{productId}, #{rating}, #{comment},#{img})
 	</insert>
 	<select id="search" parameterType="Integer" resultType="Comment">
 		select*
@@ -18,9 +18,9 @@
 	<update id="update" parameterType="Comment">
 		update t_comment
 		set
-		rating =
-		#{rating},
-		comment = #{comment}
+		rating = #{rating},
+		comment = #{comment},
+		img = #{img}
 		where id = #{id}
 	</update>
 	<delete id="delete" parameterType="Integer">

@@ -5,10 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.ssafy.gumipresso.model.Retrofit
 import com.ssafy.gumipresso.model.dto.Comment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.lang.Exception
 
 private const val TAG ="CommentViewModel"
@@ -62,16 +67,42 @@ class CommentViewModel: ViewModel() {
         _avgRating.postValue(rating / list.size)
     }
 
+    private val _isImageUpload = MutableLiveData<Boolean>(false)
+    val isImageUpload : LiveData<Boolean>
+        get() = _isImageUpload
+    fun setImageUploadState(state: Boolean){
+        _isImageUpload.value = state
+    }
 
-    fun insertComment(comment: Comment){
+    fun insertComment(comment: Comment, imageUrl: String?){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response = Retrofit.commentService.insertComment(comment)
-                if(response.isSuccessful && response.body() != null){
-                    _commentList.postValue(response.body() as MutableList<Comment>)
-                }
-                else{
-                    Log.d(TAG, "getComments: ${response}")
+                Log.d(TAG, "insertComment: $imageUrl")
+                if(imageUrl != null) {
+                    val file = File(imageUrl)
+                    var fileName = "comments/" + System.currentTimeMillis().toString() + ".png"
+                    comment.img = fileName
+                    var requestBody: RequestBody =
+                        RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                    var imageBody: MultipartBody.Part =
+                        MultipartBody.Part.createFormData("uploaded_file", fileName, requestBody)
+                    val json = Gson().toJson(comment)
+                    val commentBody = RequestBody.create(
+                        "application/json; charset=utf-8".toMediaTypeOrNull(),
+                        json
+                    )
+                    val response = Retrofit.commentService.insertCommentImage(imageBody, commentBody)
+                    if(response.isSuccessful && response.body() != null){
+                        _commentList.postValue(response.body() as MutableList<Comment>)
+                    }
+                    else{
+                        Log.d(TAG, "getComments: ${response}")
+                    }
+                }else{
+                    val response = Retrofit.commentService.insertComment(comment)
+                    if(response.isSuccessful && response.body() != null){
+                        _commentList.postValue(response.body() as MutableList<Comment>)
+                    }
                 }
             }
             catch (e: Exception){
@@ -96,6 +127,32 @@ class CommentViewModel: ViewModel() {
             }
         }
     }
+
+    fun updateCommentImage(comment: Comment, imageUrl: String){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val file = File(imageUrl)
+                var fileName = "products/" + System.currentTimeMillis().toString() + ".png"
+                var requestBody: RequestBody =
+                    RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                var imageBody: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("uploaded_file", fileName, requestBody)
+                val json = Gson().toJson(comment)
+                val commentBody = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(),json)
+                val response = Retrofit.commentService.updateCommentImage(imageBody, commentBody)
+                if(response.isSuccessful && response.body() != null){
+                    _commentList.postValue(response.body() as MutableList<Comment>)
+                }
+                else{
+                    Log.d(TAG, "getComments: ${response}")
+                }
+            }
+            catch (e: Exception){
+                Log.d(TAG, "getComments: ${e.message}")
+            }
+        }
+    }
+
 
     fun deleteComment(id: Int){
         viewModelScope.launch(Dispatchers.IO){

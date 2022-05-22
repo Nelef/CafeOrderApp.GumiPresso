@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_manageFragment_to_menuEditFragment"
             app:destination="@id/menuEditFragment" />
+        <action
+            android:id="@+id/action_manageFragment_to_bannerFragment"
+            app:destination="@id/bannerFragment" />
     </fragment>
     <fragment
         android:id="@+id/pushMessageFragment"
@@ -37,5 +40,21 @@
         android:name="com.ssafy.gumipresso_admin.fragment.manage.MenuEditFragment"
         android:label="fragment_menu_edit"
         tools:layout="@layout/fragment_menu_edit" >
+    </fragment>
+    <fragment
+        android:id="@+id/bannerFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.manage.BannerFragment"
+        android:label="BannerFragment" >
+        <action
+            android:id="@+id/action_bannerFragment_to_bannerEditFragment"
+            app:destination="@id/bannerEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bannerEditFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.manage.BannerEditFragment"
+        android:label="BannerEditFragment" >
+        <action
+            android:id="@+id/action_bannerEditFragment_to_manageFragment"
+            app:destination="@id/manageFragment" />
     </fragment>
 </navigation>

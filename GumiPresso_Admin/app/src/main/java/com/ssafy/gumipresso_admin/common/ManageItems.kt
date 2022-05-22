@@ -7,7 +7,8 @@ class ManageItems {
     companion object{
         private val ITEMS = listOf<Map<String, Any>>(
             mapOf("title" to "전체 메시지", "action" to R.id.action_manageFragment_to_pushMessageFragment),
-            mapOf("title" to "메뉴 관리", "action" to R.id.action_manageFragment_to_menuEditFragment)
+            mapOf("title" to "메뉴 관리", "action" to R.id.action_manageFragment_to_menuEditFragment),
+            mapOf("title" to "배너 관리", "action" to R.id.action_manageFragment_to_bannerFragment)
         )
 
         fun get(): List<Map<String, Any>>{

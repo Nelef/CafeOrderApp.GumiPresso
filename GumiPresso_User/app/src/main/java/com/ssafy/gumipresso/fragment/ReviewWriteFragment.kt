@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.UriPathUtil
 import com.ssafy.gumipresso.viewmodel.*
 
+private const val TAG ="ReviewWriteFragment"
 class ReviewWriteFragment : Fragment() {
     private lateinit var binding: FragmentReviewWriteBinding
     private val productViewModel: ProductViewModel by viewModels()
@@ -42,7 +44,7 @@ class ReviewWriteFragment : Fragment() {
     private lateinit var product: Product
     private lateinit var commentList: MutableList<Comment>
 
-    private var imageUrl = ""
+    private var imageUrl: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,7 +65,7 @@ class ReviewWriteFragment : Fragment() {
         binding.btnAddComment.setOnClickListener {
             val inputString = binding.etComment.text.toString().trim()
             if (!inputString.isEmpty()) {
-                insert(Comment(user.id, product.id!!, binding.ratingBarDialog.rating, inputString))
+                insert(Comment(user.id, product.id!!, binding.ratingBarDialog.rating, inputString, null))
                 (activity as MainActivity).navController.popBackStack()
             } else {
                 Toast.makeText(context, "코멘트를 입력해 주세요.", Toast.LENGTH_SHORT).show()
@@ -92,10 +94,8 @@ class ReviewWriteFragment : Fragment() {
     }
 
     fun insert(comment: Comment) {
-        commentViewModel.insertComment(comment)
-        if(imageUrl.isNotEmpty()){
-            imageViewModel.uploadImage(imageUrl)
-        }
+        Log.d(TAG, "insert: $imageUrl")
+        commentViewModel.insertComment(comment,imageUrl)
         Toast.makeText(requireContext(), "등록되었습니다", Toast.LENGTH_SHORT).show()
     }
 
@@ -111,9 +111,9 @@ class ReviewWriteFragment : Fragment() {
     val resultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val data = it.data!!
-                val imageUri = data.data!!
+                val imageUri = it.data!!.data!!
                 imageUrl = UriPathUtil().getPath(requireContext(), imageUri).toString()
+                commentViewModel.setImageUploadState(true)
                 binding.ivReviewImage.setImageURI(imageUri)
             }
         }

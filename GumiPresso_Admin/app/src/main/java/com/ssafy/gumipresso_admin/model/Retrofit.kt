@@ -16,5 +16,8 @@ object Retrofit {
     val productService: ProductService by lazy {
         ApplicationClass.retrofit.create(ProductService::class.java)
     }
+    val bannerService: BannerService by lazy {
+        ApplicationClass.retrofit.create(BannerService::class.java)
+    }
 
 }
