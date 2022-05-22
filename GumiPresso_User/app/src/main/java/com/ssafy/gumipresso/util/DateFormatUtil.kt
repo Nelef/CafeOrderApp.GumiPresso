@@ -29,5 +29,20 @@ class DateFormatUtil {
 
             return formmater.format(System.currentTimeMillis())
         }
+        fun convertyyyyMMddTHHmmsszz(): String{
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+            formatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+            return formatter.format(System.currentTimeMillis())
+        }
+
+        fun convertTMapArrivalTime(arrvalTime: String): String{
+            var formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+            formatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+            val date = formatter.parse(arrvalTime)
+            formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            formatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+
+            return formatter.format(date)
+        }
     }
 }

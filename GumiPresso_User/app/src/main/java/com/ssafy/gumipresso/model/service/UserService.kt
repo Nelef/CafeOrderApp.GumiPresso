@@ -2,6 +2,7 @@ package com.ssafy.gumipresso.model.service
 
 import com.kakao.sdk.auth.model.OAuthToken
 import com.ssafy.gumipresso.model.dto.User
+import com.ssafy.gumipresso.model.dto.tmap.ReceiveForm
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -33,4 +34,11 @@ interface UserService {
     @POST("/admin/fcm/update")
     suspend fun updateFCMTokenUser(@Body map: Map<String, String>) : Response<Void>
 
+    @Headers(
+        "Accept: application/json",
+        "Content-Type: application/json",
+        "appKey: l7xx4413ff598ab447188293f216e681c583"
+    )
+    @POST("/{uri}")
+    suspend fun getArrvalTimeInfo(@Path("uri", encoded = true) uri: String, @Body json: String): Response<ReceiveForm>
 }

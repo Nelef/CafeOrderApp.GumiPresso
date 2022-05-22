@@ -1,7 +1,9 @@
 package com.ssafy.gumipresso.fragment
 
+import android.Manifest
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CartItemAdapter
 import com.ssafy.gumipresso.databinding.FragmentCartBinding
@@ -17,6 +22,7 @@ import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
+import com.ssafy.gumipresso.viewmodel.GPSViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 private const val TAG = "CartFragment"
@@ -25,6 +31,7 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val GPSViewModel: GPSViewModel by viewModels()
 
     private lateinit var cartAdapter: CartItemAdapter
     private lateinit var cartList: List<Cart>
@@ -52,9 +59,11 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        checkGPSPermission()
+
         userTable = "T/O"
         binding.viewmodel = cartViewModel
-
 
         binding.apply {
             btnOrder.setOnClickListener {
@@ -108,6 +117,7 @@ class CartFragment : Fragment() {
     }
 
     private fun makeOrder() {
+        checkGPSPermission()
         cartViewModel.orderCart((userViewModel.user.value as User).id, userTable)
         userViewModel.getUserInfo()
         userViewModel.sendFCMPushMessage(
@@ -134,4 +144,36 @@ class CartFragment : Fragment() {
         (activity as MainActivity).visibilityBottomNavBar(false)
     }
 
+
+    private fun checkGPSPermission(){
+        val permissionlistener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                GPSViewModel.setLocationRepository(requireContext())
+                GPSViewModel.enableLocationServices()
+                GPSViewModel.locationRepository?.let { it ->
+                    it.observe(viewLifecycleOwner) { location ->
+                        location?.let {
+                            GPSViewModel.setLocationItem(it)
+                        }
+                    }
+                }
+
+                GPSViewModel.location?.observe(viewLifecycleOwner){
+                    Log.d(TAG, "onViewCreated: $it")
+                    GPSViewModel.getArrivalTime()
+                }
+            }
+            override fun onPermissionDenied(deniedPermissions: List<String>) {
+                Toast.makeText(context,
+                    "도착시간 계산을 위한 위치 정보 사용에 동의해 주세요",
+                    Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+        TedPermission.create()
+            .setPermissionListener(permissionlistener)
+            .setDeniedMessage("권한을 허용해주세요. [설정] > [앱 및 알림] > [고급] > [앱 권한]")
+            .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+            .check()
+    }
 }
