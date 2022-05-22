@@ -27,5 +27,13 @@ public class BannerServiceImpl implements BannerService{
 	public int updateBanner(Banner banner) {
 		return repo.updateBanner(banner);
 	}
+
+	@Override
+	public int deleteBanner(Banner banner) {
+		return repo.deleteBanner(banner);
+	}
+
+	
+	
 	
 }

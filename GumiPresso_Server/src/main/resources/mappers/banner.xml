@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.ssafy.through.model.repo.ImageRepo">
+<mapper namespace="com.ssafy.through.model.repo.BannerRepo">
 
 	<insert id="insertBanner" parameterType="Banner">
 		insert into t_banner(img, url) values(#{img}, #{url})
@@ -15,4 +15,7 @@
 	<update id="updateBanner" parameterType="Banner">
 		update t_banner set img = #{img}, url = #{url} where id = #{id}
 	</update>
+	<delete id="deleteBanner" parameterType="Banner">
+		delete from t_banner where id = #{id}
+	</delete>
 </mapper>

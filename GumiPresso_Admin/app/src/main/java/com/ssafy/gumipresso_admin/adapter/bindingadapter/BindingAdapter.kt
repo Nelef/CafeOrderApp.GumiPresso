@@ -17,3 +17,4 @@ fun loadImage(view: ImageView, src: String?) {
         .error(R.drawable.icon_empty_image)
         .into(view)
 }
+

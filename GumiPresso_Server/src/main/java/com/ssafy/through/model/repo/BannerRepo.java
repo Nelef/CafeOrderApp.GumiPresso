@@ -8,4 +8,5 @@ public interface BannerRepo {
 	int insertBanner(Banner banner);
 	List<Banner> selectBanner();
 	int updateBanner(Banner banner);
+	int deleteBanner(Banner banner);
 }
