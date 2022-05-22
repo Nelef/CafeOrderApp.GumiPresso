@@ -100,7 +100,7 @@ class PayFragment : Fragment() {
                 super.onAuthenticationError(errorCode, errString)
                 Log.d(TAG, "$errorCode :: $errString")
 
-                if (errorCode != 13 || errorCode != 10) { // 10, 13 은 취소시 발생하므로 제외
+                if (errorCode != 13 && errorCode != 10) { // 10, 13 은 취소시 발생하므로 제외
                     Toast.makeText(
                         requireContext(),
                         "생체인증이 불가능한 단말기입니다. 단계를 건너뜁니다.",
