@@ -9,6 +9,10 @@
         android:icon="@drawable/shopping_list"
         android:title="Order"/>
     <item
+        android:id="@+id/payFragment"
+        android:icon="@drawable/ic_baseline_payment_24"
+        android:title="Pay"/>
+    <item
         android:id="@+id/myPageFragment"
         android:icon="@drawable/user"
         android:title="Mypage"/>

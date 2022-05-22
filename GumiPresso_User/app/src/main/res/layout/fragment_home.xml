@@ -88,17 +88,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Name님 환영합니다." />
 
-                <LinearLayout
-                    android:id="@+id/divider1"
-                    style="@style/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_username" />
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview_banner"
                     android:layout_width="match_parent"
@@ -107,7 +96,7 @@
                     app:cardCornerRadius="10dp"
                     app:cardElevation="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/divider1">
+                    app:layout_constraintTop_toBottomOf="@id/tv_username">
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/view_pager2"
@@ -146,10 +135,13 @@
                 <Button
                     android:id="@+id/btn_fcm_push"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FCM 메시지 전송"
+                    android:layout_height="30dp"
+                    android:background="@drawable/button_color"
+                    android:text="FCM TEST"
+                    android:layout_margin="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/tv_username"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_username"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_table_list"

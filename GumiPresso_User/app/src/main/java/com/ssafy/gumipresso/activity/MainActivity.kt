@@ -10,11 +10,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.os.Build
 import android.os.Bundle
 import android.os.RemoteException
+import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -36,6 +41,7 @@ import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
 import com.ssafy.gumipresso.fragment.OrderFragment
+import com.ssafy.gumipresso.fragment.PayFragment
 import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.util.SettingsUtil
@@ -45,12 +51,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
+import kotlin.math.sqrt
 
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), BeaconConsumer {
+class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
     private lateinit var binding: ActivityMainBinding
+    lateinit var navHostFragment: NavHostFragment
     lateinit var navController: NavController
     private val settingViewModel: SettingViewModel by viewModels()
     private val tableViewModel: TableViewModel by viewModels()
@@ -70,14 +78,18 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         Identifier.parse(BEACON_MINOR)
     )
     private var bluetoothAdapter: BluetoothAdapter? = null
-    // 비콘 변수 끝
 
     // 태그 변수
     private var nfcAdapter: NfcAdapter? = null
     private lateinit var pIntent: PendingIntent
     private lateinit var filters: Array<IntentFilter>
     private var tag: String? = null
-    // 태그 변수 끝
+
+    // 기기 흔들기
+    private lateinit var sensorManager: SensorManager
+    private var accel: Float = 0.0f //초기
+    private var accelCurrent: Float = 0.0f //이동하는 치수
+    private var accelLast: Float = 0.0f
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,10 +98,9 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         setContentView(binding.root)
 
         Log.d(TAG, "onCreate: ")
-        val navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_main) as NavHostFragment
         navController = navHostFragment.navController
-        val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
 
         getFirebaseToken()
@@ -122,6 +133,13 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
                 tableList = tableViewModel.tableList.value as List<Table>
             }
         }
+
+        //센서 매니저를 설정한다.
+        this.sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        accel = 10f
+        accelCurrent = SensorManager.GRAVITY_EARTH
+        accelLast = SensorManager.GRAVITY_EARTH
     }
 
     fun visibilityBottomNavBar(hide: Boolean) {
@@ -375,12 +393,19 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
     override fun onResume() {
         super.onResume()
         nfcAdapter?.enableForegroundDispatch(this, pIntent, filters, null)
+        // 가속도 센서 On
+        sensorManager.registerListener(
+            this, sensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL
+        )
     }
 
     // 포그라운드 모드 비활성화
     override fun onPause() {
         super.onPause()
         nfcAdapter?.disableForegroundDispatch(this)
+        // 가속도 센서 Off
+        sensorManager.unregisterListener(this)
     }
 
 
@@ -457,4 +482,35 @@ class MainActivity : AppCompatActivity(), BeaconConsumer {
         return tag
     }
     // 태그 끝
+
+    // 기기 흔들기
+    //흔들었을때 센서 감지
+    override fun onSensorChanged(event: SensorEvent?) {
+        // x,y,z 축의 값을 받아온다
+        val x = event!!.values[0]
+        val y = event.values[1]
+        val z = event.values[2]
+        // 중력 가속도값으로 나눈 값으로 만든다
+        val gX = x / SensorManager.GRAVITY_EARTH
+        val gY = y / SensorManager.GRAVITY_EARTH
+        val gZ = z / SensorManager.GRAVITY_EARTH
+
+        var gForce = sqrt(gX * gX + gY * gY + gZ * gZ).toFloat()
+        // 진동을 감지했을 때
+        // gforce가 기준치 이상일 경우
+        if (gForce > 2.0) {
+            Log.d(TAG, "기기 흔들림.")
+            // 기기 진동
+            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(200) // 200 ms
+
+            // Pay로 이동
+            navHostFragment.childFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_main, PayFragment()).addToBackStack(null).commit()
+        }
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        // 그냥 생성되어야만 함.
+    }
 }
