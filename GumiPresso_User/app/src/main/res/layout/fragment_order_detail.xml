@@ -51,6 +51,8 @@
 
 
                     <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        app:menu="@menu/menu_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:contentInsetStart="0dp"
@@ -61,7 +63,6 @@
                         app:contentInsetStartWithNavigation="0dp"
                         app:layout_collapseMode="pin"
                         app:title="@{productVM.product.name}"
-                        app:titleMarginEnd="50dp"
                         android:paddingBottom="10dp">
 
                         <ImageView

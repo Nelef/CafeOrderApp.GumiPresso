@@ -76,7 +76,7 @@ fun toAnonymous(view: TextView, src: String) {
         view.text = src + "***"
     }
 }
-
+     
 @BindingAdapter("toString")
 fun toString(view: TextView, src: Int) {
     view.text = src.toString()
