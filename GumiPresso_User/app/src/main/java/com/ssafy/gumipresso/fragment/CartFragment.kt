@@ -67,7 +67,6 @@ class CartFragment : Fragment() {
         }
 
         userTable = "T/O"
-        cartViewModel.setCartTotalValue()
         binding.viewmodel = cartViewModel
 
         binding.apply {

@@ -54,7 +54,6 @@ class CartViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO){
             try {
                 val response = Retrofit.orderService.order(orderForm)
-                clearCart()
             }catch (e: Exception){
                 Log.d(TAG, "orderCart: ${e.message}")
             }
