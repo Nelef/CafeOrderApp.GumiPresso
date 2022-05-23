@@ -199,6 +199,7 @@
                         android:background="@drawable/textview_regular"
                         android:hint="이동할 URL을 입력해 주세요"
                         android:text="@{bannerVM.banner.url}"
+                        android:singleLine="true"
                         android:minHeight="30dp"
                         android:inputType="textUri"
                         android:textColor="@color/black" />

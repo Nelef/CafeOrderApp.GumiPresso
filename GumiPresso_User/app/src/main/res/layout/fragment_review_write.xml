@@ -143,6 +143,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/textview_regular"
                         android:hint="리뷰를 입력해주세요"
+                        android:singleLine="true"
                         android:minHeight="100dp"
                         android:textColor="@color/black" />
                 </androidx.cardview.widget.CardView>
