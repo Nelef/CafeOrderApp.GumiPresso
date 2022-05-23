@@ -25,5 +25,8 @@
 		insert into t_user (id, name) 
 		values (#{id}, #{name})
 	</insert>
+	<update id="updateMoney" parameterType="User">
+		update t_user set money = #{money} where id = #{id}
+	</update>
 
 </mapper>

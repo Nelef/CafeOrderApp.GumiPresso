@@ -13,6 +13,7 @@ public class User {
 	private String pass;
 	@ApiModelProperty(value="스탬프")
 	private Integer stamps;
+	private Integer money;
 
 	public User() {
 	}
@@ -53,38 +54,90 @@ public class User {
 		this.pass = pass;
 		this.stamps = stamps;
 	}
+	
+	
+
+	public User(String id, String name, String pass, Integer stamps, Integer money) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.pass = pass;
+		this.stamps = stamps;
+		this.money = money;
+	}
+
+
+
 
 	public String getId() {
 		return id;
 	}
 
+
+
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
+
+
 
 	public String getName() {
 		return name;
 	}
 
+
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+
 
 	public String getPass() {
 		return pass;
 	}
 
+
+
+
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
+
+
+
 
 	public Integer getStamps() {
 		return stamps;
 	}
 
+
+
+
 	public void setStamps(Integer stamps) {
 		this.stamps = stamps;
 	}
+
+
+
+
+	public Integer getMoney() {
+		return money;
+	}
+
+
+
+
+	public void setMoney(Integer money) {
+		this.money = money;
+	}
+
+
+
 
 	@Override
 	public String toString() {
@@ -97,6 +150,8 @@ public class User {
 		builder.append(pass);
 		builder.append(", stamps=");
 		builder.append(stamps);
+		builder.append(", money=");
+		builder.append(money);
 		builder.append("]");
 		return builder.toString();
 	}

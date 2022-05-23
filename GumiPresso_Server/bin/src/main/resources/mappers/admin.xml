@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.through.model.repo.AdminRepo">
+
+	<insert id="insertAdmin" parameterType="User">
+		insert into t_admin (id, name, pass) 
+		values (#{id}, #{name}, #{pass})
+	</insert>
+	<select id="loginAdmin" parameterType="User" resultType="User">
+		select * from t_admin where id = #{id}
+	</select>
+	<select id="getAdminUser" parameterType="String" resultType="User">
+		select * from t_admin where id = #{id}
+	</select>
+	<select id="checkId" parameterType="String" resultType="Integer">
+		select count(id) from t_admin where id = #{id}
+	</select>	
+
+	<select id="selectOrderByCompleted" resultType="Order">
+		select * from t_order where completed = 'N'
+	</select>
+	
+	<select id="selectOrderDetailByOrderId" parameterType="String" resultType="OrderDetail">
+		select * from t_order_detail, t_product
+		where t_order_detail.order_id = #{orderId}
+		and t_order_detail.product_id = t_product.id
+	</select>	
+	<update id="orderComplete" parameterType="Integer">
+		update t_order set completed = 'Y' where o_id = #{orderId}
+	</update>
+	
+	<select id="selectYear" parameterType ="DateDto" resultType="Sales">
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(`order_time`) = #{year} group by MONTH(`order_time`) order by order_time;
+	</select>
+	<select id="selectYearType" parameterType ="DateDto" resultType="Sales">
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(`order_time`) = #{year} group by MONTH(`order_time`), type order by order_time;
+	</select>
+	<select id="selectMonth" parameterType ="DateDto" resultType="Sales">
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} group by DATE(`order_time`) order by order_time;
+	</select>
+	<select id="selectMonthType" parameterType ="DateDto" resultType="Sales">
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} group by DATE(`order_time`), type order by order_time;
+	</select>
+	<select id="selectDay" parameterType ="DateDto" resultType="Sales">
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, HOUR(order_time) as hour , sum(price*quantity) as total from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(order_time) = #{month} and DAY(order_time) = #{day} group by HOUR(order_time) order by order_time;
+	</select>
+	<select id="selectDayType" parameterType ="DateDto" resultType="Sales">
+		select YEAR(`order_time`)as year, MONTH(`order_time`) as month, DAY(`order_time`) as day, HOUR(`order_time`) as hour, sum(price*quantity) as total, type from t_order, t_order_detail, t_product where o_id = order_id and product_id = id and YEAR(order_time) = #{year} and MONTH(`order_time`) = #{month} and DAY(`order_time`) = #{day} group by HOUR(`order_time`), type order by order_time;
+	</select>
+	
+	<insert id="insertFCMTokenUser" parameterType ="hashMap">
+		insert into t_fcm_token(user_id, token, state) values(#{userId}, #{token}, #{state})
+	</insert>
+	<update id="updateFCMTokenUser" parameterType ="hashMap">
+		update t_fcm_token set token = #{token}, state = #{state} where user_id = #{userId}
+	</update>
+	<select id="selectAllToken" resultType="String">
+		select token from t_fcm_token where state = "true"
+	</select>
+	
+	<insert id="insertProduct">
+		INSERT INTO t_product (name, type, price, img) VALUES (#{name}, #{type}, #{price}, #{img})
+	</insert>
+	<update id="updateProduct">
+		update t_product set name = #{name}, type = #{type}, price = #{price}, img = #{img} where id=#{id}
+	</update>
+	<delete id="deleteProduct">
+		delete from t_product where id = #{id}
+	</delete>
+	
+</mapper>

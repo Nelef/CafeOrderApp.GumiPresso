@@ -20,8 +20,8 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		final ApiInfo apiInfo = new ApiInfoBuilder()
-				.title("11조 API")
-				.description("<h3>정봉진 김명지</h3>")
+				.title("10조 API")
+				.description("<h3>정봉진 장우영</h3>")
 				.contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com"))
 				.license("MIT License")
 				.version("1.0")

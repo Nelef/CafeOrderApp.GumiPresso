@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_manageFragment_to_tableFragment"
             app:destination="@id/tableFragment" />
+        <action
+            android:id="@+id/action_manageFragment_to_payManageFragment"
+            app:destination="@id/payManageFragment" />
     </fragment>
     <fragment
         android:id="@+id/pushMessageFragment"
@@ -64,4 +67,9 @@
         android:id="@+id/tableFragment"
         android:name="com.ssafy.gumipresso_admin.fragment.manage.TableFragment"
         android:label="TableFragment" />
+    <fragment
+        android:id="@+id/payManageFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.manage.PayManageFragment"
+        android:label="PayManageFragment" >
+    </fragment>
 </navigation>

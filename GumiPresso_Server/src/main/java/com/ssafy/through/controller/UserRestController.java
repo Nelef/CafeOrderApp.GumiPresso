@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -192,7 +193,13 @@ public class UserRestController {
 		fcmUtil.send_FCM(map.get("token"), map.get("title"), map.get("content"));
 		return "d";
 	}
-
 	
-
+	@PutMapping("/money")
+	public ResponseEntity<?> updateMoney(@RequestBody User user){
+		int result = uService.update(user);
+		if(result > 0) {
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+	}
 }

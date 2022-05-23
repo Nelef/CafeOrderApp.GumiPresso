@@ -16,4 +16,6 @@ public interface UserService {
 	int orderUseOrderForm(AosOrderForm orderForm);
 	
 	int insertKakaoUser(User user);
+	
+	int updateMoney(User user);
 }
