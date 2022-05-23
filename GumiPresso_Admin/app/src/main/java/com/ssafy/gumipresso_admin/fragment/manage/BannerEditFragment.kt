@@ -62,13 +62,21 @@ class BannerEditFragment : Fragment() {
                 checkPermission()
             }
             btnRegist.setOnClickListener {
-                if(imageUrl == ""){
-                    bannerViewModel.updateBanner(banner)
+                val url = etBannerUrl.text.toString()
+                if(url.trim().isNotEmpty()){
+                    banner.url = if(!url.contains("https://") || !url.contains("http://"))"https://"+url else url
+                    if(imageUrl == ""){
+                        bannerViewModel.updateBanner(banner)
+                    }else{
+                        bannerViewModel.updateBannerImage(banner, imageUrl)
+                    }
+                    Toast.makeText(context, "저장 되었습니다", Toast.LENGTH_SHORT).show()
+                    (activity as MainActivity).navController.navigate(R.id.action_bannerEditFragment_to_manageFragment)
                 }else{
-                    bannerViewModel.updateBannerImage(banner, imageUrl)
+                    Toast.makeText(context, "항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(context, "저장 되었습니다", Toast.LENGTH_SHORT).show()
-                (activity as MainActivity).navController.navigate(R.id.action_bannerEditFragment_to_manageFragment)
+
+
             }
             btnDelete.setOnClickListener {
                 bannerViewModel.deleteBanner(banner)

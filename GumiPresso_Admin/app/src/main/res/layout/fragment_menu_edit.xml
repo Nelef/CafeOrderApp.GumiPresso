@@ -224,7 +224,7 @@
                         android:background="@drawable/textview_regular"
                         android:hint="가격을 입력해주세요"
                         android:singleLine="true"
-                        android:text="@{productVM.product.price +``}"
+                        android:text="@{productVM.product.price == 0 ? `` : productVM.product.price+``}"
                         android:inputType="number"
                         android:minHeight="30dp"
                         android:textColor="@color/black" />
