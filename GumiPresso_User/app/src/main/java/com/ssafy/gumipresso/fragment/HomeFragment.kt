@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
     private var tableList = listOf<Table>()
     private lateinit var bannerAdapter: BannerAdapter
     private var bannerList = listOf<Banner>()
-    private var currentPosition = Int.MAX_VALUE / 2
+    private var bannerPosition = 0
     private var myHandler = MyHandler()
 
     override fun onCreateView(
@@ -123,6 +123,14 @@ class HomeFragment : Fragment() {
         }
         // indicator(. . .) 설정
         binding.dotsIndicator.setViewPager2(binding.viewPager2)
+        // AutoScroll 설정
+        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                bannerPosition = position
+            }
+        })
+
     }
 
     // 자동 스크롤
@@ -131,7 +139,7 @@ class HomeFragment : Fragment() {
         myHandler.sendEmptyMessageDelayed(0, intervalTime)
     }
 
-    private fun autoScrollStop(){
+    private fun autoScrollStop() {
         myHandler.removeMessages(0) // 핸들러를 중지시킴
     }
 
@@ -139,8 +147,14 @@ class HomeFragment : Fragment() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
 
-            if(msg.what == 0) {
-                binding.viewPager2.setCurrentItem(currentPosition, true)
+            if (msg.what == 0) {
+                // 끝에 도달시
+                if (bannerPosition == bannerList.size - 1) {
+                    bannerPosition = 0
+                } else {
+                    bannerPosition++
+                }
+                binding.viewPager2.setCurrentItem(bannerPosition, true)
                 autoScrollStart(5000) // 5초
             }
         }
