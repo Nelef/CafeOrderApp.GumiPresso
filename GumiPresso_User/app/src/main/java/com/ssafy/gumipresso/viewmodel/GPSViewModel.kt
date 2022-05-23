@@ -53,7 +53,7 @@ class GPSViewModel:ViewModel() {
         }
     }
 
-    private val _arrivalTime =  MutableLiveData<String>("매장과의 거리 계산중")
+    private val _arrivalTime =  MutableLiveData<String>(null)
     val arrivalTime: LiveData<String>
         get() = _arrivalTime
 

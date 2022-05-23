@@ -12,8 +12,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginTop="20dp">
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview_member"
@@ -29,8 +29,8 @@
             <ImageView
                 android:id="@+id/iv_product_image"
                 loadImage="@{cart.menuImg}"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintCircleRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
             android:text="@{cart.menuName}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="17dp"
@@ -69,27 +68,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
             android:text="@{cart.totalPrice +`원`}"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/btn_menu_delete"
+            app:layout_constraintEnd_toStartOf="@id/btn_menu_delete"
+            app:layout_constraintTop_toTopOf="@id/btn_menu_delete"
             tools:text="000 원" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_menu_delete"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button_color"
             android:text="삭제"
             android:textColor="@color/coffee_point_red"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/divider2"
+            style="@style/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
