@@ -123,6 +123,23 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.cardview.widget.CardView>
 
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:dampingRatio="0.5"
+                    app:dotsCornerRadius="20dp"
+                    app:dotsColor="@color/gumipresso_gray"
+                    app:dotsSize="10dp"
+                    app:dotsSpacing="6dp"
+                    app:dotsStrokeWidth="1dp"
+                    app:stiffness="300"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/cardview_banner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
                 <LinearLayout
                     android:id="@+id/divider2"
                     style="@style/divider"
@@ -132,7 +149,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_banner" />
+                    app:layout_constraintTop_toBottomOf="@id/dots_indicator" />
 
                 <TextView
                     android:id="@+id/tv_table_list"

@@ -113,4 +113,7 @@ dependencies {
 
     // 생체인증
     implementation 'androidx.biometric:biometric:1.0.1'
+
+    // 인디케이터
+    implementation("com.tbuonomo:dotsindicator:4.3")
 }

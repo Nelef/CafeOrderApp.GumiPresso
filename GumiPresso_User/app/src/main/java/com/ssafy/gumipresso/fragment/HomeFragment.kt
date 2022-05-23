@@ -3,6 +3,8 @@ package com.ssafy.gumipresso.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +28,8 @@ import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.viewmodel.*
 
-private const val TAG ="HomeFragment"
+private const val TAG = "HomeFragment"
+
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val userViewModel: UserViewModel by activityViewModels()
@@ -39,6 +42,8 @@ class HomeFragment : Fragment() {
     private var tableList = listOf<Table>()
     private lateinit var bannerAdapter: BannerAdapter
     private var bannerList = listOf<Banner>()
+    private var currentPosition = Int.MAX_VALUE / 2
+    private var myHandler = MyHandler()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,48 +64,48 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun initViewModel(){
+    fun initViewModel() {
         noticeViewModel.getNoticeList()
-        noticeViewModel.notice.observe(viewLifecycleOwner){
+        noticeViewModel.notice.observe(viewLifecycleOwner) {
             binding.noticeVM = noticeViewModel
         }
-        userViewModel.user.observe(viewLifecycleOwner){
-            if(userViewModel.user.value != null){
+        userViewModel.user.observe(viewLifecycleOwner) {
+            if (userViewModel.user.value != null) {
                 binding.homeUserViewModel = userViewModel
                 orderViewModel.getOrderList(userViewModel.user.value!!.id)
             }
         }
         tableViewModel.getOrdertable()
-        tableViewModel.tableList.observe(viewLifecycleOwner){
-            if(it != null){
+        tableViewModel.tableList.observe(viewLifecycleOwner) {
+            if (it != null) {
                 tableList = tableViewModel.tableList.value as List<Table>
                 initTableAdapter()
             }
         }
-        tableViewModel.flagTableChange.observe(viewLifecycleOwner){
+        tableViewModel.flagTableChange.observe(viewLifecycleOwner) {
             Log.d(TAG, "initViewModel: flageTableChange")
-            if(tableList.isNotEmpty()){
+            if (tableList.isNotEmpty()) {
                 initTableAdapter()
             }
         }
         bannerViewModel.getBanner()
-        bannerViewModel.bannerList.observe(viewLifecycleOwner){
-            if(it != null){
+        bannerViewModel.bannerList.observe(viewLifecycleOwner) {
+            if (it != null) {
                 bannerList = bannerViewModel.bannerList.value as List<Banner>
                 initBannerAdapter()
             }
         }
     }
 
-    private fun initTableAdapter(){
+    private fun initTableAdapter() {
         tableAdapter = TableAdapter(tableList)
         binding.recyclerTableList.apply {
-            layoutManager = GridLayoutManager (context, 5)
+            layoutManager = GridLayoutManager(context, 5)
             adapter = tableAdapter
         }
     }
 
-    private fun initBannerAdapter(){
+    private fun initBannerAdapter() {
         Log.d(TAG, "initBannerAdapter: $bannerList")
         bannerAdapter = BannerAdapter(bannerList)
         binding.viewPager2.adapter = bannerAdapter
@@ -111,10 +116,45 @@ class HomeFragment : Fragment() {
                 try {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(address))
                     startActivity(intent)
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     Toast.makeText(requireContext(), "BannerLinkError", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+        // indicator(. . .) 설정
+        binding.dotsIndicator.setViewPager2(binding.viewPager2)
+    }
+
+    // 자동 스크롤
+    private fun autoScrollStart(intervalTime: Long) {
+        myHandler.removeMessages(0)
+        myHandler.sendEmptyMessageDelayed(0, intervalTime)
+    }
+
+    private fun autoScrollStop(){
+        myHandler.removeMessages(0) // 핸들러를 중지시킴
+    }
+
+    private inner class MyHandler : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+
+            if(msg.what == 0) {
+                binding.viewPager2.setCurrentItem(currentPosition, true)
+                autoScrollStart(5000) // 5초
+            }
+        }
+    }
+
+    // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
+    override fun onResume() {
+        super.onResume()
+        autoScrollStart(5000) // 5초
+    }
+
+    // 다른 페이지로 떠나있는 동안 스크롤이 동작할 필요는 없음. 정지
+    override fun onPause() {
+        super.onPause()
+        autoScrollStop()
     }
 }

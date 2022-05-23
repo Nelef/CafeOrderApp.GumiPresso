@@ -14,7 +14,7 @@ class BannerAdapter(var list: List<Banner>) : RecyclerView.Adapter<BannerAdapter
         fun bind(item: Banner) {
             binding.banner = item
         }
-        fun bindClickListener(listener: BannerAdapter.OnBannerItemClick) {
+        fun bindClickListener(listener: OnBannerItemClick) {
             binding.root.setOnClickListener {
                 listener.onClick(it, adapterPosition)
             }
