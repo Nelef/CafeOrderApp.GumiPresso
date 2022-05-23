@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gumipresso_gray">#FF54565a</color>
+    <color name="gumipresso_red">#FFd60037</color>
     <color name="coffee_dark_brown">#493319</color>
     <color name="coffee_brown">#907f60</color>
     <color name="coffee_light_gray">#c7ccd3</color>

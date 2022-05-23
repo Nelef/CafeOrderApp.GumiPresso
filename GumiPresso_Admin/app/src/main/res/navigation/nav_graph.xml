@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_manageFragment_to_bannerFragment"
             app:destination="@id/bannerFragment" />
+        <action
+            android:id="@+id/action_manageFragment_to_tableFragment"
+            app:destination="@id/tableFragment" />
     </fragment>
     <fragment
         android:id="@+id/pushMessageFragment"
@@ -57,4 +60,8 @@
             android:id="@+id/action_bannerEditFragment_to_manageFragment"
             app:destination="@id/manageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/tableFragment"
+        android:name="com.ssafy.gumipresso_admin.fragment.manage.TableFragment"
+        android:label="TableFragment" />
 </navigation>

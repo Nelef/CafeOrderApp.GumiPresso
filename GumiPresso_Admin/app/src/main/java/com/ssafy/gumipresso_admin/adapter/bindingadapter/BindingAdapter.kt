@@ -3,6 +3,7 @@ package com.ssafy.gumipresso_admin.adapter.bindingadapter
 
 import android.net.Uri
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -18,3 +19,11 @@ fun loadImage(view: ImageView, src: String?) {
         .into(view)
 }
 
+@BindingAdapter("tableUse")
+fun tableUse(view: ConstraintLayout, src: Boolean) {
+    if(src){
+        view.setBackgroundResource(R.color.gumipresso_red)
+    } else {
+        view.setBackgroundResource(R.color.gumipresso_gray)
+    }
+}
