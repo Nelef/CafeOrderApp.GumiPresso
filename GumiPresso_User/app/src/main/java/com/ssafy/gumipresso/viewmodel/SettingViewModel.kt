@@ -47,6 +47,17 @@ class SettingViewModel: ViewModel() {
         _autoLoginState.value = SettingsUtil().getAutoLoginState()
     }
 
+    private val _shakeToPay = MutableLiveData<Boolean>()
+    val shakeToPay: LiveData<Boolean>
+        get() = _shakeToPay
+    fun setShakeToPayState(){
+        _shakeToPay.value = !_shakeToPay.value!!
+        SettingsUtil().setShakeToPayState(_shakeToPay.value!!)
+    }
+    fun getShakeToPayState(){
+        _shakeToPay.value = SettingsUtil().getShakeToPayState()
+    }
+
     fun insertFCMToken(){
         viewModelScope.launch(Dispatchers.IO){
             try {

@@ -29,5 +29,11 @@ class SettingsUtil {
     fun setFirstRunCheck(accept: Boolean){
         ApplicationClass.firstRunCheck.edit().putBoolean("State", accept).apply()
     }
+    fun setShakeToPayState(accept: Boolean){
+        ApplicationClass.shakeToPayPrefs.edit().putBoolean("State", accept).apply()
+    }
+    fun getShakeToPayState(): Boolean{
+        return ApplicationClass.shakeToPayPrefs.getBoolean("State", true)
+    }
 
 }
