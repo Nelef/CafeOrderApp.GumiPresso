@@ -53,7 +53,8 @@ public class CommentRestController {
 	{
 		int result = cService.insert(comment);		
 		if(result > 0) {
-			List<Comment> comments = cService.search(comment.getProductId());			
+			List<Comment> comments = cService.search(comment.getProductId());
+			System.out.println(comment.getProductId());
 			return new ResponseEntity<List<Comment>>(comments, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -66,7 +67,11 @@ public class CommentRestController {
 		System.out.println(comment);
 		iService.fileUpload(imageFile);
 		int result = cService.insert(comment);
-		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
+		if(result > 0) { 
+			List<Comment> comments = cService.search(comment.getProductId());
+			System.out.println(comment.getProductId());
+			return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+			}
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 	
@@ -87,7 +92,11 @@ public class CommentRestController {
 		Comment comment = gson.fromJson(json, Comment.class);
 		iService.fileUpload(imageFile);
 		int result = cService.update(comment);
-		if(result > 0) return new ResponseEntity<Void>(HttpStatus.OK);
+		if(result > 0) {
+			List<Comment> comments = cService.search(comment.getProductId());
+			System.out.println(comment.getProductId());
+			return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+		}
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 	

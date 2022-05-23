@@ -48,6 +48,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<Order> selectOrderByCompleted() {
+		System.out.println("################"+ repo.selectOrderByCompleted());
 		return repo.selectOrderByCompleted();
 	}
 
@@ -63,8 +64,8 @@ public class AdminServiceImpl implements AdminService{
 		for(int i = 0; i < orders.size(); i++) {
 			Order order = orders.get(i);
 			detailList = selectOrderDetailByOrderId(order.getoId().toString());
-			list.add(new RecentOrder(order.getoId(), order.getOrderTime(), order.getOrderTable(), 
-					order.getCompleted(), detailList));
+			list.add(new RecentOrder(order.getoId(),order.getUserId(), order.getOrderTime(), order.getOrderTable(), 
+					order.getCompleted(), order.getArrivalTime(), order.getRemainTime(), detailList));
 		}
 		
 		return list;

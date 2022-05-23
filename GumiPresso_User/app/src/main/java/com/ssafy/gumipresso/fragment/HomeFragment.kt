@@ -83,7 +83,6 @@ class HomeFragment : Fragment() {
             }
         }
         tableViewModel.flagTableChange.observe(viewLifecycleOwner) {
-            Log.d(TAG, "initViewModel: flageTableChange")
             if (tableList.isNotEmpty()) {
                 initTableAdapter()
             }
@@ -106,7 +105,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initBannerAdapter() {
-        Log.d(TAG, "initBannerAdapter: $bannerList")
         bannerAdapter = BannerAdapter(bannerList)
         binding.viewPager2.adapter = bannerAdapter
         binding.viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL // 방향을 가로로

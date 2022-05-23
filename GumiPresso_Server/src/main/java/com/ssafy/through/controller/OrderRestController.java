@@ -66,8 +66,9 @@ public class OrderRestController {
 	@ApiOperation(value = "주문시 -> 주문 insert List<OrderForm> + update User.stamps ", response = OrderForm.class)
 	@PostMapping("/order")
 	public ResponseEntity<?> insertOrder(@RequestBody List<OrderForm> orderForm) {
-		Order order = new Order(orderForm.get(1).getUserId());
+		Order order = new Order(orderForm.get(1).getUserId());		
 		int result = oService.insert(order);
+		
 
 		if (result > 0) {
 			int result1 = oService.search();
@@ -117,7 +118,7 @@ public class OrderRestController {
 		if (orderList != null) {
 			for (int i = 0; i < orderList.size(); i++) {
 				List<OrderDetail> orderDetailList = detailService.select(orderList.get(i).getoId().toString());
-				RecentOrder recentOrder = new RecentOrder(orderList.get(i).getoId(), orderList.get(i).getOrderTime(),
+				RecentOrder recentOrder = new RecentOrder(orderList.get(i).getoId(), orderList.get(i).getOrderTime(), orderList.get(i).getOrderTable(), orderList.get(i).getCompleted(),
 						orderDetailList);
 				recentOrderList.add(recentOrder);
 			}

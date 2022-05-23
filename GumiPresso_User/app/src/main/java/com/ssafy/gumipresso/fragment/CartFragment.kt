@@ -122,9 +122,9 @@ class CartFragment : Fragment() {
 
     private fun makeOrder() {
         var order = Order((userViewModel.user.value as User).id, userTable)
-        if(gpsViewModel.location?.value != null){
-            order.arrival_time = gpsViewModel.arrivalTime.value
-            order.remain_time = gpsViewModel.remainTime.value
+        if(gpsViewModel.arrivalTime.value != null){
+            order.arrivalTime = gpsViewModel.arrivalTime.value
+            order.remainTime = gpsViewModel.remainTime.value
         }
         cartViewModel.orderCart(order)
         userViewModel.getUserInfo()

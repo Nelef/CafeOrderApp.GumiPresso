@@ -9,7 +9,7 @@ create table t_user(
 	id varchar(100) primary key,
     name varchar(100) not null,
     pass varchar(100) default "0",
-    stamps integer default 0    
+    stamps integer default 0  
 );
 create table t_product(
 	id integer auto_increment primary key,
@@ -29,6 +29,8 @@ create  table t_order(
     remain_time varchar(100) default '도착 정보가 없습니다.',
     constraint fk_order_user foreign key (user_id) references t_user(id) on delete cascade
 );
+
+select * from t_order;
 
 create table t_order_detail(
 	d_id integer auto_increment primary key,

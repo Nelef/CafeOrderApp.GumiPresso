@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_simple_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:autoSizeMaxTextSize="16sp"
@@ -40,7 +40,8 @@
                 android:autoSizeStepGranularity="2sp"
                 android:autoSizeTextType="uniform"
                 android:text="@{orderVM.totalTitle}"
-                android:textSize="16sp"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_simple_check"
                 app:layout_constraintStart_toEndOf="@id/tv_simple_id"
@@ -51,31 +52,58 @@
             <ImageView
                 android:id="@+id/iv_simple_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="10dp"
                 android:src="@drawable/check"
                 app:layout_constraintEnd_toStartOf="@id/iv_dropdown"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/iv_dropdown" />
 
             <ImageView
                 android:id="@+id/iv_dropdown"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:src="@drawable/arrow_drop_down"
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_simple_name" />
 
             <TextView
                 android:id="@+id/tv_order_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@{orderVM.orderTime}"
-                android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/iv_dropdown"
+                android:text="@{`주문 시간: `+orderVM.orderTime}"
+                app:layout_constraintTop_toBottomOf="@id/tv_simple_name"
+                android:layout_marginVertical="5dp"
                 tools:text="2022/05/18 10:11" />
 
+            <TextView
+                android:id="@+id/tv_arrival_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="@{orderVM.arrivalTime == null? `도착 정보가 없습니다` : `도착 예정 시간: ` +orderVM.arrivalTime}"
+                app:layout_constraintTop_toBottomOf="@id/tv_order_time"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="도착시간:"/>
+
+            <TextView
+                android:id="@+id/tv_title_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완료"
+                app:layout_constraintTop_toBottomOf="@id/iv_simple_check"
+                app:layout_constraintStart_toStartOf="@id/iv_simple_check"
+                app:layout_constraintEnd_toEndOf="@id/iv_simple_check"
+                />
+
+            <TextView
+                android:id="@+id/tv_title_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상세"
+                app:layout_constraintTop_toBottomOf="@id/iv_dropdown"
+                app:layout_constraintStart_toStartOf="@id/iv_dropdown"
+                app:layout_constraintEnd_toEndOf="@id/iv_dropdown"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

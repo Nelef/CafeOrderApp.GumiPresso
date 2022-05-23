@@ -30,7 +30,6 @@ class BannerAdapter(var list: List<Banner>) : RecyclerView.Adapter<BannerAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d(TAG, "onBindViewHolder: $list")
         val item = list[position]
         holder.bind(item)
     }

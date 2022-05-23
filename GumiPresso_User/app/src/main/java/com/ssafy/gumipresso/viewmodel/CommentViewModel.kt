@@ -87,6 +87,7 @@ class CommentViewModel: ViewModel() {
                     val response = Retrofit.commentService.insertCommentImage(imageBody, commentBody)
                     if(response.isSuccessful && response.body() != null){
                         _commentList.postValue(response.body() as MutableList<Comment>)
+
                     }
                     else{
                         Log.d(TAG, "getComments: ${response}")

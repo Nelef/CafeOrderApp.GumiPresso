@@ -27,6 +27,7 @@ class OrderViewModel : ViewModel() {
                 val response = Retrofit.orderService.getOrderListByCompleted()
                 if (response.isSuccessful && response.body() != null) {
                     _orderList.postValue(response.body() as MutableList<RecentOrder>)
+                    Log.d(TAG, "getOrderListByCompleted: ${response.body()}")
                 }
             } catch (e: Exception) {
                 Log.d(TAG, "getOrderListByCompleted: ${e.message}")
@@ -70,6 +71,16 @@ class OrderViewModel : ViewModel() {
     private val _orderTime = MutableLiveData<String>()
     val orderTime: LiveData<String>
         get() = _orderTime
+    private val _remainTime = MutableLiveData<String?>()
+    val remainTime: LiveData<String?>
+        get() = _remainTime
+    private val _arrivalTime = MutableLiveData<String?>()
+    val arrivalTime: LiveData<String?>
+        get() = _arrivalTime
+    private val _userId = MutableLiveData<String>()
+    val userId: LiveData<String>
+        get() = _userId
+    
 
     fun getTotalValue() {
         val detailList = (_recentOrder.value as RecentOrder).recentOrderDetail
@@ -89,6 +100,10 @@ class OrderViewModel : ViewModel() {
         _orderId.value = "주문번호: ${(_recentOrder.value as RecentOrder).oId}"
         _orderTime.value =
             DateFormatUtil.convertYYMMDDHHMM((_recentOrder.value as RecentOrder).orderTime)
+
+        _remainTime.value = (_recentOrder.value as RecentOrder).remain_time
+        _arrivalTime.value = (_recentOrder.value as RecentOrder).arrival_time
+        _userId.value = (_recentOrder.value as RecentOrder).user_id
     }
 
     private val _detailPrice = MutableLiveData<String>()

@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.model.dto.RecentOrderDetail
 import com.ssafy.gumipresso.util.DateFormatUtil
@@ -58,6 +59,7 @@ fun loadImage(view: ImageView, src: String?) {
     Glide.with(view.context)
         .load(Uri.parse("http://ssafymobile.iptime.org:7890/images/${src}"))
         .error(R.drawable.icon_empty_image)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(view)
 }
 

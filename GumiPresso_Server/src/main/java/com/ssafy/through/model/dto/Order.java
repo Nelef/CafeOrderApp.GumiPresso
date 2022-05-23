@@ -20,8 +20,8 @@ public class Order {
 	private Date orderTime;
 	@ApiModelProperty(value="completed")
 	private String completed;
-	private String arrival_time;
-	private String remain_time;
+	private String arrivalTime;
+	private String remainTime;
 	
 	public Order() {
 	}
@@ -46,19 +46,17 @@ public class Order {
 		this.orderTime = orderTime;
 		this.completed = completed;
 	}
-	
-	
 
-	public Order(Integer oId, String userId, String orderTable, Date orderTime, String completed, String arrival_time,
-			String remain_time) {
+	public Order(Integer oId, String userId, String orderTable, Date orderTime, String completed, String arrivalTime,
+			String remainTime) {
 		super();
 		this.oId = oId;
 		this.userId = userId;
 		this.orderTable = orderTable;
 		this.orderTime = orderTime;
 		this.completed = completed;
-		this.arrival_time = arrival_time;
-		this.remain_time = remain_time;
+		this.arrivalTime = arrivalTime;
+		this.remainTime = remainTime;
 	}
 
 	public Integer getoId() {
@@ -101,20 +99,20 @@ public class Order {
 		this.completed = completed;
 	}
 
-	public String getArrival_time() {
-		return arrival_time;
+	public String getArrivalTime() {
+		return arrivalTime;
 	}
 
-	public void setArrival_time(String arrival_time) {
-		this.arrival_time = arrival_time;
+	public void setArrivalTime(String arrivalTime) {
+		this.arrivalTime = arrivalTime;
 	}
 
-	public String getRemain_time() {
-		return remain_time;
+	public String getRemainTime() {
+		return remainTime;
 	}
 
-	public void setRemain_time(String remain_time) {
-		this.remain_time = remain_time;
+	public void setRemainTime(String remainTime) {
+		this.remainTime = remainTime;
 	}
 
 	@Override
@@ -130,13 +128,13 @@ public class Order {
 		builder.append(orderTime);
 		builder.append(", completed=");
 		builder.append(completed);
-		builder.append(", arrival_time=");
-		builder.append(arrival_time);
-		builder.append(", remain_time=");
-		builder.append(remain_time);
+		builder.append(", arrivalTime=");
+		builder.append(arrivalTime);
+		builder.append(", remainTime=");
+		builder.append(remainTime);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	
+		
 }

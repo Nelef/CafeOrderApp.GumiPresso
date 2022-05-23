@@ -7,7 +7,7 @@
 
 	<insert id="insert" parameterType="Order">
 		INSERT INTO t_order(user_id, order_table, arrival_time, remain_time) 
-		VALUES (#{userId}, #{orderTable}, #{arrival_time}, #{remain_time})
+		VALUES (#{userId}, #{orderTable}, #{arrivalTime}, #{remainTime})
 	</insert>
 	
 	<select id="select" parameterType="String" resultType="Order">

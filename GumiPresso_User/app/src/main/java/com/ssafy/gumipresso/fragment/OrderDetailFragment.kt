@@ -120,6 +120,7 @@ class OrderDetailFragment : Fragment() {
 
     private fun initViewModel() {
         productId = arguments?.getString("product_id").toString()
+        Log.d(TAG, "##########################initViewModel: ${productId} ")
 
         productViewModel.getSelectProduct(productId)
         commentViewModel.getComments(productId.toInt())
@@ -136,8 +137,9 @@ class OrderDetailFragment : Fragment() {
         commentViewModel.avgRating.observe(viewLifecycleOwner) {
             binding.commentVM = commentViewModel
         }
-
+        
         commentViewModel.commentList.observe(viewLifecycleOwner) {
+            Log.d(TAG, "initViewModel: ${it}")
             commentViewModel.setAverageRating()
             commentList = it
             initAdapter()
