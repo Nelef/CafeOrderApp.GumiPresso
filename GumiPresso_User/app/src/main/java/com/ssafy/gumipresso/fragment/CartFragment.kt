@@ -127,6 +127,7 @@ class CartFragment : Fragment() {
             order.remainTime = gpsViewModel.remainTime.value
         }
         cartViewModel.orderCart(order)
+        cartViewModel.clearCart()
         userViewModel.getUserInfo()
         userViewModel.sendFCMPushMessage(
             PushMessageUtil().getFcmToken(),
