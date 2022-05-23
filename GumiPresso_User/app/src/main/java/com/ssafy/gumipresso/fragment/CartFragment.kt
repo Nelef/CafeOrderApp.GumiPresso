@@ -126,11 +126,10 @@ class CartFragment : Fragment() {
         OrderCheckDialog().apply {
             onClickConfirm = object : OrderCheckDialog.OnClickConfirm{
                 override fun onClick(usePay: Boolean) {
-                    if(usePay){
-                        order.completed = "P"
-                        userViewModel.setUserMoney(cartViewModel.totalCartPrice.value!!)
-                        userViewModel.updateMoney()
-                    }
+
+                    order.completed = if(usePay)"P" else "N"
+                    userViewModel.setUserMoney(cartViewModel.totalCartPrice.value!!)
+                    userViewModel.updateMoney()
                     if(gpsViewModel.arrivalTime.value != null){
                         order.arrivalTime = gpsViewModel.arrivalTime.value
                         order.remainTime = gpsViewModel.remainTime.value

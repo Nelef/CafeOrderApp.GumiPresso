@@ -13,6 +13,6 @@ data class RecentOrder(var oId: Int, var orderTime: Date, var orderTable: String
     }
 
     override fun toString(): String {
-        return "${super.toString()}  ${this.arrival_time} ${this.remain_time}"
+        return "${super.toString()}  ${this.arrival_time} ${this.remain_time} ${this.completed}"
     }
 }

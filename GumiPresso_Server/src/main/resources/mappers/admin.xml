@@ -20,7 +20,7 @@
 	</select>	
 
 	<select id="selectOrderByCompleted" resultType="Order">
-		select * from t_order where completed = 'N'
+		select * from t_order where completed != 'Y'
 	</select>
 	
 	<select id="selectOrderDetailByOrderId" parameterType="String" resultType="OrderDetail">

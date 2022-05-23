@@ -57,6 +57,7 @@ class HomeFragment : Fragment() {
             binding.orderVM = orderViewModel
             orderList = it
             initAdapter()
+
         }
         userViewModel.getAdminUser()
         orderViewModel.getOrderListByCompleted()

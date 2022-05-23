@@ -64,6 +64,7 @@ class OrderAdapter(val list: MutableList<RecentOrder>): RecyclerView.Adapter<Ord
             }
 
             binding.orderVM!!.setOrders(list[adapterPosition])
+            Log.d(TAG, "bind: ${list[adapterPosition]}")
             binding.orderVM!!.getTotalValue()
             val deatailAdapter =  OrderDetailAdapter(list[adapterPosition].recentOrderDetail)
 

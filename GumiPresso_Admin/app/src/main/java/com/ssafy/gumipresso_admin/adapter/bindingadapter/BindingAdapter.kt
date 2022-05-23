@@ -3,6 +3,7 @@ package com.ssafy.gumipresso_admin.adapter.bindingadapter
 
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -26,4 +27,14 @@ fun tableUse(view: ConstraintLayout, src: Boolean) {
     } else {
         view.setBackgroundResource(R.color.gumipresso_gray)
     }
+}
+
+@BindingAdapter("orderStateTitle")
+fun orderStateTitle(view: TextView, src: String?) {
+    if(src == "P"){
+        view.text = "결제 완료"
+    }else{
+        view.text = "매장 결제"
+    }
+
 }
