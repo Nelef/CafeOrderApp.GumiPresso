@@ -18,7 +18,9 @@ import com.google.android.material.tabs.TabLayout
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso_admin.R
+import com.ssafy.gumipresso_admin.activity.LoginActivity
 import com.ssafy.gumipresso_admin.activity.MainActivity
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.databinding.FragmentBannerEditBinding
 import com.ssafy.gumipresso_admin.model.dto.Banner
 import com.ssafy.gumipresso_admin.viewmodel.BannerViewModel
@@ -50,17 +52,31 @@ class BannerEditFragment : Fragment() {
         initViewModel()
 
         binding.apply {
+            ivLogout.setOnClickListener{
+                ApplicationClass.userPrefs.edit().clear().commit()
+                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                activity?.startActivity(Intent(activity, LoginActivity::class.java))
+                activity?.finish()
+            }
             btnInsertImage.setOnClickListener {
                 checkPermission()
             }
             btnRegist.setOnClickListener {
-                if(imageUrl == ""){
-                    bannerViewModel.updateBanner(banner)
+                val url = etBannerUrl.text.toString()
+                if(url.trim().isNotEmpty()){
+                    banner.url = if(!url.contains("https://") || !url.contains("http://"))"https://"+url else url
+                    if(imageUrl == ""){
+                        bannerViewModel.updateBanner(banner)
+                    }else{
+                        bannerViewModel.updateBannerImage(banner, imageUrl)
+                    }
+                    Toast.makeText(context, "저장 되었습니다", Toast.LENGTH_SHORT).show()
+                    (activity as MainActivity).navController.navigate(R.id.action_bannerEditFragment_to_manageFragment)
                 }else{
-                    bannerViewModel.updateBannerImage(banner, imageUrl)
+                    Toast.makeText(context, "항목을 모두 입력해주세요", Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(context, "저장 되었습니다", Toast.LENGTH_SHORT).show()
-                (activity as MainActivity).navController.navigate(R.id.action_bannerEditFragment_to_manageFragment)
+
+
             }
             btnDelete.setOnClickListener {
                 bannerViewModel.deleteBanner(banner)

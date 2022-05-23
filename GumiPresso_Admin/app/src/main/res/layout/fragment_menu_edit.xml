@@ -201,6 +201,7 @@
                         android:background="@drawable/textview_regular"
                         android:hint="이름을 입력해주세요"
                         android:minHeight="30dp"
+                        android:singleLine="true"
                         android:text="@{productVM.product.name}"
                         android:textColor="@color/black" />
                 </androidx.cardview.widget.CardView>
@@ -222,7 +223,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/textview_regular"
                         android:hint="가격을 입력해주세요"
-                        android:text="@{productVM.product.price +``}"
+                        android:singleLine="true"
+                        android:text="@{productVM.product.price == 0 ? `` : productVM.product.price+``}"
                         android:inputType="number"
                         android:minHeight="30dp"
                         android:textColor="@color/black" />

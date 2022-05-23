@@ -24,8 +24,10 @@ import com.google.android.material.tabs.TabLayout
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso_admin.R
+import com.ssafy.gumipresso_admin.activity.LoginActivity
 import com.ssafy.gumipresso_admin.activity.MainActivity
 import com.ssafy.gumipresso_admin.adapter.ProductAdapter
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.databinding.FragmentMenuEditBinding
 import com.ssafy.gumipresso_admin.model.dto.Product
 import com.ssafy.gumipresso_admin.viewmodel.ProductViewModel
@@ -129,6 +131,12 @@ class MenuEditFragment : Fragment() {
                 productViewModel.deleteProduct(product.id!!)
                 Toast.makeText(context, "삭제 되었습니다.", Toast.LENGTH_SHORT).show()
                 (activity as MainActivity).navController.popBackStack()
+            }
+            ivLogout.setOnClickListener{
+                ApplicationClass.userPrefs.edit().clear().commit()
+                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                activity?.startActivity(Intent(activity, LoginActivity::class.java))
+                activity?.finish()
             }
         }
     }

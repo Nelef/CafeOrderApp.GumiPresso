@@ -12,6 +12,7 @@ create table t_user(
     stamps integer default 0,
     money integer default 0
 );
+
 create table t_product(
 	id integer auto_increment primary key,
     name varchar(100) not null,
@@ -30,8 +31,6 @@ create  table t_order(
     remain_time varchar(100) default '도착 정보가 없습니다.',
     constraint fk_order_user foreign key (user_id) references t_user(id) on delete cascade
 );
-
-select * from t_order;
 
 create table t_order_detail(
 	d_id integer auto_increment primary key,
@@ -150,6 +149,7 @@ commit;
 -- select o_id from t_order order by o_id desc limit 1;
 -- select * from t_product;
 -- select * from t_order_detail;
+-- select * from t_order where completed != 'Y';
 -- select * from t_order;
 -- select * from t_image;
 -- select * from t_table;

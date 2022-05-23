@@ -69,6 +69,9 @@
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_orderDetailFragment_to_reviewModifyFragment"
+            app:destination="@id/reviewModifyFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -139,4 +142,8 @@
         android:name="com.ssafy.gumipresso.fragment.PayFragment"
         android:label="fragment_pay"
         tools:layout="@layout/fragment_pay" />
+    <fragment
+        android:id="@+id/reviewModifyFragment"
+        android:name="com.ssafy.gumipresso.fragment.ReviewModifyFragment"
+        android:label="ReviewModifyFragment" />
 </navigation>

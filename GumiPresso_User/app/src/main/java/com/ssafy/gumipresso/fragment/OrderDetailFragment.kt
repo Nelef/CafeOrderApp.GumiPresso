@@ -120,7 +120,6 @@ class OrderDetailFragment : Fragment() {
 
     private fun initViewModel() {
         productId = arguments?.getString("product_id").toString()
-        Log.d(TAG, "##########################initViewModel: ${productId} ")
 
         productViewModel.getSelectProduct(productId)
         commentViewModel.getComments(productId.toInt())
@@ -139,7 +138,6 @@ class OrderDetailFragment : Fragment() {
         }
         
         commentViewModel.commentList.observe(viewLifecycleOwner) {
-            Log.d(TAG, "initViewModel: ${it}")
             commentViewModel.setAverageRating()
             commentList = it
             initAdapter()
@@ -151,15 +149,8 @@ class OrderDetailFragment : Fragment() {
         commentAdapter.apply {
             onClickEdit = object : CommentAdapter.OnClickEdit {
                 override fun onClick(view: View, position: Int) {
-                    val dialog = DialogComment()
-                    dialog.arguments = bundleOf("comment" to commentList[position])
-                    dialog.onClickConfime = object : DialogComment.OnClickConfirm {
-                        override fun onClicked(comment: Comment) {
-                            commentViewModel.updateComment(comment)
-                            Toast.makeText(context, "수정되었습니다", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    dialog.show(parentFragmentManager.beginTransaction(), "DC")
+                    commentViewModel.setCommentItem(commentList[position])
+                    (activity as MainActivity).navController.navigate(R.id.action_orderDetailFragment_to_reviewModifyFragment, bundleOf("product" to product))
                 }
             }
             onClickRemove = object : CommentAdapter.OnClickRemove {
@@ -171,7 +162,8 @@ class OrderDetailFragment : Fragment() {
                         dialog.cancel()
                     }
                     builder.setPositiveButton("확인") { dialog, _ ->
-                        commentViewModel.deleteComment(commentList[position].id)
+                        commentViewModel.setCommentItem(commentList[position])
+                        commentViewModel.deleteComment()
                         Toast.makeText(context, "삭제되었습니다", Toast.LENGTH_SHORT).show()
                     }.show()
                 }
@@ -190,9 +182,7 @@ class OrderDetailFragment : Fragment() {
 
     fun initisFavorite(name:String) {
         for(str in favoriteViewModel.favoriteList.value!!){
-            Log.d(TAG, "initFavorite: $str / $name")
-            if(str.equals(name)){
-                Log.d(TAG, "initFavorite: 발견됨")
+            if(str == name){
                 isFavorite = true
                 break
             }

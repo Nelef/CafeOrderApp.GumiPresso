@@ -87,9 +87,11 @@ public class CommentRestController {
 	}
 	
 	@PutMapping("/image")
-	public ResponseEntity<?> updateCommentImage(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("product") String json){
+	public ResponseEntity<?> updateCommentImage(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("comment") String json){
 		Gson gson = new Gson();
 		Comment comment = gson.fromJson(json, Comment.class);
+		iService.deleteFile(comment.getImg());		
+		comment.setImg(imageFile.getOriginalFilename());
 		iService.fileUpload(imageFile);
 		int result = cService.update(comment);
 		if(result > 0) {
@@ -107,6 +109,21 @@ public class CommentRestController {
 		int result = cService.delete(id);		
 		if(result > 0) {
 			List<Comment> comments = cService.search(productId);
+			if(comments != null) {
+				return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+			}
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value="comment를 삭제한다", response = Comment.class)
+	@PostMapping("/delete")
+	public ResponseEntity<?> deleteCommentItem(@RequestBody Comment comment){
+		
+		int result = cService.deleteCommentItem(comment);		
+		if(result > 0) {
+			List<Comment> comments = cService.search(comment.getProductId());
 			if(comments != null) {
 				return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
 			}

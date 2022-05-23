@@ -6,16 +6,18 @@
     <data>
 
         <import type="android.view.View" />
-
+        <variable
+            name="commentVM"
+            type="com.ssafy.gumipresso.viewmodel.CommentViewModel" />
         <variable
             name="productVM"
-            type="com.ssafy.gumipresso.viewmodel.ProductViewModel" />
+            type="com.ssafy.gumipresso.model.dto.Product" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.ReviewWriteFragment">
+        tools:context=".fragment.ReviewModifyFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/iv_title_bar"
@@ -46,8 +48,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_title_bar"
-                app:text="@{productVM.product.name+` 리뷰 작성`}"
-                tools:text="아메리카노 리뷰 작성" />
+                app:text="@{productVM.name+` 리뷰 수정/삭제`}"
+                tools:text="아메리카노 리뷰 수정/삭제" />
 
             <LinearLayout
                 android:id="@+id/divider0"
@@ -117,7 +119,7 @@
                             android:layout_marginHorizontal="100dp"
                             android:numStars="5"
                             android:progressTint="@color/coffee_point_red"
-                            android:rating="5"
+                            android:rating="@{commentVM.comment.rating}"
                             android:stepSize="1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -145,6 +147,7 @@
                         android:hint="리뷰를 입력해주세요"
                         android:singleLine="true"
                         android:minHeight="100dp"
+                        android:text="@{commentVM.comment.comment}"
                         android:textColor="@color/black" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,7 +156,7 @@
         <Button
             android:id="@+id/btn_add_comment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/button_go_order"
             android:text="등록"
@@ -161,7 +164,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
