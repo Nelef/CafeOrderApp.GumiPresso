@@ -96,3 +96,12 @@ fun tableUse(view: ConstraintLayout, src: Boolean) {
         view.setBackgroundResource(R.color.gumipresso_gray)
     }
 }
+
+@BindingAdapter("orderStateTitle")
+fun orderStateTitle(view: TextView, src: String?){
+    when(src){
+        "Y" -> view.text = "수령 완료"
+        "P" -> view.text = "결제 완료"
+        "N" -> view.text = "주문 완료"
+    }
+}

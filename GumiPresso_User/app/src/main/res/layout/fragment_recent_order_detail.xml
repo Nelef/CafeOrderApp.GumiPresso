@@ -67,7 +67,7 @@
                 android:id="@+id/tv_orderdetail_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="주문완료"
+                orderStateTitle="@{orderDetailViewModel.recentOrder.completed}"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="20sp"
                 android:textStyle="bold"

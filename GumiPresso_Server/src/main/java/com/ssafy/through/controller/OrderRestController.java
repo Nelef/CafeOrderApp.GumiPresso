@@ -135,7 +135,7 @@ public class OrderRestController {
 		System.out.println(order);
 		if (order != null) {
 			List<OrderDetail> orderDetailList = detailService.select(order.getoId().toString());
-			RecentOrder recentOrder = new RecentOrder(order.getoId(), order.getOrderTime(), orderDetailList);
+			RecentOrder recentOrder = new RecentOrder(order.getoId(), order.getOrderTime(), order.getOrderTable(), order.getCompleted(), orderDetailList);
 			System.out.println(recentOrder);			
 			return new ResponseEntity<RecentOrder>(recentOrder, HttpStatus.OK);
 		} else {
