@@ -66,8 +66,7 @@
                 android:textColor="@color/coffee_point_red"
                 android:visibility="@{noticeVM.notice.size() > 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toTopOf="@id/iv_notification"
-                app:layout_constraintEnd_toEndOf="@id/iv_notification"
-                />
+                app:layout_constraintEnd_toEndOf="@id/iv_notification" />
 
             <TextView
                 android:layout_width="wrap_content"

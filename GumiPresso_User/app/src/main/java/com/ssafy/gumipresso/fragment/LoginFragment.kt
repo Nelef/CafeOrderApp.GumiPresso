@@ -236,7 +236,7 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     val user = mAuth!!.currentUser
-                    val newUser = User(user!!.email!!, "", user.displayName!!, 0)
+                    val newUser = User(user!!.email!!, "", user.displayName!!, 0, 0)
                     userViewModel.join(newUser)
                     userViewModel.login(newUser)
                 }

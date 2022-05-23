@@ -83,6 +83,11 @@ fun toString(view: TextView, src: Int) {
     view.text = src.toString()
 }
 
+@BindingAdapter("toStringWon")
+fun toStringWon(view: TextView, src: Int) {
+    view.text = src.toString() + " 원"
+}
+
 @BindingAdapter("tableUse")
 fun tableUse(view: ConstraintLayout, src: Boolean) {
     if(src){

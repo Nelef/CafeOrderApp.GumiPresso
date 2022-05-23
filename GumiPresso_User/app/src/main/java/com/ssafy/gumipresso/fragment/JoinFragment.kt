@@ -66,7 +66,7 @@ class JoinFragment : Fragment() {
                         (activity as LoginActivity).movePage(CONST.FRAG_LOGIN)
                     }
                 }
-                userViewModel.join(User(id, pass, name, 0))
+                userViewModel.join(User(id, pass, name, 0, 0))
             }
         }
     }

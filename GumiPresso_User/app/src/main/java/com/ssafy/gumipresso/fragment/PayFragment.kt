@@ -42,6 +42,11 @@ class PayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.getUserInfo()
+        userViewModel.user.observe(viewLifecycleOwner) {
+            if (userViewModel.user.value != null) {
+                binding.homeUserViewModel = userViewModel
+            }
+        }
 
         //생체인증
         status = BiometricManager.from(requireContext()).canAuthenticate()
