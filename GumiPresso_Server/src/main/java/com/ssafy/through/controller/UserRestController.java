@@ -196,7 +196,7 @@ public class UserRestController {
 	
 	@PutMapping("/money")
 	public ResponseEntity<?> updateMoney(@RequestBody User user){
-		int result = uService.update(user);
+		int result = uService.updateMoney(user);
 		if(result > 0) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
