@@ -485,27 +485,33 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
     // 기기 흔들기
     //흔들었을때 센서 감지
     override fun onSensorChanged(event: SensorEvent?) {
-        // x,y,z 축의 값을 받아온다
-        val x = event!!.values[0]
-        val y = event.values[1]
-        val z = event.values[2]
-        // 중력 가속도값으로 나눈 값으로 만든다
-        val gX = x / SensorManager.GRAVITY_EARTH
-        val gY = y / SensorManager.GRAVITY_EARTH
-        val gZ = z / SensorManager.GRAVITY_EARTH
+        if (SettingsUtil().getShakeToPayState()) {
+            // x,y,z 축의 값을 받아온다
+            val x = event!!.values[0]
+            val y = event.values[1]
+            val z = event.values[2]
+            // 중력 가속도값으로 나눈 값으로 만든다
+            val gX = x / SensorManager.GRAVITY_EARTH
+            val gY = y / SensorManager.GRAVITY_EARTH
+            val gZ = z / SensorManager.GRAVITY_EARTH
 
-        var gForce = sqrt(gX * gX + gY * gY + gZ * gZ)
-        // 진동을 감지했을 때
-        // gforce가 기준치 이상일 경우
-        if (gForce > 2.0) {
-            Log.d(TAG, "기기 흔들림.")
-            // 기기 진동
-            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            vibrator.vibrate(200) // 200 ms
 
-            // Pay로 이동
-            navHostFragment.childFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_main, PayFragment()).commit()
+            var gForce = sqrt(gX * gX + gY * gY + gZ * gZ).toFloat()
+            // 진동을 감지했을 때
+            // gforce가 기준치 이상일 경우
+            if (gForce > 2.0) {
+                Log.d(TAG, "기기 흔들림.")
+                // 기기 진동
+                val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vibrator.vibrate(200) // 200 ms
+
+                // Pay로 이동
+
+                navHostFragment.childFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container_main, PayFragment()).addToBackStack(null)
+                    .commit()
+
+            }
         }
     }
 

@@ -39,7 +39,7 @@ class SettingsFragment : Fragment() {
         initViewModel()
         settingViewModel.getAutoLogin()
         settingViewModel.getPushState()
-
+        settingViewModel.getShakeToPayState()
         binding.apply {
             btnAutologin.setOnClickListener{
                 settingViewModel.setAutoLogin()
@@ -55,6 +55,10 @@ class SettingsFragment : Fragment() {
             }
             ivBack.setOnClickListener {
                 (activity as MainActivity).navController.popBackStack()
+            }
+            btnShake.setOnClickListener {
+                settingViewModel.setShakeToPayState()
+                Toast.makeText(context, "Pay 설정이 변경 되었습니다", Toast.LENGTH_SHORT).show()
             }
         }
     }

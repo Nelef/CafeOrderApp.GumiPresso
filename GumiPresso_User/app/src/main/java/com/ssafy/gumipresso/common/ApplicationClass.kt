@@ -25,6 +25,7 @@ class ApplicationClass: Application() {
         lateinit var autoLoginState: SharedPreferences
         lateinit var firstRunCheck: SharedPreferences
         lateinit var favoritesPrefs: SharedPreferences
+        lateinit var shakeToPayPrefs: SharedPreferences
     }
     override fun onCreate() {
         super.onCreate()
@@ -51,5 +52,6 @@ class ApplicationClass: Application() {
         autoLoginState = getSharedPreferences("AutoLogin", MODE_PRIVATE)
         firstRunCheck = getSharedPreferences("FirstRun", MODE_PRIVATE)
         favoritesPrefs = getSharedPreferences("favorite", MODE_PRIVATE)
+        shakeToPayPrefs = getSharedPreferences("ShakeToPay", MODE_PRIVATE)
     }
 }
