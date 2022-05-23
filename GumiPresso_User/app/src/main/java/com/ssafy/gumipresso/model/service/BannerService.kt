@@ -1,14 +1,10 @@
 package com.ssafy.gumipresso.model.service
 
-import com.ssafy.gumipresso.model.dto.Table
+import com.ssafy.gumipresso.model.dto.Banner
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 
-interface TableService {
-    @GET("/order/table")
-    suspend fun getOrdertableList(): Response<List<Table>>
-
-    @GET("/order/table/{tableId}")
-    suspend fun setOrdertable(@Path("tableId") tableId: Int): Response<List<Table>>
+interface BannerService {
+    @GET("/banner/")
+    suspend fun getBannerList(): Response<List<Banner>>
 }

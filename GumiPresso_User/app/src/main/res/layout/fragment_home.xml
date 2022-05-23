@@ -13,7 +13,6 @@
         <variable
             name="homeUserViewModel"
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
-
         <variable
             name="table"
             type="com.ssafy.gumipresso.model.dto.Table" />

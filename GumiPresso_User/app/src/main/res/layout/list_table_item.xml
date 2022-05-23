@@ -5,7 +5,7 @@
 
         <variable
             name="table"
-            type="com.ssafy.gumipresso.viewmodel.TableViewModel" />
+            type="com.ssafy.gumipresso.model.dto.Table" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,10 +27,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tableUse="@{table.table.state}">
+                tableUse="@{table.state}">
 
                 <TextView
-                    toString="@{table.table.id}"
+                    toString="@{table.id}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"

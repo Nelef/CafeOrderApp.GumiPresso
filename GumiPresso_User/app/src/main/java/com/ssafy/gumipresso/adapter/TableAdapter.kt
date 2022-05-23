@@ -11,11 +11,8 @@ import com.ssafy.gumipresso.viewmodel.TableViewModel
 private const val TAG = "TableAdapter"
 class TableAdapter(val list: List<Table>): RecyclerView.Adapter<TableAdapter.ViewHolder>() {
     class ViewHolder(private val binding: ListTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.table = TableViewModel()
-        }
         fun bind(item: Table) {
-            binding.table!!.setTableItem(item)
+            binding.table = item
         }
     }
 
