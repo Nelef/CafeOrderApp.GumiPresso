@@ -12,7 +12,9 @@ import androidx.fragment.app.viewModels
 import com.google.zxing.integration.android.IntentIntegrator
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.ssafy.gumipresso_admin.activity.LoginActivity
 import com.ssafy.gumipresso_admin.activity.MainActivity
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.databinding.FragmentPayManageBinding
 import com.ssafy.gumipresso_admin.model.dto.User
 import com.ssafy.gumipresso_admin.viewmodel.PayViewModel
@@ -58,6 +60,12 @@ class PayManageFragment : Fragment() {
                     Toast.makeText(context, "QR코드를 입력해 주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
+            ivLogout.setOnClickListener{
+                ApplicationClass.userPrefs.edit().clear().commit()
+                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                activity?.startActivity(Intent(activity, LoginActivity::class.java))
+                activity?.finish()
+            }
         }
     }
 
@@ -74,7 +82,7 @@ class PayManageFragment : Fragment() {
     private fun checkPermission() {
         val permissionlistener = object : PermissionListener {
             override fun onPermissionGranted() {
-                IntentIntegrator.forSupportFragment(this@PayManageFragment).initiateScan()
+                IntentIntegrator.forSupportFragment(this@PayManageFragment).setOrientationLocked(false).initiateScan()
             }
 
             override fun onPermissionDenied(deniedPermissions: List<String>) {
@@ -98,6 +106,7 @@ class PayManageFragment : Fragment() {
         if (result != null) {
             if (result.contents == null) {
                 Toast.makeText(context, "취소 되었습니다.", Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).navController.popBackStack()
             } else {
                  payViewModel.getUserByQRCode(result.contents)
             }

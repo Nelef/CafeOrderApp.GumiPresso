@@ -18,7 +18,9 @@ import com.google.android.material.tabs.TabLayout
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso_admin.R
+import com.ssafy.gumipresso_admin.activity.LoginActivity
 import com.ssafy.gumipresso_admin.activity.MainActivity
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.databinding.FragmentBannerEditBinding
 import com.ssafy.gumipresso_admin.model.dto.Banner
 import com.ssafy.gumipresso_admin.viewmodel.BannerViewModel
@@ -50,6 +52,12 @@ class BannerEditFragment : Fragment() {
         initViewModel()
 
         binding.apply {
+            ivLogout.setOnClickListener{
+                ApplicationClass.userPrefs.edit().clear().commit()
+                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                activity?.startActivity(Intent(activity, LoginActivity::class.java))
+                activity?.finish()
+            }
             btnInsertImage.setOnClickListener {
                 checkPermission()
             }

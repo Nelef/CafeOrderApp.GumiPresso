@@ -1,6 +1,7 @@
 package com.ssafy.gumipresso_admin.fragment.manage
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import com.ssafy.gumipresso_admin.activity.LoginActivity
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.databinding.FragmentPushMessageBinding
 import com.ssafy.gumipresso_admin.model.Retrofit
 import com.ssafy.gumipresso_admin.viewmodel.UserViewModel
@@ -54,6 +57,12 @@ class PushMessageFragment : Fragment() {
             }
             btnClear.setOnClickListener {
                 etMassage.setText("")
+            }
+            ivLogout.setOnClickListener{
+                ApplicationClass.userPrefs.edit().clear().commit()
+                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                activity?.startActivity(Intent(activity, LoginActivity::class.java))
+                activity?.finish()
             }
         }
     }

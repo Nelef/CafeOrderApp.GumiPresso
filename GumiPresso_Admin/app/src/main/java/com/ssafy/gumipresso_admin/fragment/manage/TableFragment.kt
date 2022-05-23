@@ -1,15 +1,19 @@
 package com.ssafy.gumipresso_admin.fragment.manage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ssafy.gumipresso_admin.R
+import com.ssafy.gumipresso_admin.activity.LoginActivity
 import com.ssafy.gumipresso_admin.adapter.TableAdapter
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.databinding.FragmentTableBinding
 import com.ssafy.gumipresso_admin.model.dto.Table
 import com.ssafy.gumipresso_admin.viewmodel.TableViewModel
@@ -38,6 +42,12 @@ class TableFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViewModel()
+        binding.ivLogout.setOnClickListener{
+            ApplicationClass.userPrefs.edit().clear().commit()
+            Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+            activity?.startActivity(Intent(activity, LoginActivity::class.java))
+            activity?.finish()
+        }
     }
 
     private fun initViewModel() {
