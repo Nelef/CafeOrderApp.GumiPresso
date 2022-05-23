@@ -19,5 +19,8 @@ object Retrofit {
     val bannerService: BannerService by lazy {
         ApplicationClass.retrofit.create(BannerService::class.java)
     }
+    val tableService: TableService by lazy {
+        ApplicationClass.retrofit.create(TableService::class.java)
+    }
 
 }
