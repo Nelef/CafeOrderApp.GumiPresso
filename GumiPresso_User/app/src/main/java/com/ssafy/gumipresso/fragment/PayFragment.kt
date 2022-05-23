@@ -75,7 +75,7 @@ class PayFragment : Fragment() {
         val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         for (x in 0 until width) {
             for (y in 0 until height) {
-                bmp.setPixel(x, y, if (matrix[x, y]) Color.WHITE else Color.TRANSPARENT)
+                bmp.setPixel(x, y, if (matrix[x, y]) Color.BLACK else Color.WHITE)
             }
         }
         return bmp

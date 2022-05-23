@@ -30,6 +30,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 
 private const val TAG ="GPSViewModel"
 class GPSViewModel:ViewModel() {
@@ -89,9 +90,13 @@ class GPSViewModel:ViewModel() {
 
             val receiveForm = Gson().fromJson(responseBody.toString(),ReceiveForm::class.java)
             Log.d(TAG, "getLocationInfo: aklsdjfkljasdlkfjklsadjfklajsdklfjklsadjf")
-            _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
-            _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
-            _remainTime.postValue(convertTMapTotalTime(receiveForm.features[0].properties.totalTime))
+            try {
+                _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
+                _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
+                _remainTime.postValue(convertTMapTotalTime(receiveForm.features[0].properties.totalTime))    
+            } catch (e:Exception){
+                Log.d(TAG, "getLocationInfo: $e")
+            }
         }
     }
 }

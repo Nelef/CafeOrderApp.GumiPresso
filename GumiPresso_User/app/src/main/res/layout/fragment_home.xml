@@ -55,18 +55,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_notice_exist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="알림이 있습니다!"
+            <ImageView
+                android:id="@+id/iv_noti_new"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/red_dot"
+                android:layout_marginBottom="3dp"
                 android:textSize="12sp"
+                android:layout_marginRight="2dp"
                 android:textColor="@color/coffee_point_red"
                 android:visibility="@{noticeVM.notice.size() > 0 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_notification"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_notification"
+                app:layout_constraintEnd_toEndOf="@id/iv_notification"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                toString="@{noticeVM.notice.size()}"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/iv_noti_new"
+                app:layout_constraintEnd_toEndOf="@id/iv_noti_new"
+                app:layout_constraintTop_toTopOf="@id/iv_noti_new"
+                android:visibility="@{noticeVM.notice.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_noti_new"/>
 
             <LinearLayout
                 android:id="@+id/divider0"
