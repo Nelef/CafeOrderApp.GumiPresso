@@ -18,6 +18,7 @@ import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CartItemAdapter
 import com.ssafy.gumipresso.databinding.FragmentCartBinding
+import com.ssafy.gumipresso.dialog.OrderCheckDialog
 import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.Order
 import com.ssafy.gumipresso.model.dto.User
@@ -122,21 +123,32 @@ class CartFragment : Fragment() {
 
     private fun makeOrder() {
         var order = Order((userViewModel.user.value as User).id, userTable)
-        if(gpsViewModel.arrivalTime.value != null){
-            order.arrivalTime = gpsViewModel.arrivalTime.value
-            order.remainTime = gpsViewModel.remainTime.value
-        }
-        cartViewModel.orderCart(order)
-        cartViewModel.clearCart()
-        userViewModel.getUserInfo()
-        userViewModel.sendFCMPushMessage(
-            PushMessageUtil().getFcmToken(),
-            "GumiPresso",
-            "주문이 완료 되었습니다. - ${userTable}"
-        )
-        Toast.makeText(context, "주문이 완료 되었습니다. $userTable", Toast.LENGTH_SHORT).show()
-        (activity as MainActivity).visibilityBottomNavBar(false)
-        (activity as MainActivity).navController.popBackStack()
+        OrderCheckDialog().apply {
+            onClickConfirm = object : OrderCheckDialog.OnClickConfirm{
+                override fun onClick(usePay: Boolean) {
+                    if(usePay){
+                        order.completed = "P"
+                        userViewModel.setUserMoney(cartViewModel.totalCartPrice.value!!)
+                        userViewModel.updateMoney()
+                    }
+                    if(gpsViewModel.arrivalTime.value != null){
+                        order.arrivalTime = gpsViewModel.arrivalTime.value
+                        order.remainTime = gpsViewModel.remainTime.value
+                    }
+                    cartViewModel.orderCart(order)
+                    cartViewModel.clearCart()
+                    userViewModel.getUserInfo()
+                    userViewModel.sendFCMPushMessage(
+                        PushMessageUtil().getFcmToken(),
+                        "GumiPresso",
+                        "주문이 완료 되었습니다. - ${userTable}"
+                    )
+                    Toast.makeText(context, "주문이 완료 되었습니다. $userTable", Toast.LENGTH_SHORT).show()
+                    (activity as MainActivity).visibilityBottomNavBar(false)
+                    (activity as MainActivity).navController.popBackStack()
+                }
+            }
+        }.show(parentFragmentManager.beginTransaction(),"Dialog")
     }
 
     private fun requestNFC() {

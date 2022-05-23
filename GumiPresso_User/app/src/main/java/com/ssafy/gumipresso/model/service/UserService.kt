@@ -41,4 +41,7 @@ interface UserService {
     )
     @POST("/{uri}")
     suspend fun getArrvalTimeInfo(@Path("uri", encoded = true) uri: String, @Body json: String): Response<ReceiveForm>
+
+    @PUT("/user/money")
+    suspend fun updateMoney(@Body user: User): Response<User>
 }

@@ -6,8 +6,8 @@
 <mapper namespace="com.ssafy.through.model.repo.OrderRepo">
 
 	<insert id="insert" parameterType="Order">
-		INSERT INTO t_order(user_id, order_table, arrival_time, remain_time) 
-		VALUES (#{userId}, #{orderTable}, #{arrivalTime}, #{remainTime})
+		INSERT INTO t_order(user_id, order_table, completed, arrival_time, remain_time) 
+		VALUES (#{userId}, #{orderTable}, #{completed}, #{arrivalTime}, #{remainTime})
 	</insert>
 	
 	<select id="select" parameterType="String" resultType="Order">

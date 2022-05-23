@@ -10,6 +10,7 @@ data class Order(var userId: String, var orderTable: String, var orderTime: Stri
     var completed: String = ""
     constructor(oId: Int, userId: String, orderTable: String, orderTime: String, completed: String): this(userId, orderTable, orderTime){
         this.oId = oId
+        this.completed = completed
     }
 
     constructor(oId: Int,userId: String,orderTable: String,orderTime: String,completed: String,arrival_time: String?, remain_time: String?):this(oId, userId, orderTable, orderTime, completed){

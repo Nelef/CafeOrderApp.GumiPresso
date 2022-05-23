@@ -107,6 +107,14 @@ class CartViewModel: ViewModel() {
     fun setHereOrTogo(takeOut: Boolean){
         _isTakeOut.postValue(takeOut)
     }
+
+    private val _usePay = MutableLiveData<Boolean>(true)
+    val usePay: LiveData<Boolean>
+        get() = _usePay
+    fun setUsePayState(state: Boolean){
+        _usePay.value = state
+    }
+
 }
 
 

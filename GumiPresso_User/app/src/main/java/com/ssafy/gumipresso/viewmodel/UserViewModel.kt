@@ -147,4 +147,22 @@ class UserViewModel: ViewModel() {
         }
     }
 
+    fun updateMoney(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = Retrofit.userService.updateMoney(_user.value as User)
+                if(response.isSuccessful && response.body() != null){
+                    _user.postValue(response.body() as User)
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "orderCart: ${e.message}")
+            }
+        }
+    }
+
+    fun setUserMoney(totalPrice: Int){
+        var user = _user.value as User
+        user.money -= totalPrice
+        _user.value = user
+    }
 }
