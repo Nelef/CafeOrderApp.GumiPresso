@@ -163,9 +163,18 @@ class CartFragment : Fragment() {
 
         order.completed = if (cartViewModel.usePay.value == true) "P" else "N"
         if (order.completed == "P") {
+            if(userViewModel.user.value!!.money < resultPrice) {
+                val builder = AlertDialog.Builder(requireActivity())
+                builder.setTitle("알림")
+                builder.setMessage("잔액을 확인해주세요.")
+                builder.setPositiveButton("확인") { dialog, _ ->
+                    dialog.cancel()
+                }.show()
+                return
+            }
             userViewModel.setUserMoney(resultPrice)// 페이 결제시 유저 머니에서 차감
+            userViewModel.updateMoney()
         }
-        userViewModel.updateMoney()
         if (gpsViewModel.arrivalTime.value != null) {
             order.arrivalTime = gpsViewModel.arrivalTime.value
             order.remainTime = gpsViewModel.remainTime.value
