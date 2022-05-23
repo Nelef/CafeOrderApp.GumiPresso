@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="gpsVM"
             type="com.ssafy.gumipresso.viewmodel.GPSViewModel" />
@@ -65,8 +64,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_product_list"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="20dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintBottom_toTopOf="@id/layout_option"
             app:layout_constraintTop_toBottomOf="@+id/iv_title_bar"
             tools:layout_editor_absoluteX="22dp" />
@@ -83,8 +82,8 @@
             android:id="@+id/layout_option"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
             android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
             app:layout_constraintBottom_toTopOf="@id/divider2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -118,13 +117,13 @@
                 android:layout_width="90dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/button_color"
-                android:backgroundTint="@{viewmodel.usePay ? @color/white : @color/coffee_light_gray}"
+                android:background="@{viewmodel.usePay ? @drawable/button_color : @drawable/button_non_color}"
                 android:text="페이 결제"
                 android:textColor="@color/coffee_dark_brown"
                 app:layout_constraintBottom_toBottomOf="@id/btn_post_pay"
                 app:layout_constraintEnd_toStartOf="@id/btn_post_pay"
-                app:layout_constraintTop_toTopOf="@id/btn_post_pay" />
+                app:layout_constraintTop_toTopOf="@id/btn_post_pay"
+                tools:background="@drawable/button_color" />
 
             <Button
                 android:id="@+id/btn_post_pay"
@@ -132,13 +131,13 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="15dp"
-                android:background="@drawable/button_color"
-                android:backgroundTint="@{!viewmodel.usePay ? @color/white : @color/coffee_light_gray}"
+                android:background="@{!viewmodel.usePay ? @drawable/button_color : @drawable/button_non_color}"
                 android:text="후 결제"
                 android:textColor="@color/coffee_dark_brown"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/btn_tout"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@drawable/button_non_color" />
 
 
             <TextView
@@ -169,25 +168,25 @@
                 android:layout_width="90dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/button_color"
-                android:backgroundTint="@{viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
+                android:background="@{viewmodel.isTakeOut ? @drawable/button_non_color : @drawable/button_color}"
                 android:text="매장 테이블"
                 android:textColor="@color/coffee_dark_brown"
                 app:layout_constraintBottom_toBottomOf="@id/btn_tout"
                 app:layout_constraintEnd_toStartOf="@id/btn_tout"
-                app:layout_constraintTop_toTopOf="@id/btn_tout" />
+                app:layout_constraintTop_toTopOf="@id/btn_tout"
+                tools:background="@drawable/button_non_color" />
 
             <Button
                 android:id="@+id/btn_tout"
                 android:layout_width="90dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/button_color"
-                android:backgroundTint="@{!viewmodel.isTakeOut ? @color/white : @color/coffee_light_gray}"
+                android:background="@{!viewmodel.isTakeOut ? @drawable/button_non_color : @drawable/button_color}"
                 android:text="테이크 아웃"
                 android:textColor="@color/coffee_dark_brown"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:background="@drawable/button_color" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -214,14 +213,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingHorizontal="10dp"
-                android:text="@{`총 `+viewmodel.totalCartQuantity.toString()+` 개`}"
+                android:text="페이 잔액"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/tv_pay_price"
+                app:layout_constraintBottom_toBottomOf="@id/tv_pay_money"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_pay_price"
-                tools:text="페이 잔액" />
+                app:layout_constraintTop_toTopOf="@id/tv_pay_money" />
 
             <LinearLayout
                 android:id="@+id/divider6"
@@ -229,20 +227,19 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/tv_pay_price"
-                app:layout_constraintEnd_toStartOf="@id/tv_pay_price"
+                app:layout_constraintBottom_toBottomOf="@id/tv_pay_money"
+                app:layout_constraintEnd_toStartOf="@id/tv_pay_money"
                 app:layout_constraintStart_toEndOf="@id/tv_pay"
-                app:layout_constraintTop_toTopOf="@id/tv_pay_price" />
+                app:layout_constraintTop_toTopOf="@id/tv_pay_money" />
 
             <TextView
-                android:id="@+id/tv_pay_price"
+                android:id="@+id/tv_pay_money"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:paddingHorizontal="10dp"
-                android:text="@{viewmodel.totalCartPrice.toString()+` 원`}"
                 android:textAlignment="textEnd"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="16sp"
@@ -300,14 +297,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingHorizontal="10dp"
-                android:text="@{`총 `+viewmodel.totalCartQuantity.toString()+` 개`}"
+                android:text="남은 금액"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/tv_result_totalprice"
-                app:layout_constraintTop_toTopOf="@id/tv_result_totalprice"
-                tools:text="남은 금액" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_result_totalprice" />
 
             <LinearLayout
                 android:id="@+id/divider5"
@@ -328,7 +324,6 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:paddingHorizontal="10dp"
-                android:text="@{viewmodel.totalCartPrice.toString()+` 원`}"
                 android:textAlignment="textEnd"
                 android:textColor="@color/coffee_dark_brown"
                 android:textSize="16sp"

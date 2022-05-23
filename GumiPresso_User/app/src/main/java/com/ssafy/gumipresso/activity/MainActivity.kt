@@ -494,7 +494,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
         val gY = y / SensorManager.GRAVITY_EARTH
         val gZ = z / SensorManager.GRAVITY_EARTH
 
-        var gForce = sqrt(gX * gX + gY * gY + gZ * gZ).toFloat()
+        var gForce = sqrt(gX * gX + gY * gY + gZ * gZ)
         // 진동을 감지했을 때
         // gforce가 기준치 이상일 경우
         if (gForce > 2.0) {
@@ -505,7 +505,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
 
             // Pay로 이동
             navHostFragment.childFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_main, PayFragment()).addToBackStack(null).commit()
+                .replace(R.id.fragment_container_main, PayFragment()).commit()
         }
     }
 

@@ -1,24 +1,17 @@
 package com.ssafy.gumipresso.fragment
 
-import android.Manifest
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CartItemAdapter
 import com.ssafy.gumipresso.databinding.FragmentCartBinding
-import com.ssafy.gumipresso.dialog.OrderCheckDialog
 import com.ssafy.gumipresso.model.dto.Cart
 import com.ssafy.gumipresso.model.dto.Order
 import com.ssafy.gumipresso.model.dto.User
@@ -38,6 +31,7 @@ class CartFragment : Fragment() {
     private lateinit var cartAdapter: CartItemAdapter
     private lateinit var cartList: List<Cart>
     private lateinit var userTable: String
+    private lateinit var orderType: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,13 +41,17 @@ class CartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        userViewModel.getUserInfo()
         cartViewModel.totalCartPrice.observe(viewLifecycleOwner) {
             initAdapter()
         }
         cartViewModel.isTakeOut.observe(viewLifecycleOwner) {
             binding.viewmodel = cartViewModel
             userTable = if (cartViewModel.isTakeOut.value as Boolean) "TakeOut" else "Here"
+        }
+        cartViewModel.usePay.observe(viewLifecycleOwner) {
+            binding.viewmodel = cartViewModel
+            orderType = if (cartViewModel.usePay.value as Boolean) "P" else "N"
         }
         binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
@@ -62,7 +60,7 @@ class CartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        gpsViewModel.location?.observe(viewLifecycleOwner){
+        gpsViewModel.location?.observe(viewLifecycleOwner) {
 
             binding.gpsVM = gpsViewModel
         }
@@ -71,6 +69,10 @@ class CartFragment : Fragment() {
         binding.viewmodel = cartViewModel
 
         binding.apply {
+            // 처음 금액 나오도록
+            tvPayMoney.text = userViewModel.user.value?.money.toString() + " 원"
+            tvResultTotalprice.text = (userViewModel.user.value?.money?.minus(cartViewModel.totalCartPrice.value!!)).toString() + " 원"
+
             btnOrder.setOnClickListener {
                 if (cartViewModel.totalCartPrice.value == 0) {
                     val builder = AlertDialog.Builder(requireActivity())
@@ -96,6 +98,16 @@ class CartFragment : Fragment() {
             }
             btnTstore.setOnClickListener {
                 cartViewModel.setHereOrTogo(false)
+            }
+            btnPrePay.setOnClickListener {
+                cartViewModel.setUsePayState(true)
+                tvPayMoney.text = userViewModel.user.value?.money.toString() + " 원"
+                tvResultTotalprice.text = (userViewModel.user.value?.money?.minus(cartViewModel.totalCartPrice.value!!)).toString() + " 원"
+            }
+            btnPostPay.setOnClickListener {
+                cartViewModel.setUsePayState(false)
+                tvPayMoney.text = "동결"
+                tvResultTotalprice.text = "동결"
             }
             ivBack.setOnClickListener {
                 (activity as MainActivity).visibilityBottomNavBar(false)
@@ -123,31 +135,26 @@ class CartFragment : Fragment() {
 
     private fun makeOrder() {
         var order = Order((userViewModel.user.value as User).id, userTable)
-        OrderCheckDialog().apply {
-            onClickConfirm = object : OrderCheckDialog.OnClickConfirm{
-                override fun onClick(usePay: Boolean) {
 
-                    order.completed = if(usePay)"P" else "N"
-                    userViewModel.setUserMoney(cartViewModel.totalCartPrice.value!!)
-                    userViewModel.updateMoney()
-                    if(gpsViewModel.arrivalTime.value != null){
-                        order.arrivalTime = gpsViewModel.arrivalTime.value
-                        order.remainTime = gpsViewModel.remainTime.value
-                    }
-                    cartViewModel.orderCart(order)
-                    cartViewModel.clearCart()
-                    userViewModel.getUserInfo()
-                    userViewModel.sendFCMPushMessage(
-                        PushMessageUtil().getFcmToken(),
-                        "GumiPresso",
-                        "주문이 완료 되었습니다. - ${userTable}"
-                    )
-                    Toast.makeText(context, "주문이 완료 되었습니다. $userTable", Toast.LENGTH_SHORT).show()
-                    (activity as MainActivity).visibilityBottomNavBar(false)
-                    (activity as MainActivity).navController.popBackStack()
-                }
-            }
-        }.show(parentFragmentManager.beginTransaction(),"Dialog")
+        order.completed = if (cartViewModel.usePay.value == true) "P" else "N"
+        if(order.completed == "P") {
+            userViewModel.setUserMoney(cartViewModel.totalCartPrice.value!!)// 페이 결제시 유저 머니 변경
+        }
+        userViewModel.updateMoney()
+        if (gpsViewModel.arrivalTime.value != null) {
+            order.arrivalTime = gpsViewModel.arrivalTime.value
+            order.remainTime = gpsViewModel.remainTime.value
+        }
+        cartViewModel.orderCart(order)
+        cartViewModel.clearCart()
+        userViewModel.sendFCMPushMessage(
+            PushMessageUtil().getFcmToken(),
+            "GumiPresso",
+            "주문이 완료 되었습니다. - ${userTable}"
+        )
+        Toast.makeText(context, "주문이 완료 되었습니다. $userTable", Toast.LENGTH_SHORT).show()
+        (activity as MainActivity).visibilityBottomNavBar(false)
+        (activity as MainActivity).navController.popBackStack()
     }
 
     private fun requestNFC() {
@@ -163,9 +170,4 @@ class CartFragment : Fragment() {
         super.onDestroy()
         (activity as MainActivity).visibilityBottomNavBar(false)
     }
-    
-    
-    
-
-
 }
