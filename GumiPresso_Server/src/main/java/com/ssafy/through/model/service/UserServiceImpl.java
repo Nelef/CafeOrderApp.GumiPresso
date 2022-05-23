@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int insertKakaoUser(User user) { 
 		return repo.insertKakaoUser(user);
+	}
+
+	@Override
+	public int updateMoney(User user) {
+		return repo.updateMoney(user);
 	}	
 
 	

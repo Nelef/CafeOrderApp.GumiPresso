@@ -9,7 +9,8 @@ create table t_user(
 	id varchar(100) primary key,
     name varchar(100) not null,
     pass varchar(100) default "0",
-    stamps integer default 0  
+    stamps integer default 0,
+    money integer default 0
 );
 create table t_product(
 	id integer auto_increment primary key,

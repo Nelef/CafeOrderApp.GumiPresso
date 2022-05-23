@@ -19,4 +19,7 @@ interface UserService {
 
     @POST("/admin/fcm")
     suspend fun sendFCMPushMessgae(@Body map: Map<String, String>) : Response<Void>
+
+    @PUT("/user/money")
+    suspend fun updateUserMoney(@Body user: User): Response<Void>
 }

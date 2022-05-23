@@ -19,6 +19,7 @@ import com.ssafy.through.model.repo.ImageRepo;
 @Service
 public class ImageServiceImpl implements ImageService{
 	private final String FILE_URL = "C:/SSAFY/final_gumi0607_10/GumiPresso_Server/src/main/resources/image/";
+	private final String FILE_URL_VUE = "C:\\SSAFY\\final_gumi0607_10\\GumiPresso_Vue\\src\\assets\\menu/";
 	@Autowired
 	private ImageRepo repo;
 
@@ -35,6 +36,13 @@ public class ImageServiceImpl implements ImageService{
 	@Override
 	public void fileUpload(MultipartFile multipartFile){
         Path copyOfLocation = Paths.get(FILE_URL+multipartFile.getOriginalFilename());
+        try {
+            Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Could not store file : " + multipartFile.getOriginalFilename());
+        }
+        copyOfLocation = Paths.get(FILE_URL_VUE+multipartFile.getOriginalFilename());
         try {
             Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

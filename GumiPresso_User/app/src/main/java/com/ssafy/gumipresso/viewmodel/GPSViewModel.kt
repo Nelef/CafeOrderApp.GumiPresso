@@ -88,7 +88,7 @@ class GPSViewModel:ViewModel() {
             val responseBody = JSONObject(response.body!!.string())
 
             val receiveForm = Gson().fromJson(responseBody.toString(),ReceiveForm::class.java)
-            Log.d(TAG, "getLocationInfo: aklsdjfkljasdlkfjklsadjfklajsdklfjklsadjf")
+            Log.d(TAG, "getLocationInfo: ${receiveForm}")
             _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
             _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
             _remainTime.postValue(convertTMapTotalTime(receiveForm.features[0].properties.totalTime))
