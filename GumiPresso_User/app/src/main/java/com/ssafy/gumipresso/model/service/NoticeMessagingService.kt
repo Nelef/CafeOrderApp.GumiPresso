@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.util.NoticeMessageUtil
 
@@ -31,7 +32,7 @@ class NoticeMessagingService : FirebaseMessagingService() {
             }
             val mainPendingIntent = PendingIntent.getActivity(this, 0, mainIntent, 0)
             val builder = NotificationCompat.Builder(this, "ssafy_id")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.mipmap.ic_launcher_new)
                 .setContentTitle(messageTitle)
                 .setContentText(messageContent)
                 .setAutoCancel(true)

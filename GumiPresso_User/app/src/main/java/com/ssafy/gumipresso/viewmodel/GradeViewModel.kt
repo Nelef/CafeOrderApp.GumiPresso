@@ -9,7 +9,7 @@ private const val TAG = "GradeViewModel"
 class GradeViewModel: ViewModel() {
 
     private val _grade = MutableLiveData<Grade>()
-    var grade: LiveData<Grade>? = null
+    val grade: LiveData<Grade>
         get() = _grade
 
     private fun getGrade(stamps: Int){

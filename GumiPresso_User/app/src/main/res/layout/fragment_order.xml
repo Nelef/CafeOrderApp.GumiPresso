@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="gpsVM"
             type="com.ssafy.gumipresso.viewmodel.GPSViewModel" />
@@ -93,30 +95,39 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <RadioGroup
-            android:id="@+id/radio_group"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="@id/tab_layout"
-            app:layout_constraintStart_toEndOf="@id/tab_layout"
-            android:orientation="horizontal"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:visibility="gone">
-            <RadioButton
-                android:id="@+id/radio_rating"
+            app:layout_constraintStart_toEndOf="@id/tab_layout">
+
+            <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="평점 순"
-                android:buttonTint="@color/coffee_brown" />
-            <RadioButton
-                android:id="@+id/radio_quanity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="판매량 순"
-                android:buttonTint="@color/coffee_brown"
-                />
-        </RadioGroup>
+
+                android:orientation="vertical"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/radio_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/coffee_brown"
+                    android:text="평점 순" />
+
+                <RadioButton
+                    android:id="@+id/radio_quanity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/coffee_brown"
+                    android:text="판매량 순" />
+            </RadioGroup>
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_product_list"

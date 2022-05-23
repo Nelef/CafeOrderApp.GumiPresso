@@ -25,7 +25,7 @@ import com.ssafy.gumipresso.viewmodel.UserViewModel
 private const val TAG ="MyPageFragment"
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
-    private val gradeViewModel: GradeViewModel by viewModels()
+    private val gradeViewModel: GradeViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
     private val cartViewModel: CartViewModel by activityViewModels()
@@ -83,8 +83,8 @@ class MyPageFragment : Fragment() {
                 initOrderAdapter()
             }
         }
-        gradeViewModel.grade?.observe(viewLifecycleOwner){
-            if(gradeViewModel.grade!!.value != null) {
+        gradeViewModel.grade.observe(viewLifecycleOwner){
+            if(gradeViewModel.grade.value != null) {
                 binding.gradeVM = gradeViewModel
             }
         }

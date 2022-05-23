@@ -120,10 +120,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mMap = p0
 
         val DEFAULT_LOCATION = LatLng(36.10830144233874, 128.41827450414362)
-        mMap.addMarker(MarkerOptions().position(DEFAULT_LOCATION).title("싸피벅스"))
+        mMap.addMarker(MarkerOptions().position(DEFAULT_LOCATION).title("구미프레소"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 15f))
 
-        // 싸피벅스 클릭시 다이어로그 띄우기
+        // 구미프레소 클릭시 다이어로그 띄우기
         mMap.setOnInfoWindowClickListener(infoWindowClickListener);
 
         setMyLocation()

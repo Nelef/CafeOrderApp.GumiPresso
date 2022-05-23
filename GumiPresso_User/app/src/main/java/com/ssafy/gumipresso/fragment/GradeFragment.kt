@@ -23,7 +23,7 @@ import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 class GradeFragment : Fragment() {
     private lateinit var binding: FragmentGradeBinding
-    private val gradeViewModel: GradeViewModel by viewModels()
+    private val gradeViewModel: GradeViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var user: User
@@ -49,8 +49,8 @@ class GradeFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        gradeViewModel.grade?.observe(viewLifecycleOwner) {
-            if (gradeViewModel.grade!!.value != null) {
+        gradeViewModel.grade.observe(viewLifecycleOwner) {
+            if (gradeViewModel.grade.value != null) {
                 binding.gradeVM = gradeViewModel
             }
         }

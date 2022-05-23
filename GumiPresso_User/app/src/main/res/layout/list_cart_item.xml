@@ -82,7 +82,6 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/button_color"
             android:text="삭제"
             android:textColor="@color/coffee_point_red"

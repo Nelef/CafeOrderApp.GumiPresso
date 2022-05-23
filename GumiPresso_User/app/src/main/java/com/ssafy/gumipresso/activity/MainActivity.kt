@@ -506,11 +506,12 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
                 vibrator.vibrate(200) // 200 ms
 
                 // Pay로 이동
-
-                navHostFragment.childFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_main, PayFragment()).addToBackStack(null)
-                    .commit()
-
+                if(navHostFragment.childFragmentManager.findFragmentByTag("pay")== null) { // 중복 방지
+                    navHostFragment.childFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, PayFragment(), "pay")
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
         }
     }

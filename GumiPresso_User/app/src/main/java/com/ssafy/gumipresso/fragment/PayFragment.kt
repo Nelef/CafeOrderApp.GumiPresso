@@ -88,9 +88,8 @@ class PayFragment : Fragment() {
 
     private fun createPromptInfo(): BiometricPrompt.PromptInfo {
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("생체정보로 결제")
-            .setSubtitle("구매상품: 아메리카노 외 2잔")
-            .setDescription("결제 진행을 위해 생체 정보를 입력시켜주세요.")
+            .setTitle("생체정보 인증")
+            .setDescription("금액 충전을 위해 생체정보를 입력시켜주세요.")
             .setConfirmationRequired(false)
             .setNegativeButtonText("취소")
             .build()

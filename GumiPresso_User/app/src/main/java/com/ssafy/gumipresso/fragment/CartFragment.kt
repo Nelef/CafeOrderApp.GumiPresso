@@ -2,6 +2,7 @@ package com.ssafy.gumipresso.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
 import com.ssafy.gumipresso.viewmodel.GPSViewModel
+import com.ssafy.gumipresso.viewmodel.GradeViewModel
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
 private const val TAG = "CartFragment"
@@ -27,11 +29,13 @@ class CartFragment : Fragment() {
     private val cartViewModel: CartViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     private val gpsViewModel: GPSViewModel by activityViewModels()
+    private val gradeViewModel: GradeViewModel by activityViewModels()
 
     private lateinit var cartAdapter: CartItemAdapter
     private lateinit var cartList: List<Cart>
     private lateinit var userTable: String
     private lateinit var orderType: String
+    private var discountPercent: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,7 +45,20 @@ class CartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var user = (userViewModel.user.value as User)
+        gradeViewModel.getUserGrade(user.stamps)
+        gradeViewModel.grade.observe(viewLifecycleOwner) {
+            if (gradeViewModel.grade.value != null) {
+                binding.gradeVM = gradeViewModel
+                discountPercent = gradeViewModel.grade.value!!.id
+            }
+        }
         userViewModel.getUserInfo()
+        userViewModel.user.observe(viewLifecycleOwner) {
+            if (userViewModel.user.value != null) {
+                binding.userVM = userViewModel
+            }
+        }
         cartViewModel.totalCartPrice.observe(viewLifecycleOwner) {
             initAdapter()
         }
@@ -69,9 +86,17 @@ class CartFragment : Fragment() {
         binding.viewmodel = cartViewModel
 
         binding.apply {
-            // 처음 금액 나오도록
-            tvPayMoney.text = userViewModel.user.value?.money.toString() + " 원"
-            tvResultTotalprice.text = (userViewModel.user.value?.money?.minus(cartViewModel.totalCartPrice.value!!)).toString() + " 원"
+            // 페이 시,
+            var userMoney = userViewModel.user.value?.money
+            var totalCartPrice = cartViewModel.totalCartPrice.value
+            var discountPrice = gradeViewModel.grade.value?.id
+
+            Log.d(TAG, "onViewCreated: $userMoney / $totalCartPrice / $discountPrice")
+
+//            tvPayMoney.text = userMoney.toString() + " 원"
+//            tvDiscountPrice.text = discountPrice.toString() + " 원"
+//            tvResult.text = "결제 후 잔액"
+//            tvResultTotalprice.text = ((userMoney?.minus(totalCartPrice!!))?.minus(discountPrice!!)).toString()
 
             btnOrder.setOnClickListener {
                 if (cartViewModel.totalCartPrice.value == 0) {
@@ -101,13 +126,9 @@ class CartFragment : Fragment() {
             }
             btnPrePay.setOnClickListener {
                 cartViewModel.setUsePayState(true)
-                tvPayMoney.text = userViewModel.user.value?.money.toString() + " 원"
-                tvResultTotalprice.text = (userViewModel.user.value?.money?.minus(cartViewModel.totalCartPrice.value!!)).toString() + " 원"
             }
             btnPostPay.setOnClickListener {
                 cartViewModel.setUsePayState(false)
-                tvPayMoney.text = "동결"
-                tvResultTotalprice.text = "동결"
             }
             ivBack.setOnClickListener {
                 (activity as MainActivity).visibilityBottomNavBar(false)
@@ -136,9 +157,13 @@ class CartFragment : Fragment() {
     private fun makeOrder() {
         var order = Order((userViewModel.user.value as User).id, userTable)
 
+        // 최종 결제 금액 = 결제 금액 - (결제금액 * 할인율)
+        var disCountPercent = (discountPercent.toDouble()/ 100 * 2)
+        var resultPrice = cartViewModel.totalCartPrice.value!! - (cartViewModel.totalCartPrice.value!! * disCountPercent).toInt()
+
         order.completed = if (cartViewModel.usePay.value == true) "P" else "N"
-        if(order.completed == "P") {
-            userViewModel.setUserMoney(cartViewModel.totalCartPrice.value!!)// 페이 결제시 유저 머니 변경
+        if (order.completed == "P") {
+            userViewModel.setUserMoney(resultPrice)// 페이 결제시 유저 머니에서 차감
         }
         userViewModel.updateMoney()
         if (gpsViewModel.arrivalTime.value != null) {
