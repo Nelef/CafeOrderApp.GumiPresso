@@ -12,8 +12,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/list_orderlist"
-        android:layout_width="160dp"
-        android:layout_height="240dp"
+        android:layout_width="170dp"
+        android:layout_height="300dp"
         android:layout_marginRight="10dp">
 
         <androidx.cardview.widget.CardView
@@ -34,18 +34,19 @@
                 <ImageView
                     android:id="@+id/iv_product_image"
                     loadImage="@{recentOrder.recentOrderDetail[0].img}"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/coffee10" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="130dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_product_image">
 
                     <TextView
