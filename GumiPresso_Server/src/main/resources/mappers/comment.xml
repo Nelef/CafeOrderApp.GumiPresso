@@ -33,4 +33,7 @@
 		from t_comment
 		where id = #{id}
 	</select>
+	<delete id="deleteCommentItem" parameterType="Comment">
+		delete from t_comment where id = #{id}
+	</delete>
 </mapper>

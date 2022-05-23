@@ -42,4 +42,11 @@ public class CommentServiceImpl implements CommentService {
 		return repo.select(id);
 	}
 
+	@Override
+	public int deleteCommentItem(Comment comment) {
+		return repo.deleteCommentItem(comment);
+	}
+	
+	
+
 }

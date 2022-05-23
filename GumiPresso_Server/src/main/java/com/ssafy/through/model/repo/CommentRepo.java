@@ -15,5 +15,6 @@ public interface CommentRepo {
 	int delete(Integer id);
 
 	Comment select(Integer id);
-
+	
+	int deleteCommentItem(Comment comment);
 }

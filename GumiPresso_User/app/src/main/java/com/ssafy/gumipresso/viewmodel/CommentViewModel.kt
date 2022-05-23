@@ -48,6 +48,10 @@ class CommentViewModel: ViewModel() {
         }
     }
 
+    fun setCommentRating(rating: Float){
+        _comment.value!!.rating = rating
+    }
+
     private val _avgRating = MutableLiveData<Float>(0f)
     val avgRating: LiveData<Float>
         get() = _avgRating
@@ -70,7 +74,6 @@ class CommentViewModel: ViewModel() {
     fun insertComment(comment: Comment, imageUrl: String?){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                Log.d(TAG, "insertComment: $imageUrl")
                 if(imageUrl != null) {
                     val file = File(imageUrl)
                     var fileName = "comments/" + System.currentTimeMillis().toString() + ".png"
@@ -105,10 +108,11 @@ class CommentViewModel: ViewModel() {
         }
     }
 
-    fun updateComment(comment: Comment){
+    fun updateComment(){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response = Retrofit.commentService.updateComment(comment)
+                val com = _comment.value as Comment
+                val response = Retrofit.commentService.updateComment(com)
                 if(response.isSuccessful && response.body() != null){
                     _commentList.postValue(response.body() as MutableList<Comment>)
                 }
@@ -122,7 +126,7 @@ class CommentViewModel: ViewModel() {
         }
     }
 
-    fun updateCommentImage(comment: Comment, imageUrl: String){
+    fun updateCommentImage(imageUrl: String){
         viewModelScope.launch(Dispatchers.IO){
             try {
                 val file = File(imageUrl)
@@ -131,7 +135,7 @@ class CommentViewModel: ViewModel() {
                     RequestBody.create("image/*".toMediaTypeOrNull(), file)
                 var imageBody: MultipartBody.Part =
                     MultipartBody.Part.createFormData("uploaded_file", fileName, requestBody)
-                val json = Gson().toJson(comment)
+                val json = Gson().toJson(comment.value as Comment)
                 val commentBody = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(),json)
                 val response = Retrofit.commentService.updateCommentImage(imageBody, commentBody)
                 if(response.isSuccessful && response.body() != null){
@@ -148,10 +152,10 @@ class CommentViewModel: ViewModel() {
     }
 
 
-    fun deleteComment(id: Int){
+    fun deleteComment(){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response = Retrofit.commentService.deleteComment(id)
+                val response = Retrofit.commentService.deleteComment(comment.value as Comment)
                 if(response.isSuccessful && response.body() != null){
                     _commentList.postValue(response.body() as MutableList<Comment>)
                 }

@@ -16,4 +16,5 @@ public interface CommentService {
 	
 	Comment select(Integer id);
 
+	int deleteCommentItem(Comment comment);
 }
