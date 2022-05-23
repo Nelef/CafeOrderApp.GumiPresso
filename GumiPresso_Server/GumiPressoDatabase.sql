@@ -19,13 +19,14 @@ create table t_product(
     img varchar(100) not null
 );
 
-
 create  table t_order(
 	o_id integer auto_increment primary key,
     user_id varchar(100) not null,
     order_table varchar(20),
     order_time timestamp default CURRENT_TIMESTAMP,    
     completed char(1) default 'N',
+    arrival_time varchar(100) default '도착 정보가 없습니다.',
+    remain_time varchar(100) default '도착 정보가 없습니다.',
     constraint fk_order_user foreign key (user_id) references t_user(id) on delete cascade
 );
 
@@ -80,6 +81,16 @@ create table t_fcm_token(
     token varchar(250),
     state varchar(10) default "true"
 );
+
+create table t_banner(
+id int primary key auto_increment,
+img varchar(100),
+url varchar(300)
+);
+
+insert into t_banner(img , url) values('banners/banner1.png', 'https://www.naver.com/');
+insert into t_banner(img , url) values('banners/banner2.png', 'https://www.ssafy.com/ksp/jsp/swp/swpMain.jsp');
+
 insert into t_table(state) value(false); 
 insert into t_table(state) value(false); 
 insert into t_table(state) value(false); 
@@ -91,16 +102,16 @@ insert into t_table(state) value(false);
 insert into t_table(state) value(false); 
 insert into t_table(state) value(false); 
 
-INSERT INTO t_product (name, type, price, img) VALUES ('아메리카노', 'coffee', 4100, '/products/coffee1.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('카페라떼', 'coffee', 4500, '/products/coffee2.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('카라멜 마끼아또', 'coffee', 4800, '/products/coffee3.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('카푸치노', 'coffee', 4800, '/products/coffee4.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('모카라떼', 'coffee', 4800, '/products/coffee5.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('민트라떼', 'coffee', 4300, '/products/coffee6.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('화이트 모카라떼', 'coffee', 4800, '/products/coffee7.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('자몽에이드', 'coffee', 5100, '/products/coffee8.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('레몬에이드', 'coffee', 5100, '/products/coffee9.png');
-INSERT INTO t_product (name, type, price, img) VALUES ('초코칩 쿠키', 'cookie', 1500, '/products/cookie.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('아메리카노', 'coffee', 4100, 'products/coffee1.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('카페라떼', 'coffee', 4500, 'products/coffee2.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('카라멜 마끼아또', 'coffee', 4800, 'products/coffee3.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('카푸치노', 'coffee', 4800, 'products/coffee4.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('모카라떼', 'coffee', 4800, 'products/coffee5.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('민트라떼', 'coffee', 4300, 'products/coffee6.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('화이트 모카라떼', 'coffee', 4800, 'products/coffee7.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('자몽에이드', 'coffee', 5100, 'products/coffee8.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('레몬에이드', 'coffee', 5100, 'products/coffee9.png');
+INSERT INTO t_product (name, type, price, img) VALUES ('초코칩 쿠키', 'cookie', 1500, 'products/cookie.png');
 commit;
 
 
@@ -130,9 +141,11 @@ commit;
 --  ('ssafy10', 10, 10, '초코칩 쿠키 먹으로 여기 옵니다.')
 
  -- select * from t_user;
--- select * from t_product;
+-- select t_product.id, name, type, price, t_product.img from t_product, t_comment where t_product.id = product_id group by name order by avg(rating) desc;
+-- select id, name, type, price, img from t_product, t_order_detail where id = product_id group by id order by sum(quantity) desc;
 -- select * from t_order, t_order_detail where t_order.o_id = t_order_detail.order_id;
 -- select o_id from t_order order by o_id desc limit 1;
+-- select * from t_product;
 -- select * from t_order_detail;
 -- select * from t_order;
 -- select * from t_image;

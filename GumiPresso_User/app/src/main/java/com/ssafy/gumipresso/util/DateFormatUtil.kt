@@ -44,5 +44,16 @@ class DateFormatUtil {
 
             return formatter.format(date)
         }
+
+        fun convertTMapTotalTime(totalTime: Int): String{
+            var hour = totalTime / 3600
+            var minute = totalTime / 60
+            var second = totalTime % 60
+            if(hour > 0){
+                return "${hour}시간 ${minute}분"
+            }else{
+                return "${minute}분 ${second}초"
+            }
+        }
     }
 }

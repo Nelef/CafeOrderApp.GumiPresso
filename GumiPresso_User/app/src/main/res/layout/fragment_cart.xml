@@ -91,17 +91,17 @@
                     android:id="@+id/tv_distnace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`매장과의 거리: `+ gpsVM.distanceToStore}"
+                    android:text="@{gpsVM.distanceToStore == null ? `GPS 정보가 없습니다.` : `매장과의 거리: `+gpsVM.distanceToStore}"
+                    tools:text="5Km"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="매장과의 거리: 5Km"
                     app:layout_constraintBottom_toTopOf="@id/tv_shoppinglist_quantity"/>
 
                 <TextView
                     android:id="@+id/tv_arrival_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{`예상 도착 시간: `+ gpsVM.arrivalTime}"
-                    tools:text="예상 도착 시간: 55"
+                    android:text="@{gpsVM.arrivalTime == null ? `도착시간 정보가 없습니다.` : `도착 예정 시간: `+gpsVM.arrivalTime}"
+                    tools:text="55"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/tv_shoppinglist_price"
                     />

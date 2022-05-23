@@ -20,6 +20,8 @@ public class Order {
 	private Date orderTime;
 	@ApiModelProperty(value="completed")
 	private String completed;
+	private String arrival_time;
+	private String remain_time;
 	
 	public Order() {
 	}
@@ -43,6 +45,20 @@ public class Order {
 		this.orderTable = orderTable;
 		this.orderTime = orderTime;
 		this.completed = completed;
+	}
+	
+	
+
+	public Order(Integer oId, String userId, String orderTable, Date orderTime, String completed, String arrival_time,
+			String remain_time) {
+		super();
+		this.oId = oId;
+		this.userId = userId;
+		this.orderTable = orderTable;
+		this.orderTime = orderTime;
+		this.completed = completed;
+		this.arrival_time = arrival_time;
+		this.remain_time = remain_time;
 	}
 
 	public Integer getoId() {
@@ -85,6 +101,22 @@ public class Order {
 		this.completed = completed;
 	}
 
+	public String getArrival_time() {
+		return arrival_time;
+	}
+
+	public void setArrival_time(String arrival_time) {
+		this.arrival_time = arrival_time;
+	}
+
+	public String getRemain_time() {
+		return remain_time;
+	}
+
+	public void setRemain_time(String remain_time) {
+		this.remain_time = remain_time;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -98,8 +130,13 @@ public class Order {
 		builder.append(orderTime);
 		builder.append(", completed=");
 		builder.append(completed);
+		builder.append(", arrival_time=");
+		builder.append(arrival_time);
+		builder.append(", remain_time=");
+		builder.append(remain_time);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
 }

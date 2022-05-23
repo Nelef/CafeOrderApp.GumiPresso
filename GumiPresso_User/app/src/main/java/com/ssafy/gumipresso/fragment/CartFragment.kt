@@ -19,6 +19,7 @@ import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.CartItemAdapter
 import com.ssafy.gumipresso.databinding.FragmentCartBinding
 import com.ssafy.gumipresso.model.dto.Cart
+import com.ssafy.gumipresso.model.dto.Order
 import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.viewmodel.CartViewModel
@@ -120,8 +121,12 @@ class CartFragment : Fragment() {
     }
 
     private fun makeOrder() {
-
-        cartViewModel.orderCart((userViewModel.user.value as User).id, userTable)
+        var order = Order((userViewModel.user.value as User).id, userTable)
+        if(gpsViewModel.location?.value != null){
+            order.arrival_time = gpsViewModel.arrivalTime.value
+            order.remain_time = gpsViewModel.remainTime.value
+        }
+        cartViewModel.orderCart(order)
         userViewModel.getUserInfo()
         userViewModel.sendFCMPushMessage(
             PushMessageUtil().getFcmToken(),
@@ -146,7 +151,9 @@ class CartFragment : Fragment() {
         super.onDestroy()
         (activity as MainActivity).visibilityBottomNavBar(false)
     }
-
+    
+    
+    
 
 
 }

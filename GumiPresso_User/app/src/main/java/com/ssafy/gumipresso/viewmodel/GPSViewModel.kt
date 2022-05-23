@@ -20,6 +20,7 @@ import com.ssafy.gumipresso.model.dto.tmap.*
 import com.ssafy.gumipresso.model.service.LocationService
 import com.ssafy.gumipresso.util.DateFormatUtil
 import com.ssafy.gumipresso.util.DateFormatUtil.Companion.convertTMapArrivalTime
+import com.ssafy.gumipresso.util.DateFormatUtil.Companion.convertTMapTotalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -30,6 +31,7 @@ import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.converter.gson.GsonConverterFactory
 
+private const val TAG ="GPSViewModel"
 class GPSViewModel:ViewModel() {
     private val _location: MutableLiveData<Location>? = MutableLiveData<Location>()
     val location: LiveData<Location>?
@@ -50,9 +52,13 @@ class GPSViewModel:ViewModel() {
         }
     }
 
-    private val _arrivalTime =  MutableLiveData<String>()
+    private val _arrivalTime =  MutableLiveData<String>("매장과의 거리 계산중")
     val arrivalTime: LiveData<String>
         get() = _arrivalTime
+
+    private val _remainTime =  MutableLiveData<String>("매장과의 거리 계산중")
+    val remainTime: LiveData<String>
+        get() = _remainTime
 
     private val _distanceToStore = MutableLiveData<String>("매장과의 거리 계산중")
     val distanceToStore: LiveData<String>
@@ -82,8 +88,10 @@ class GPSViewModel:ViewModel() {
             val responseBody = JSONObject(response.body!!.string())
 
             val receiveForm = Gson().fromJson(responseBody.toString(),ReceiveForm::class.java)
+            Log.d(TAG, "getLocationInfo: aklsdjfkljasdlkfjklsadjfklajsdklfjklsadjf")
             _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
             _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
+            _remainTime.postValue(convertTMapTotalTime(receiveForm.features[0].properties.totalTime))
         }
     }
 }

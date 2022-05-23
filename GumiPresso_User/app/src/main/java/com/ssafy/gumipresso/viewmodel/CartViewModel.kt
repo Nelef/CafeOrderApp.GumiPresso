@@ -43,10 +43,10 @@ class CartViewModel: ViewModel() {
     }
 
 
-    fun orderCart(userId: String, orderTable: String){
+    fun orderCart(order: Order){
         val list = _cartList.value as MutableList<Cart>
         val orderDetailList = mutableListOf<AosOrderDetail>()
-        val order = Order(userId, orderTable)
+
         for(i in list.indices){
             orderDetailList.add(AosOrderDetail(list[i].menuId, list[i].menuCnt))
         }
