@@ -52,16 +52,16 @@ class BannerViewModel : ViewModel() {
     }
 
     fun insertBanner(banner: Banner, imageUrl: String){
-        val file = File(imageUrl)
-        var fileName = "banners/" + System.currentTimeMillis().toString()+".png"
-        banner.img = fileName
-        var requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        var imageBody : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)
-        val json = Gson().toJson(banner)
-        val bannerBody = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), json)
-
         viewModelScope.launch(Dispatchers.IO){
             try {
+                val file = File(imageUrl)
+                Log.d(TAG, "insertBanner: ${imageUrl}")
+                var fileName = "banners/" + System.currentTimeMillis().toString()+".png"
+                banner.img = fileName
+                var requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                var imageBody : MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file",fileName,requestBody)
+                val json = Gson().toJson(banner)
+                val bannerBody = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), json)
                 val response = Retrofit.bannerService.insertBanner(imageBody, bannerBody)
                 if(response.isSuccessful && response.body() != null){
                     _bannerList.postValue(response.body() as MutableList<Banner>)

@@ -28,7 +28,7 @@ import com.ssafy.gumipresso_amdin.util.UriPathUtil
 
 class BannerEditFragment : Fragment() {
     private lateinit var binding: FragmentBannerEditBinding
-    private val bannerViewModel by viewModels<BannerViewModel>()
+    private val bannerViewModel: BannerViewModel by viewModels()
 
     lateinit var banner: Banner
     private var imageUrl = ""

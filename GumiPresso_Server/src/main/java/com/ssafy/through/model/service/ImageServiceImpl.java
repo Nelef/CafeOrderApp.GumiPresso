@@ -59,6 +59,11 @@ public class ImageServiceImpl implements ImageService{
 		if(file.exists()) {
 			file.delete();
 		}
+		path = FILE_URL_VUE+imageFileName;
+		file = new File(path);
+		if(file.exists()) {
+			file.delete();
+		}
 	}
 	
 	

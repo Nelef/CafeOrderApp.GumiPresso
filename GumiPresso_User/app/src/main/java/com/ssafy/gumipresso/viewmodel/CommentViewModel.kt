@@ -76,12 +76,11 @@ class CommentViewModel: ViewModel() {
             try {
                 if(imageUrl != null) {
                     val file = File(imageUrl)
+                    Log.d(TAG, "insertComment: ${imageUrl}")
                     var fileName = "comments/" + System.currentTimeMillis().toString() + ".png"
                     comment.img = fileName
-                    var requestBody: RequestBody =
-                        RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                    var imageBody: MultipartBody.Part =
-                        MultipartBody.Part.createFormData("uploaded_file", fileName, requestBody)
+                    var requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                    var imageBody: MultipartBody.Part = MultipartBody.Part.createFormData("uploaded_file", fileName, requestBody)
                     val json = Gson().toJson(comment)
                     val commentBody = RequestBody.create(
                         "application/json; charset=utf-8".toMediaTypeOrNull(),

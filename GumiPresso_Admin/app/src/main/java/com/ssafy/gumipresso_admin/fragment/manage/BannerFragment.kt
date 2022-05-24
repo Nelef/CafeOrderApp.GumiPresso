@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -30,7 +31,7 @@ import com.ssafy.gumipresso_amdin.util.UriPathUtil
 
 class BannerFragment : Fragment() {
     private lateinit var binding: FragmentBannerBinding
-    private val bannerViewModel by viewModels<BannerViewModel>()
+    private val bannerViewModel: BannerViewModel by activityViewModels()
 
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var bannerList: MutableList<Banner>

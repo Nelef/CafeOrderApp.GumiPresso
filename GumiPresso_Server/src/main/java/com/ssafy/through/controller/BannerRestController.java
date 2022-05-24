@@ -51,9 +51,10 @@ public class BannerRestController {
 	
 	@PostMapping("/")
 	public ResponseEntity<?> insertBanner(@RequestParam("uploaded_file") MultipartFile imageFile, @RequestParam("banner") String json) {		
-		Gson gson = new Gson();
+		Gson gson = new Gson();		
 		Banner banner = gson.fromJson(json, Banner.class);
 		banner.setImg(imageFile.getOriginalFilename());
+		System.out.println(imageFile.getOriginalFilename());
 		iService.fileUpload(imageFile);
 		int result = bService.insertBanner(banner);		
 		if(result > 0) {			
