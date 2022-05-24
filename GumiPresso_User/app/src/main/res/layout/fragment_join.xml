@@ -38,10 +38,9 @@
             app:layout_constraintTop_toTopOf="@id/et_id"
             app:layout_constraintBottom_toBottomOf="@id/et_id"
             app:layout_constraintEnd_toEndOf="@id/et_id"
-
             android:visibility='@{joinViewModel.isUsedId ? View.VISIBLE : View.GONE}'
             android:layout_marginHorizontal="20dp"
-            />
+            app:tint="@color/coffee_point_red" />
 
 
         <TextView
