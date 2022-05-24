@@ -255,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_marginVertical="10dp"
-                    android:text="대기 주문"
+                    android:text="미수령 주문"
                     android:textColor="@color/coffee_dark_brown"
                     android:textSize="20sp"
                     android:textStyle="bold"

@@ -1,5 +1,6 @@
 package com.ssafy.gumipresso.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -60,8 +61,16 @@ class MyPageFragment : Fragment() {
                 mainActivity.movePage(CONST.FRAG_SETTING, null)
             }
             ivLogout.setOnClickListener {
-                ApplicationClass.userPrefs.edit().clear().commit()
-                mainActivity.movePage(CONST.LOGOUT, null)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("알림")
+                builder.setMessage("로그아웃 하시겠습니까?")
+                builder.setNegativeButton("취소") { dialog, _ ->
+                    dialog.cancel()
+                }
+                builder.setPositiveButton("확인") { dialog, _ ->
+                    ApplicationClass.userPrefs.edit().clear().commit()
+                    mainActivity.movePage(CONST.LOGOUT, null)
+                }.show()
             }
             membershipLayout.setOnClickListener {
                 mainActivity.movePage(CONST.FRAG_GRADE_FROM_MYPAGE, null)

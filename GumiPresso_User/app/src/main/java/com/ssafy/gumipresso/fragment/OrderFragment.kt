@@ -52,7 +52,6 @@ class OrderFragment : Fragment() {
         getFavoriteList()
 
         binding.apply {
-            tvMenuDistance.text = (activity as MainActivity).distanceMethod()
             ivMap.setOnClickListener {
                 (activity as MainActivity).movePage(CONST.FRAG_MAPS, null)
             }
@@ -124,10 +123,6 @@ class OrderFragment : Fragment() {
                 }
             }
         }
-    }
-
-    fun tvMenuDistanceChange() {
-        binding.tvMenuDistance.text = (activity as MainActivity).distanceMethod()
     }
 
     private fun initProductAdapter() {

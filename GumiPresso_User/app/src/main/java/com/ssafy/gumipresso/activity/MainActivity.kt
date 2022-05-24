@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -52,6 +53,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.altbeacon.beacon.*
+import kotlin.concurrent.thread
 import kotlin.math.sqrt
 
 
@@ -72,7 +74,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
     private val BEACON_MAJOR = "10004"
     private val BEACON_MINOR = "54480"
     private var STORE_INFO_POPUP = false
-    private var storeDistanceTV = "Beacon Searching"
     private val region = Region(
         "estimote",
         Identifier.parse(BEACON_UUID),
@@ -108,16 +109,16 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
         getFirebaseToken()
 
 //        // 비콘
-//        val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
-//        bluetoothAdapter = bluetoothManager.adapter
-//
-//        beaconManager = BeaconManager.getInstanceForApplication(this)
-//        beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"))
-//
-//        checkPermission()
-//        thread {
-//            startScan()
-//        }
+        val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+        bluetoothAdapter = bluetoothManager.adapter
+
+        beaconManager = BeaconManager.getInstanceForApplication(this)
+        beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"))
+
+        checkPermission()
+        thread {
+            startScan()
+        }
 //        // 비콘 끝
 
         // 태그
@@ -283,7 +284,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
 
         beaconManager.addRangeNotifier { beacons, region ->
             for (beacon in beacons) {
-                storeDistanceTV = "${String.format("%.2f", beacon.distance)}m"
 
                 if (!STORE_INFO_POPUP) {
                     CoroutineScope(Dispatchers.Main).launch {
@@ -291,20 +291,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
                     }
                 }
 
-                // 프레그먼트의 tvMenuDistance 변경
-                val fragment: OrderFragment? =
-                    supportFragmentManager.findFragmentById(R.id.orderFragment) as OrderFragment?
-                if (fragment != null)
-                    fragment.tvMenuDistanceChange()
-
                 Log.d(
                     TAG,
                     "distance: " + beacon.distance + " id:" + beacon.id1 + "/" + beacon.id2 + "/" + beacon.id3
                 )
-            }
-
-            if (beacons.isEmpty()) {
-                storeDistanceTV = "가맹점을 찾을 수 없습니다."
             }
         }
 
@@ -389,10 +379,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
         val callBLEEnableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
         requestBLEActivity.launch(callBLEEnableIntent)
         Log.d(TAG, "requestEnableBLE: ")
-    }
-
-    fun distanceMethod(): String {
-        return storeDistanceTV
     }
     // 비콘 끝
 
