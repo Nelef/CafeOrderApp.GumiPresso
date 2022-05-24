@@ -3,6 +3,9 @@ buildscript {
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'
     }
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }// Top-level b
 plugins {
     id 'com.android.application' version '7.1.2' apply false
