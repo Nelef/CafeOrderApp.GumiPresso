@@ -181,7 +181,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="30dp"
-                        android:text="- 구프페이 충전은 매장에 문의해주세요."
+                        android:text="- 구프페이 충전은 매장에 문의해주세요.(관리자앱 필요)"
                         android:textColor="@color/gray" />
 
                     <TextView

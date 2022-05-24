@@ -85,12 +85,12 @@ class RecentOrderDetailFragment : Fragment() {
     }
 
     override fun onResume() {
-        super.onResume()
         (activity as MainActivity).visibilityBottomNavBar(true)
+        super.onResume()
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         (activity as MainActivity).visibilityBottomNavBar(false)
+        super.onDestroy()
     }
 }

@@ -42,6 +42,7 @@ import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.ActivityMainBinding
 import com.ssafy.gumipresso.fragment.OrderFragment
 import com.ssafy.gumipresso.fragment.PayFragment
+import com.ssafy.gumipresso.fragment.SettingsFragment
 import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.util.SettingsUtil
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
     private val settingViewModel: SettingViewModel by viewModels()
     private val tableViewModel: TableViewModel by viewModels()
     private lateinit var tableList: List<Table>
+    var payFragment: PayFragment? = null
 
     // 비콘 변수
     private lateinit var beaconManager: BeaconManager
@@ -222,10 +224,21 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
                 return@OnCompleteListener
             }
             if (SettingsUtil().getFirstRunCheck()) {
-                Toast.makeText(this, "처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "앱을 처음 실행 하셨습니다.", Toast.LENGTH_SHORT).show()
                 PushMessageUtil().setFcmToken(it.result)
                 SettingsUtil().setFirstRunCheck(false)
                 settingViewModel.insertFCMToken()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("앱 처음 실행")
+                builder.setMessage("알림과 자동로그인이 활성화 되어 있습니다. 설정을 하시겠습니까?")
+                builder.setNegativeButton("취소") { dialog, _ ->
+                    dialog.cancel()
+                }
+                builder.setPositiveButton("확인") { dialog, _ ->
+                    navHostFragment.childFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, SettingsFragment()).addToBackStack(null)
+                        .commit()
+                }.show()
             } else {
                 settingViewModel.updateFCMToken()
             }
@@ -509,17 +522,17 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
             var gForce = sqrt(gX * gX + gY * gY + gZ * gZ).toFloat()
             // 진동을 감지했을 때
             // gforce가 기준치 이상일 경우
-            if (gForce > 2.0) {
+            if (gForce > 2.5) {
                 Log.d(TAG, "기기 흔들림.")
                 // 기기 진동
                 val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                 vibrator.vibrate(200) // 200 ms
 
                 // Pay로 이동
-                if(navHostFragment.childFragmentManager.findFragmentByTag("pay")== null) { // 중복 방지
+                if (payFragment == null) {
+                    payFragment = PayFragment()
                     navHostFragment.childFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_main, PayFragment(), "pay")
-                        .addToBackStack(null)
+                        .replace(R.id.fragment_container_main, PayFragment()).addToBackStack(null)
                         .commit()
                 }
             }

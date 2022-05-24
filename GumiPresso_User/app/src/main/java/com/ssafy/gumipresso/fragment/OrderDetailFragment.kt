@@ -176,8 +176,8 @@ class OrderDetailFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         (activity as MainActivity).visibilityBottomNavBar(false)
+        super.onDestroy()
     }
 
     fun initisFavorite(name:String) {

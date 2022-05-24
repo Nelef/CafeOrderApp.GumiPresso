@@ -201,7 +201,7 @@ class CartFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         (activity as MainActivity).visibilityBottomNavBar(false)
+        super.onDestroy()
     }
 }

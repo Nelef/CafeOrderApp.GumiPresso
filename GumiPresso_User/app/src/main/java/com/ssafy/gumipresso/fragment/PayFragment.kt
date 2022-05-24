@@ -20,6 +20,7 @@ import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import com.ssafy.gumipresso.R
+import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.databinding.FragmentPayBinding
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
@@ -131,5 +132,10 @@ class PayFragment : Fragment() {
         //The API requires the client/Activity context for displaying the prompt view
         val biometricPrompt = BiometricPrompt(this, executor, callback)
         return biometricPrompt
+    }
+
+    override fun onDestroy() {
+        (activity as MainActivity).payFragment = null
+        super.onDestroy()
     }
 }
