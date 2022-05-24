@@ -38,6 +38,10 @@ class OrderFragment : Fragment() {
     private lateinit var productAdapter: ProductAdapter
     private lateinit var productList: List<Product>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
