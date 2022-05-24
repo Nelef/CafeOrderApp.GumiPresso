@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.through.model.dto.User;
-import com.ssafy.through.model.service.FCMUtil;
 import com.ssafy.through.model.service.KakaoLoginService;
 import com.ssafy.through.model.service.NaverLoginService;
 import com.ssafy.through.model.service.UserService;
+import com.ssafy.through.utils.CryptUtils;
+import com.ssafy.through.utils.FCMUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +47,8 @@ public class UserRestController {
 	private KakaoLoginService kService;
 	@Autowired
 	private NaverLoginService nService;
+	@Autowired
+	private PasswordEncoder pwEncoder;
 	
 	@ApiOperation(value = "가입시 아이디 중복검사 return: Boolean", response = Boolean.class)
 	@GetMapping("/join/{id}")
@@ -60,11 +64,10 @@ public class UserRestController {
 
 	@ApiOperation(value = "로그인 버튼 클릭시 -> 로그인 할 유저 정보 return: User", response = User.class)
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response) throws UnsupportedEncodingException {
-		User selectedUser = uService.select(user.getId());
-		
+	public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response) throws Exception {
+		User selectedUser = uService.select(user.getId());				
 		if (selectedUser != null && selectedUser.getId().equals(user.getId())
-				&& selectedUser.getPass().equals(user.getPass())) {
+				&& pwEncoder.matches(selectedUser.getPass(), user.getPass()) ) {
 
 			Cookie cookie = new Cookie("loginId",selectedUser.getId());
 			cookie.setPath("/");
@@ -130,10 +133,12 @@ public class UserRestController {
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody User user) {
 		try {
+			user.setPass(pwEncoder.encode(user.getPass()));
 			int result = uService.insert(user);
 		}catch(Exception e) {
 			
 		}finally {
+			user = uService.select(user.getId());
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 				
@@ -141,15 +146,13 @@ public class UserRestController {
 	
     
 	@PostMapping("/kakao")
-	public ResponseEntity<?> getKakaoToken(@RequestBody String code, HttpServletResponse response) throws UnsupportedEncodingException{
-		System.out.println("#########" + code);
+	public ResponseEntity<?> getKakaoToken(@RequestBody String code, HttpServletResponse response) throws UnsupportedEncodingException{		
 		Map<String, Object> userInfo = kService.getUserInfo(code);
 		String email = (String) userInfo.get("email");
 		String nickname = (String) userInfo.get("nickname");
 		User user = new User(email, nickname);
 		int countId = uService.selectId(email);
-		Cookie cookie = new Cookie("loginId", user.getId());
-		System.out.println("kakao cookie"+cookie.getValue());
+		Cookie cookie = new Cookie("loginId", user.getId());		
 		cookie.setPath("/");
 		cookie.setMaxAge(10 * 60); // 초단위,. 600초
 		response.addCookie(cookie);
@@ -171,8 +174,7 @@ public class UserRestController {
 		
 		User user = new User(email, name);
 		int countId = uService.selectId(email);
-		Cookie cookie = new Cookie("loginId", user.getId());
-		System.out.println("kakao cookie"+cookie.getValue());
+		Cookie cookie = new Cookie("loginId", user.getId());		
 		cookie.setPath("/");
 		cookie.setMaxAge(10 * 60); // 초단위,. 600초
 		response.addCookie(cookie);

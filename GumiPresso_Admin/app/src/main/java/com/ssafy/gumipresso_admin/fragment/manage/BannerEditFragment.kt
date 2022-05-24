@@ -80,6 +80,8 @@ class BannerEditFragment : Fragment() {
             }
             btnDelete.setOnClickListener {
                 bannerViewModel.deleteBanner(banner)
+                Toast.makeText(context, "삭제 되었습니다", Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).navController.navigate(R.id.action_bannerEditFragment_to_manageFragment)
             }
             tabLayout.getTabAt(1)!!.select()
             tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{

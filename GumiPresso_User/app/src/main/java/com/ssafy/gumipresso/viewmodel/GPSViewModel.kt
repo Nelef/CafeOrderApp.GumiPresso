@@ -94,6 +94,7 @@ class GPSViewModel:ViewModel() {
                 _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
                 _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
                 _remainTime.postValue(convertTMapTotalTime(receiveForm.features[0].properties.totalTime))
+                Log.d(TAG, "getLocationInfo: ${receiveForm.features[0].properties.arrivalTime}")
             } catch (e:Exception){
                 Log.d(TAG, "getLocationInfo: $e")
             }

@@ -1,4 +1,4 @@
-package com.ssafy.through.model.service;
+package com.ssafy.through.utils;
 
 import java.io.FileInputStream;
 import java.util.List;
