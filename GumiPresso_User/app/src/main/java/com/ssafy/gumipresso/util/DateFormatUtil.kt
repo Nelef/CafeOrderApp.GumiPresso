@@ -39,7 +39,7 @@ class DateFormatUtil {
             var formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             formatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
             val date = formatter.parse(arrvalTime)
-            formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            formatter = SimpleDateFormat("HH:mm")
             formatter.timeZone = TimeZone.getTimeZone("Asia/Seoul")
 
             return formatter.format(date)
