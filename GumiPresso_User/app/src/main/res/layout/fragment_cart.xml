@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="userVM"
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
@@ -141,7 +143,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@{!viewmodel.usePay ? @drawable/button_color : @drawable/button_non_color}"
-                android:text="후 결제"
+                android:text="매장 결제"
                 android:textColor="@color/coffee_dark_brown"
                 app:layout_constraintBottom_toTopOf="@id/btn_tout"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +228,7 @@
                 android:textColor="@{viewmodel.usePay ? @color/black : @color/gray}"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_pay_money"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_pay_money" />
@@ -236,6 +239,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:orientation="vertical"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_pay_money"
                 app:layout_constraintEnd_toStartOf="@id/tv_pay_money"
                 app:layout_constraintStart_toEndOf="@id/tv_pay"
@@ -254,6 +258,7 @@
                 android:textColor="@{viewmodel.usePay ? @color/black : @color/gray}"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toTopOf="@id/tv_shoppinglist_quantity"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="11000 원" />
@@ -307,10 +312,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingHorizontal="10dp"
-                android:textColor="@{viewmodel.usePay ? @color/black : @color/gray}"
                 android:text="@{`할인 금액 (`+(gradeVM.grade.id * 2)+`%)`}"
+                android:textColor="@{viewmodel.usePay ? @color/black : @color/gray}"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_discount_price"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_discount_price"
@@ -322,6 +328,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:orientation="vertical"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_discount_price"
                 app:layout_constraintEnd_toStartOf="@id/tv_discount_price"
                 app:layout_constraintStart_toEndOf="@id/tv_result"
@@ -340,6 +347,7 @@
                 android:textColor="@{viewmodel.usePay ? @color/gumipresso_red : @color/gray}"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toTopOf="@id/tv_result"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="1000 원" />
@@ -354,6 +362,7 @@
                 android:textColor="@{viewmodel.usePay ? @color/black : @color/gray}"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_result_totalprice"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_result_totalprice"
@@ -365,6 +374,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:orientation="vertical"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_result_totalprice"
                 app:layout_constraintEnd_toStartOf="@id/tv_result_totalprice"
                 app:layout_constraintStart_toEndOf="@id/tv_result"
@@ -383,6 +393,7 @@
                 android:textColor="@{viewmodel.usePay ? @color/black : @color/gray}"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="@{viewmodel.usePay ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toTopOf="@id/btn_order"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="1000 원" />
