@@ -28,6 +28,7 @@
                 android:layout_height="40dp"
                 android:padding="10dp"
                 android:src="@drawable/icon_back"
+                app:tint="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/iv_title_bar" />
@@ -118,9 +119,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:backgroundTint="@color/coffee_point_red"
+            android:backgroundTint="@color/gumipresso_red"
             android:text="다시 주문하기"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="20dp" />
 

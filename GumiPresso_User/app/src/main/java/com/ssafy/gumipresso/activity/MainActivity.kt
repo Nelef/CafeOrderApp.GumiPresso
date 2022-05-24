@@ -109,16 +109,16 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
         getFirebaseToken()
 
 //        // 비콘
-        val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
-        bluetoothAdapter = bluetoothManager.adapter
-
-        beaconManager = BeaconManager.getInstanceForApplication(this)
-        beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"))
-
-        checkPermission()
-        thread {
-            startScan()
-        }
+//        val bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+//        bluetoothAdapter = bluetoothManager.adapter
+//
+//        beaconManager = BeaconManager.getInstanceForApplication(this)
+//        beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"))
+//
+//        checkPermission()
+//        thread {
+//            startScan()
+//        }
 //        // 비콘 끝
 
         // 태그

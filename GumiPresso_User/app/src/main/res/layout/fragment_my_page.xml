@@ -50,13 +50,12 @@
                 android:id="@+id/iv_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginHorizontal="20dp"
                 android:padding="10dp"
-                />
+                android:src="@drawable/ic_settings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
             <LinearLayout
                 android:id="@+id/divider0"
@@ -91,9 +90,9 @@
             android:text="로그아웃"
             android:textColor="@color/coffee_point_red"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_username"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_username"
-            app:layout_constraintBottom_toBottomOf="@id/tv_username"/>
+            app:layout_constraintTop_toTopOf="@id/tv_username" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/membershipLayout"
@@ -112,6 +111,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
+                android:layout_marginHorizontal="20dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp">
 
@@ -140,10 +140,10 @@
                     android:id="@+id/membershipBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:gravity="center"
                     android:layout_marginRight="15dp"
+                    android:gravity="center"
                     android:text="혜택보기"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -155,9 +155,9 @@
             android:id="@+id/tv_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="20sp"
             android:layout_marginVertical="20dp"
             android:text="주문내역"
-            android:layout_margin="20sp"
             android:textColor="@color/coffee_dark_brown"
             android:textSize="25sp"
             android:textStyle="bold"

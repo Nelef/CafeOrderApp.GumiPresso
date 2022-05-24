@@ -6,9 +6,11 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="commentVM"
             type="com.ssafy.gumipresso.viewmodel.CommentViewModel" />
+
         <variable
             name="productVM"
             type="com.ssafy.gumipresso.model.dto.Product" />
@@ -35,7 +37,8 @@
                 android:src="@drawable/icon_back"
                 app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/tv_title_notice"
@@ -92,6 +95,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
+                            android:alpha="0.5"
                             android:src="@drawable/icon_empty_image"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -145,8 +149,8 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/textview_regular"
                         android:hint="리뷰를 입력해주세요"
-                        android:singleLine="true"
                         android:minHeight="100dp"
+                        android:singleLine="true"
                         android:text="@{commentVM.comment.comment}"
                         android:textColor="@color/black" />
                 </androidx.cardview.widget.CardView>

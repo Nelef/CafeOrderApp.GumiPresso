@@ -51,6 +51,7 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="15dp"
                 android:src="@drawable/icon_notification"
+                app:tint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +74,7 @@
                 android:layout_height="wrap_content"
                 toString="@{noticeVM.notice.size()}"
                 android:textSize="10sp"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="@id/iv_noti_new"
                 app:layout_constraintEnd_toEndOf="@id/iv_noti_new"
                 app:layout_constraintTop_toTopOf="@id/iv_noti_new"

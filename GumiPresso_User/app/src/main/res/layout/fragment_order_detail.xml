@@ -67,6 +67,7 @@
 
                         <ImageView
                             android:id="@+id/iv_back"
+                            app:tint="@color/black"
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:paddingLeft="10dp"
@@ -257,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/coffee_point_red"
                 android:text="담기"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

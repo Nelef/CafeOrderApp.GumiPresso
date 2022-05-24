@@ -45,7 +45,8 @@
                 android:src="@drawable/icon_back"
                 app:layout_constraintBottom_toBottomOf="@id/iv_title_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_title_bar" />
+                app:layout_constraintTop_toTopOf="@id/iv_title_bar"
+                app:tint="@color/black"/>
 
             <TextView
                 android:id="@+id/tv_title_notice"
@@ -130,7 +131,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@{viewmodel.usePay ? @drawable/button_color : @drawable/button_non_color}"
                 android:text="페이 결제"
-                android:textColor="@color/coffee_dark_brown"
+                android:textColor="@{viewmodel.usePay ? @color/gumipresso_red : @color/gray}"
                 app:layout_constraintBottom_toBottomOf="@id/btn_post_pay"
                 app:layout_constraintEnd_toStartOf="@id/btn_post_pay"
                 app:layout_constraintTop_toTopOf="@id/btn_post_pay"
@@ -144,7 +145,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@{!viewmodel.usePay ? @drawable/button_color : @drawable/button_non_color}"
                 android:text="매장 결제"
-                android:textColor="@color/coffee_dark_brown"
+                android:textColor="@{!viewmodel.usePay ? @color/gumipresso_red : @color/gray}"
                 app:layout_constraintBottom_toTopOf="@id/btn_tout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -181,7 +182,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@{viewmodel.isTakeOut ? @drawable/button_non_color : @drawable/button_color}"
                 android:text="매장 테이블"
-                android:textColor="@color/coffee_dark_brown"
+                android:textColor="@{viewmodel.isTakeOut ? @color/gray : @color/gumipresso_red}"
                 app:layout_constraintBottom_toBottomOf="@id/btn_tout"
                 app:layout_constraintEnd_toStartOf="@id/btn_tout"
                 app:layout_constraintTop_toTopOf="@id/btn_tout"
@@ -194,7 +195,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@{!viewmodel.isTakeOut ? @drawable/button_non_color : @drawable/button_color}"
                 android:text="테이크 아웃"
-                android:textColor="@color/coffee_dark_brown"
+                android:textColor="@{!viewmodel.isTakeOut ? @color/gray : @color/gumipresso_red}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:background="@drawable/button_color" />

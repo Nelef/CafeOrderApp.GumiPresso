@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/add_favorite"
-        android:title="Favorite"
+    <item
+        android:id="@+id/add_favorite"
         android:icon="@drawable/ic_baseline_favorite_border_24"
+        app:iconTint="@color/black"
+        android:title="Favorite"
         android:visible="true"
         app:showAsAction="always" />
 
-    <item android:id="@+id/remove_favorite"
-        android:title="Favorite"
+    <item
+        android:id="@+id/remove_favorite"
         android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="Favorite"
         android:visible="true"
         app:showAsAction="always" />
 </menu>

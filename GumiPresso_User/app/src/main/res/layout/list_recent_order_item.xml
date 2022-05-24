@@ -45,8 +45,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_product_image">
 
                     <TextView
@@ -87,11 +87,11 @@
                         orderStateTitle="@{recentOrder.completed}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:paddingBottom="5dp"
                         android:textColor="@color/coffee_dark_brown"
-                        android:textStyle="bold"
-                        android:layout_marginTop="5dp"
                         android:textSize="18sp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_order_date"
@@ -104,7 +104,8 @@
                         android:layout_margin="5dp"
                         android:src="@drawable/shopping_cart"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:tint="@color/coffee_dark_brown" />
 
                     <TextView
                         android:id="@+id/tv_pickup"
