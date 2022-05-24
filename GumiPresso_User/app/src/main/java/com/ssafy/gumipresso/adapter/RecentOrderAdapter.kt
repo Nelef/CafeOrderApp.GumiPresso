@@ -13,19 +13,19 @@ private const val TAG = "RecentOrderAdapter"
 
 class RecentOrderAdapter(private val list: List<RecentOrder>) :
     RecyclerView.Adapter<RecentOrderAdapter.ViewHolder>() {
-    class ViewHolder(private val binding: ListRecentOrderItemBinding) :
+    inner class ViewHolder(private val binding: ListRecentOrderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RecentOrder) {
             binding.recentOrder = item
         }
         fun bindClickListener(listener: OnOrderItemClick) {
             binding.listOrderlist.setOnClickListener {
-                listener.onClick(it, adapterPosition);
+                listener.onClick(it, list.size - adapterPosition - 1);
             }
         }
         fun bindClickListener(listener: OnCartIconClick) {
             binding.ivCart.setOnClickListener {
-                listener.onClick(it, adapterPosition);
+                listener.onClick(it, list.size - adapterPosition - 1);
             }
         }
     }
@@ -40,7 +40,7 @@ class RecentOrderAdapter(private val list: List<RecentOrder>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = list[position]
+        val item = list[list.size - position - 1]
         holder.bind(item)
     }
 
