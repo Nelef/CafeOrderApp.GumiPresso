@@ -34,8 +34,8 @@ import com.ssafy.through.model.dto.RecentOrder;
 import com.ssafy.through.model.dto.Sales;
 import com.ssafy.through.model.dto.User;
 import com.ssafy.through.model.service.AdminService;
-import com.ssafy.through.model.service.FCMUtil;
 import com.ssafy.through.model.service.ImageService;
+import com.ssafy.through.utils.FCMUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
