@@ -82,6 +82,21 @@
                         app:layout_constraintTop_toBottomOf="@+id/tv_product_price"
                         tools:text="date" />
 
+                    <TextView
+                        android:id="@+id/tv_order_state"
+                        orderStateTitle="@{recentOrder.completed}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/coffee_dark_brown"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_order_date"
+                        tools:text="state" />
+
                     <ImageView
                         android:id="@+id/iv_cart"
                         android:layout_width="20dp"

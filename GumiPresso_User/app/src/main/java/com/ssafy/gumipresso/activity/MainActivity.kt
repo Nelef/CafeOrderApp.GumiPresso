@@ -162,6 +162,12 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
                 visibilityBottomNavBar(true)
                 navController.navigate(R.id.action_orderFragment_to_cartFragment)
             }
+            CONST.FRAG_RECENT_ORDER_DETAIL_FROM_HOME -> {
+                navController.navigate(
+                    R.id.action_homeFragment_to_recentOrderDetailFragment,
+                    bundleOf("order_id" to param)
+                )
+            }
             CONST.FRAG_RECENT_ORDER_DETAIL_FROM_MYPAGE -> {
                 navController.navigate(
                     R.id.action_myPageFragment_to_recentOrderDetailFragment,
@@ -170,6 +176,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, SensorEventListener {
             }
             CONST.FRAG_MAPS -> {
                 navController.navigate(R.id.action_orderFragment_to_mapsFragment)
+            }
+            CONST.FRAG_CART_FROM_HOME -> {
+                visibilityBottomNavBar(true)
+                navController.navigate(R.id.action_homeFragment_to_cartFragment)
             }
             CONST.FRAG_CART_FROM_MYPAGE -> {
                 visibilityBottomNavBar(true)

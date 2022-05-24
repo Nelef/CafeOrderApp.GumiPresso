@@ -20,10 +20,13 @@ import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.adapter.BannerAdapter
 import com.ssafy.gumipresso.adapter.CartItemAdapter
+import com.ssafy.gumipresso.adapter.RecentOrderAdapter
 import com.ssafy.gumipresso.adapter.TableAdapter
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentHomeBinding
 import com.ssafy.gumipresso.model.dto.Banner
+import com.ssafy.gumipresso.model.dto.Cart
+import com.ssafy.gumipresso.model.dto.RecentOrder
 import com.ssafy.gumipresso.model.dto.Table
 import com.ssafy.gumipresso.util.PushMessageUtil
 import com.ssafy.gumipresso.viewmodel.*
@@ -34,10 +37,13 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val userViewModel: UserViewModel by activityViewModels()
     private val orderViewModel: RecentOrderViewModel by viewModels()
+    private val cartViewModel: CartViewModel by activityViewModels()
     private val noticeViewModel: NoticeViewModel by viewModels()
     private val tableViewModel: TableViewModel by activityViewModels()
     private val bannerViewModel: BannerViewModel by activityViewModels()
 
+    private lateinit var orderList: List<RecentOrder>
+    private lateinit var recentOrderAdapter: RecentOrderAdapter
     private lateinit var tableAdapter: TableAdapter
     private var tableList = listOf<Table>()
     private lateinit var bannerAdapter: BannerAdapter
@@ -73,6 +79,12 @@ class HomeFragment : Fragment() {
             if (userViewModel.user.value != null) {
                 binding.homeUserViewModel = userViewModel
                 orderViewModel.getOrderList(userViewModel.user.value!!.id)
+            }
+        }
+        orderViewModel.recentOrderList.observe(viewLifecycleOwner){
+            if(orderViewModel.recentOrderList.value != null){
+                orderList = orderViewModel.recentOrderList.value as List<RecentOrder>
+                initOrderAdapter()
             }
         }
         tableViewModel.getOrdertable()
@@ -168,5 +180,38 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         autoScrollStop()
+    }
+
+    private fun initOrderAdapter(){
+        orderList = orderList.filter{
+            Log.d(TAG, "initOrderAdapter: ${it.completed}")
+            it.completed != "Y"
+        }
+
+        recentOrderAdapter = RecentOrderAdapter(orderList)
+        recentOrderAdapter.apply {
+            onCartIconClick = object : RecentOrderAdapter.OnCartIconClick {
+                override fun onClick(view: View, position: Int) {
+                    val recentOrder = (orderViewModel.recentOrderList.value as List<RecentOrder>)[position]
+                    val recentOrderDetailList = recentOrder.recentOrderDetail
+                    cartViewModel.clearCart()
+
+                    for(i in recentOrderDetailList.indices){
+                        val cart = Cart(recentOrderDetailList[i].productId, recentOrderDetailList[i].img, recentOrderDetailList[i].name, recentOrderDetailList[i].quantity, recentOrderDetailList[i].price, recentOrderDetailList[i].quantity * recentOrderDetailList[i].price, recentOrderDetailList[i].type)
+                        cartViewModel.addCart(cart)
+                    }
+                    (activity as MainActivity).movePage(CONST.FRAG_CART_FROM_HOME, null)
+                }
+            }
+            onOrderItemClick = object : RecentOrderAdapter.OnOrderItemClick {
+                override fun onClick(view: View, position: Int) {
+                    (activity as MainActivity).movePage(CONST.FRAG_RECENT_ORDER_DETAIL_FROM_HOME, orderList[position].oId.toString())
+                }
+            }
+        }
+        binding.apply {
+            recyclerTableList2.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerTableList2.adapter = recentOrderAdapter
+        }
     }
 }
