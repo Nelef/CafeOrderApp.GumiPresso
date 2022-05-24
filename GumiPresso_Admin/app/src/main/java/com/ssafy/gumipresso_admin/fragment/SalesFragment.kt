@@ -60,14 +60,15 @@ class SalesFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        initViewModel()
+        initDatePicker()
         binding.btnType.setOnClickListener {
             salesViewModel.setTypeSelect()
         }
         binding.constContent.setOnClickListener {
             salesViewModel.setFlagDatePickOpenValue()
         }
+        binding.tabLayout.getTabAt(1)!!.select()
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 var flag = ""
@@ -85,15 +86,13 @@ class SalesFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-        binding.tabLayout.getTabAt(0)!!.select()
-        initDatePicker()
-        initViewModel()
+
+
+
     }
 
     private fun initViewModel(){
-        val cal = Calendar.getInstance()
-        cal.timeZone = TimeZone.getTimeZone("Asia/Seoul")
-        salesViewModel.getSalesList("year", DateDTO(cal.get(Calendar.YEAR).toString(),cal.get(Calendar.MONTH + 1).toString(),cal.get(Calendar.DATE).toString()))
+        //salesViewModel.getSalesList("year", DateDTO(cal.get(Calendar.YEAR).toString(),cal.get(Calendar.MONTH + 1).toString(),cal.get(Calendar.DATE).toString()))
         salesViewModel.salesList.observe(viewLifecycleOwner){
             salesList = it
             if(it.size > 0){
