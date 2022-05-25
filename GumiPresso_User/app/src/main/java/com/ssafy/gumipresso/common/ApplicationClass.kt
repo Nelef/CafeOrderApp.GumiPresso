@@ -2,6 +2,7 @@ package com.ssafy.gumipresso.common
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.google.gson.GsonBuilder
 import com.kakao.sdk.common.KakaoSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import com.ssafy.gumipresso.R
@@ -37,10 +38,11 @@ class ApplicationClass: Application() {
             .addInterceptor(ReceivedCookiesInterceptor())
             .build()
 
+        var gson = GsonBuilder().setLenient().create()
         retrofit = Retrofit.Builder()
             .baseUrl(SERVER_URL)
             .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         userPrefs = getSharedPreferences("User", MODE_PRIVATE)

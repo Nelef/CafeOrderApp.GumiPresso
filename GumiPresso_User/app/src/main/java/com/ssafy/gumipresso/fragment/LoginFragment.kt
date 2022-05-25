@@ -2,6 +2,7 @@ package com.ssafy.gumipresso.fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -56,6 +58,7 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,6 +72,7 @@ class LoginFragment : Fragment() {
         initNaverLogin()
         initViewModel()
         initGoogleLogin()
+        userViewModel.getLoginRSAKey()
     }
 
     private fun initViewModel(){
@@ -81,6 +85,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun login(){
         userViewModel.logdinSuccess.observe(viewLifecycleOwner) {
             if(it == false){
@@ -94,7 +99,7 @@ class LoginFragment : Fragment() {
                 Toast.makeText(context, "아이디와 비밀번호를 확인해 주세요", Toast.LENGTH_SHORT).show()
             }
             else{
-                userViewModel.login(User(id, pass))
+                userViewModel.loginRSA(User(id, pass))
             }
         }
 
@@ -111,9 +116,6 @@ class LoginFragment : Fragment() {
                 userViewModel.sendNaverToken(NaverIdLoginSDK.getAccessToken()!!)
             }
             override fun onFailure(httpStatus: Int, message: String) {
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Toast.makeText(context,"errorCode:$errorCode, errorDesc:$errorDescription",Toast.LENGTH_SHORT).show()
             }
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)

@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.CookieUtil
+import com.ssafy.gumipresso_admin.common.ApplicationClass
 import com.ssafy.gumipresso_admin.model.Retrofit
 import com.ssafy.gumipresso_admin.model.dto.User
 import kotlinx.coroutines.CoroutineScope
@@ -75,6 +77,18 @@ class UserViewModel: ViewModel() {
                 }
             }catch (e: Exception){
                 Log.d(TAG, "checkID: ${e.message}")
+            }
+        }
+    }
+
+    fun logout(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Retrofit.userService.logout()
+                ApplicationClass.cookiePrefs.edit().clear().apply()
+                ApplicationClass.userPrefs.edit().clear().apply()
+            }catch (e: Exception){
+                Log.d(TAG, "join: ${e.message}")
             }
         }
     }

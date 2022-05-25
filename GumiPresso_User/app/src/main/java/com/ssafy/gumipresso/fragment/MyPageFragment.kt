@@ -70,7 +70,7 @@ class MyPageFragment : Fragment() {
                     dialog.cancel()
                 }
                 builder.setPositiveButton("확인") { dialog, _ ->
-                    ApplicationClass.userPrefs.edit().clear().commit()
+                    userViewModel.logout()
                     mainActivity.movePage(CONST.LOGOUT, null)
                 }.show()
             }

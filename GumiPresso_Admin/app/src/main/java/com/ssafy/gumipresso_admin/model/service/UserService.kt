@@ -11,6 +11,9 @@ interface UserService {
     @GET("/admin/me")
     suspend fun getAdminUser(): Response<User>
 
+    @GET("/admin/logout")
+    suspend fun logout(): Response<Unit>
+
     @GET("/admin/join/{id}")
     suspend fun checkId(@Path("id")id: String): Response<Boolean>
 

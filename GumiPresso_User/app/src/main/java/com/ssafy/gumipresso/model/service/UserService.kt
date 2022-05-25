@@ -3,6 +3,8 @@ package com.ssafy.gumipresso.model.service
 import com.kakao.sdk.auth.model.OAuthToken
 import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.model.dto.tmap.ReceiveForm
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -15,6 +17,9 @@ interface UserService {
 
     @POST("/user/join")
     suspend fun join(@Body user: User): Response<User>
+
+    @GET("/user/logout")
+    suspend fun logout(): Response<Unit>
 
     @GET("/user/me")
     suspend fun getUser(): Response<User>
@@ -44,4 +49,10 @@ interface UserService {
 
     @PUT("/user/money")
     suspend fun updateMoney(@Body user: User): Response<User>
+
+    @GET("/user/aos")
+    suspend fun getLoginRSAKey(): Response<Any>
+
+    @POST("/user/aos")
+    suspend fun rsaLogin(@Body user: User): Response<User>
 }

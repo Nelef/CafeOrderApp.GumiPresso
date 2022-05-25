@@ -83,6 +83,26 @@ public class AdminRestContoller {
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value = "로그아웃 버튼 클릭시 -> ", response = User.class)
+	@GetMapping("/logout")
+	public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
+		Cookie[] cookies = request.getCookies();
+		System.out.println("#####################"+cookies);
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("loginId")) {
+					Cookie removeCookie = new Cookie("loginId", "");
+					removeCookie.setPath("/");
+					removeCookie.setMaxAge(0);
+					response.addCookie(removeCookie);
+					return new ResponseEntity<Void>(HttpStatus.OK);
+				}
+			}
+		}
+		return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+	}
+	
 	@ApiOperation(value = "가입시 아이디 중복검사 return: Boolean", response = Boolean.class)
 	@GetMapping("/join/{id}")
 	public ResponseEntity<?> checkId(@PathVariable String id){
