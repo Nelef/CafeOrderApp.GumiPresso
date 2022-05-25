@@ -103,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:padding="25dp"
                     android:textSize="20dp"
+                    android:text="아메리카노"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/iv_product_image"
                     app:layout_constraintTop_toTopOf="@id/iv_product_image"
@@ -114,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:padding="25dp"
                     android:textSize="15dp"
+                    android:text="4500원"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_product_image"
                     app:layout_constraintStart_toEndOf="@+id/iv_product_image"
                     tools:text="4500원" />

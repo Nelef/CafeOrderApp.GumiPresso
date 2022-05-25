@@ -22,14 +22,14 @@
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right"/>
+            app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_homeFragment_to_recentOrderDetailFragment"
             app:destination="@id/recentOrderDetailFragment"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_left"
             app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right"/>
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -85,7 +85,11 @@
             app:popExitAnim="@anim/exit_to_right" />
         <action
             android:id="@+id/action_orderDetailFragment_to_reviewModifyFragment"
-            app:destination="@id/reviewModifyFragment" />
+            app:destination="@id/reviewModifyFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -160,5 +164,5 @@
         android:id="@+id/reviewModifyFragment"
         android:name="com.ssafy.gumipresso.fragment.ReviewModifyFragment"
         android:label="ReviewModifyFragment"
-        tools:layout="@layout/fragment_review_modify"/>
+        tools:layout="@layout/fragment_review_modify" />
 </navigation>

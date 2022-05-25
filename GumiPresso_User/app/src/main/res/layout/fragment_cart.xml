@@ -405,7 +405,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/coffee_point_red"
                 android:text="주문하기"
-                android:textColor="@color/white"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
 
