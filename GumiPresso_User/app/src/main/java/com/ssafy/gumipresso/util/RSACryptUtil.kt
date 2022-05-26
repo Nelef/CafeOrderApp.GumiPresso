@@ -8,26 +8,29 @@ import com.google.android.gms.common.util.Base64Utils
 import java.security.KeyFactory
 import java.security.PrivateKey
 import java.security.PublicKey
+import java.security.spec.MGF1ParameterSpec
 import java.security.spec.PKCS8EncodedKeySpec
 import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import javax.crypto.Cipher
+import javax.crypto.spec.OAEPParameterSpec
+import javax.crypto.spec.PSource
 
 
 class RSACryptUtil {
     @RequiresApi(Build.VERSION_CODES.O)
     fun encrypt(input: String, key: PublicKey): String {
-        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
-        cipher.init(Cipher.ENCRYPT_MODE, key)
+        val cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding")
+        cipher.init(Cipher.ENCRYPT_MODE, key, OAEPParameterSpec("SHA-256","MGF1",MGF1ParameterSpec.SHA256,PSource.PSpecified.DEFAULT))
         val bytePlain = cipher.doFinal(input.toByteArray())
         return Base64.getEncoder().encodeToString(bytePlain);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun decrypt(input: String, key: PrivateKey): String {
-        val cipher = Cipher.getInstance("RSA_ECB_PKCS1_PADDING")
+        val cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding")
         var byteEncrypt: ByteArray = Base64.getDecoder().decode(input.toByteArray())
-        cipher.init(Cipher.DECRYPT_MODE, key)
+        cipher.init(Cipher.DECRYPT_MODE, key, OAEPParameterSpec("SHA-256","MGF1",MGF1ParameterSpec.SHA256,PSource.PSpecified.DEFAULT))
         val decrypt = cipher.doFinal(byteEncrypt)
         return String(decrypt)
     }

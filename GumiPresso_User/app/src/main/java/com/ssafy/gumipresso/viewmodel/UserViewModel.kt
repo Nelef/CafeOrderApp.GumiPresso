@@ -223,11 +223,14 @@ class UserViewModel: ViewModel() {
                 val publicKey: PublicKey = RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey)
                 val newUser = User(user.id, RSACryptUtil().encrypt(user.pass!!, publicKey))
                 val response = Retrofit.userService.rsaLogin(newUser)
-                if(response.isSuccessful){
+                if(response.isSuccessful && response.body() != null){
                     _user.postValue(response.body() as User)
                     _loginSuccess.postValue(true)
+                }else{
+                    _loginSuccess.postValue(false)
                 }
             }catch (e: Exception){
+                _loginSuccess.postValue(false)
                 Log.d(TAG, "loginRSA - Error: ${e.message}")
             }
             

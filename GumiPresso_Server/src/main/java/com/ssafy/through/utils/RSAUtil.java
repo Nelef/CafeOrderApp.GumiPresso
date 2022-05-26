@@ -1,6 +1,7 @@
 package com.ssafy.through.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -10,6 +11,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -20,6 +22,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 
 import org.springframework.stereotype.Component;
 
@@ -31,19 +35,20 @@ public class RSAUtil {
      */
     public static KeyPair genRSAKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
-        gen.initialize(1024, new SecureRandom());
+        gen.initialize(2048, new SecureRandom());
         return gen.genKeyPair();
     }
 
     /**
      * Public Key로 RSA 암호화를 수행
      * @throws InvalidKeySpecException 
+     * @throws InvalidAlgorithmParameterException 
      */
     public static String encryptRSA(String plainText, PublicKey publicKey)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException, InvalidAlgorithmParameterException {
+        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
         
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");			
 		RSAPublicKeySpec pkspec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);  
@@ -57,11 +62,12 @@ public class RSAUtil {
     /**
      * Private Key로 RSA 복호화를 수행
      * @throws InvalidKeySpecException 
+     * @throws InvalidAlgorithmParameterException 
      */
     public static String decryptRSA(String encrypted, PrivateKey privateKey)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeySpecException {
-        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeySpecException, InvalidAlgorithmParameterException {
+        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
         byte[] byteEncrypted = Base64.getDecoder().decode(encrypted.getBytes());
         System.out.println(byteEncrypted.length);
         
@@ -72,7 +78,7 @@ public class RSAUtil {
 		System.out.println("###EncryptedPW: "+encrypted);
         
 
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
         byte[] bytePlain = cipher.doFinal(byteEncrypted);
         System.out.println(new String(bytePlain));
         return new String(bytePlain, "utf-8");
