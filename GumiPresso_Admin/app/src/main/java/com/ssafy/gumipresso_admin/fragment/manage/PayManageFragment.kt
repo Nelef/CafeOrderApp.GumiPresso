@@ -2,11 +2,13 @@ package com.ssafy.gumipresso_admin.fragment.manage
 
 import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.zxing.integration.android.IntentIntegrator
@@ -40,6 +42,7 @@ class PayManageFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
@@ -108,7 +111,8 @@ class PayManageFragment : Fragment() {
                 Toast.makeText(context, "취소 되었습니다.", Toast.LENGTH_SHORT).show()
                 (activity as MainActivity).navController.popBackStack()
             } else {
-                 payViewModel.getUserByQRCode(result.contents)
+                payViewModel.getUserByQRCode(result.contents)
+                payViewModel.getRSAPublicKey()
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

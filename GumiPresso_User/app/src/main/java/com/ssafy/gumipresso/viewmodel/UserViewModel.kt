@@ -189,10 +189,26 @@ class UserViewModel: ViewModel() {
         }
     }
 
+    fun getRSAPublicKey(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = Retrofit.userService.getLoginRSAKey()
+                if(response.isSuccessful){
+                    publicKey = response.headers().get("publicKey").toString()
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "orderCart: ${e.message}")
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updateMoney(){
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response = Retrofit.userService.updateMoney(_user.value as User)
+                val user = _user.value as User
+                user.name = RSACryptUtil().encrypt(user.money.toString(), RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey))
+                val response = Retrofit.userService.updateMoney(user)
                 if(response.isSuccessful && response.body() != null){
                     _user.postValue(response.body() as User)
                 }

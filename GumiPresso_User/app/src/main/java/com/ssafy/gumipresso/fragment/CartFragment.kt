@@ -1,6 +1,7 @@
 package com.ssafy.gumipresso.fragment
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.gumipresso.activity.MainActivity
@@ -45,38 +47,14 @@ class CartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var user = (userViewModel.user.value as User)
-        gradeViewModel.getUserGrade(user.stamps)
-        gradeViewModel.grade.observe(viewLifecycleOwner) {
-            if (gradeViewModel.grade.value != null) {
-                binding.gradeVM = gradeViewModel
-                discountPercent = gradeViewModel.grade.value!!.id
-            }
-        }
-        userViewModel.getUserInfo()
-        userViewModel.user.observe(viewLifecycleOwner) {
-            if (userViewModel.user.value != null) {
-                binding.userVM = userViewModel
-            }
-        }
-        cartViewModel.totalCartPrice.observe(viewLifecycleOwner) {
-            initAdapter()
-        }
-        cartViewModel.isTakeOut.observe(viewLifecycleOwner) {
-            binding.viewmodel = cartViewModel
-            userTable = if (cartViewModel.isTakeOut.value as Boolean) "TakeOut" else "Here"
-        }
-        cartViewModel.usePay.observe(viewLifecycleOwner) {
-            binding.viewmodel = cartViewModel
-            orderType = if (cartViewModel.usePay.value as Boolean) "P" else "N"
-        }
         binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initViewModel()
         gpsViewModel.location?.observe(viewLifecycleOwner) {
 
             binding.gpsVM = gpsViewModel
@@ -154,6 +132,7 @@ class CartFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun makeOrder() {
         var order = Order((userViewModel.user.value as User).id, userTable)
 
@@ -203,5 +182,34 @@ class CartFragment : Fragment() {
     override fun onDestroy() {
         (activity as MainActivity).visibilityBottomNavBar(false)
         super.onDestroy()
+    }
+
+    fun initViewModel(){
+        var user = (userViewModel.user.value as User)
+        gradeViewModel.getUserGrade(user.stamps)
+        gradeViewModel.grade.observe(viewLifecycleOwner) {
+            if (gradeViewModel.grade.value != null) {
+                binding.gradeVM = gradeViewModel
+                discountPercent = gradeViewModel.grade.value!!.id
+            }
+        }
+        userViewModel.getUserInfo()
+        userViewModel.user.observe(viewLifecycleOwner) {
+            if (userViewModel.user.value != null) {
+                binding.userVM = userViewModel
+            }
+        }
+        cartViewModel.totalCartPrice.observe(viewLifecycleOwner) {
+            initAdapter()
+        }
+        cartViewModel.isTakeOut.observe(viewLifecycleOwner) {
+            binding.viewmodel = cartViewModel
+            userTable = if (cartViewModel.isTakeOut.value as Boolean) "TakeOut" else "Here"
+        }
+        cartViewModel.usePay.observe(viewLifecycleOwner) {
+            binding.viewmodel = cartViewModel
+            orderType = if (cartViewModel.usePay.value as Boolean) "P" else "N"
+        }
+        userViewModel.getRSAPublicKey()
     }
 }

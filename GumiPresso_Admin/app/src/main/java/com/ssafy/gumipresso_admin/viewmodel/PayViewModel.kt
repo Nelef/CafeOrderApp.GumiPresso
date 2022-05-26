@@ -1,12 +1,15 @@
 package com.ssafy.gumipresso_admin.viewmodel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.gumipresso_admin.model.Retrofit
 import com.ssafy.gumipresso_admin.model.dto.User
+import com.ssafy.gumipresso_admin.util.RSACryptUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -28,9 +31,27 @@ class PayViewModel: ViewModel() {
             }
         }
     }
+    fun getRSAPublicKey(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                Log.d(TAG, "getRSAPublicKey: ${publicKey}")
+                val response = Retrofit.userService.getPublicKey()
+                if(response.isSuccessful){
+                    publicKey = response.headers().get("publicKey").toString()
+                    Log.d(TAG, "getRSAPublicKey: $publicKey")
+                }
+            }catch (e: Exception){
+                Log.d(TAG, "orderCart: ${e.message}")
+            }
+        }
+    }
+    var publicKey = ""
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updatePayMoney(user: User){
         viewModelScope.launch(Dispatchers.IO){
             try {
+                Log.d(TAG, "updatePayMoney: $publicKey")
+                user.name = RSACryptUtil().encrypt(user.money.toString(), RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey))
                 val response = Retrofit.userService.updateUserMoney(user)
                 if (response.isSuccessful && response.body() != null) {
                     _user.postValue(response.body() as User)

@@ -228,10 +228,11 @@ public class UserRestController {
 	@PutMapping("/money")
 	public ResponseEntity<?> updateMoney(@RequestBody User user) throws Exception {
 		KeyPair keyPair = RSAUtil.getRSAKeyPair();
-		user.setMoney(Integer.parseInt(RSAUtil.decryptRSA(user.getMoney().toString(), keyPair.getPrivate())));
+		user.setMoney(Integer.parseInt(RSAUtil.decryptRSA(user.getName(), keyPair.getPrivate())));
 		int result = uService.updateMoney(user);
+		User selectedUser = uService.select(user.getId());
 		if (result > 0) {
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			return new ResponseEntity<User>(selectedUser, HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
 	}
@@ -239,6 +240,8 @@ public class UserRestController {
 	@GetMapping("/aos")
 	public ResponseEntity<?> setPrivateKey(HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		Cookie[] cookies = request.getCookies();
+		System.out.println(RSAUtil.getStringPublicKey());
+		response.addHeader("publicKey", RSAUtil.getStringPublicKey());
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("loginId")) {
@@ -250,8 +253,6 @@ public class UserRestController {
 				}
 			}
 		}	
-		
-		response.addHeader("publicKey", RSAUtil.getStringPublicKey());		
 		return new ResponseEntity<String>("da", HttpStatus.ACCEPTED);
 	}
 	

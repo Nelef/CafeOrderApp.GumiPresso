@@ -28,4 +28,7 @@ interface UserService {
 
     @PUT("/user/money")
     suspend fun updateUserMoney(@Body user: User): Response<Void>
+
+    @GET("/user/aos")
+    suspend fun getPublicKey(): Response<User>
 }
