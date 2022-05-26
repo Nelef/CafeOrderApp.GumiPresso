@@ -65,6 +65,7 @@ class BannerFragment : Fragment() {
             }
 
             btnRegist.setOnClickListener {
+                imageUrl = if(!imageUrl.contains("https://") || !imageUrl.contains("http://"))"https://"+imageUrl else imageUrl
                 bannerViewModel.insertBanner(Banner("", binding.etBannerUrl.text.toString()), imageUrl)
                 Toast.makeText(context, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
                 (activity as MainActivity).navController.popBackStack()
