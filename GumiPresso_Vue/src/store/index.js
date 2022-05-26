@@ -175,7 +175,7 @@ export default new Vuex.Store({
     },
     insertUser({ commit }, user) {
       http
-        .post("/user/join", user)
+        .post("/user/vue/join", user)
         .then((response) => {
           commit("INSERT_USER", response.data);
         })
@@ -185,7 +185,7 @@ export default new Vuex.Store({
     },
     login({ commit }, user) {
       http
-        .post("/user/login", user.data)
+        .post("/user/vue/login", user.data)
         .then((response) => {
           commit("LOGIN_USER", response.data);
           console.log(response.data);
