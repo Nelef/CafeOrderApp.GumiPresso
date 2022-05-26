@@ -30,13 +30,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class RSAUtil {
 
+	private static KeyPair rsaKeyPair;
     /**
      * 1024비트 RSA 키쌍을 생성
      */
-    public static KeyPair genRSAKeyPair() throws NoSuchAlgorithmException {
-        KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
-        gen.initialize(2048, new SecureRandom());
-        return gen.genKeyPair();
+    public static KeyPair getRSAKeyPair() throws NoSuchAlgorithmException {
+        if(rsaKeyPair == null) {
+        	KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
+        	gen.initialize(2048, new SecureRandom());
+        	rsaKeyPair = gen.genKeyPair();
+        	System.out.println("KEY PAIR GENERATED####");
+        }
+        return rsaKeyPair;
+    }
+    
+    public static String getStringPublicKey() throws Exception {    	
+    	return Base64.getEncoder().encodeToString(getRSAKeyPair().getPublic().getEncoded());
     }
 
     /**
@@ -80,7 +89,7 @@ public class RSAUtil {
 
         cipher.init(Cipher.DECRYPT_MODE, privateKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
         byte[] bytePlain = cipher.doFinal(byteEncrypted);
-        System.out.println(new String(bytePlain));
+        System.out.println("###DecryptedPW: "+new String(bytePlain));
         return new String(bytePlain, "utf-8");
     }
 

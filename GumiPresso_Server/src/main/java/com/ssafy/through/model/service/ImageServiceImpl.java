@@ -17,7 +17,7 @@ import com.ssafy.through.model.dto.ImageFile;
 import com.ssafy.through.model.repo.ImageRepo;
 
 @Service
-public class ImageServiceImpl implements ImageService{
+public class ImageServiceImpl implements ImageService {
 	private final String FILE_URL = "C:/SSAFY/final_gumi0607_10/GumiPresso_Server/src/main/resources/image/";
 	private final String FILE_URL_VUE = "C:\\SSAFY\\final_gumi0607_10\\GumiPresso_Vue\\src\\assets\\menu/";
 	@Autowired
@@ -34,38 +34,38 @@ public class ImageServiceImpl implements ImageService{
 	}
 
 	@Override
-	public void fileUpload(MultipartFile multipartFile){
-        Path copyOfLocation = Paths.get(FILE_URL+multipartFile.getOriginalFilename());
-        try {
-            Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Could not store file : " + multipartFile.getOriginalFilename());
-        }
-        copyOfLocation = Paths.get(FILE_URL_VUE+multipartFile.getOriginalFilename());
-        try {
-            Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Could not store file : " + multipartFile.getOriginalFilename());
-        }
+	public void fileUpload(MultipartFile multipartFile) {
+		Path copyOfLocation = Paths.get(FILE_URL + multipartFile.getOriginalFilename());
+		try {
+			Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Could not store file : " + multipartFile.getOriginalFilename());
+		}
+		if (multipartFile.getOriginalFilename().contains("products")) {
+			copyOfLocation = Paths.get(FILE_URL_VUE + multipartFile.getOriginalFilename());
+			try {
+				Files.copy(multipartFile.getInputStream(), copyOfLocation, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new RuntimeException("Could not store file : " + multipartFile.getOriginalFilename());
+			}
+		}
 
-    }
+	}
 
 	@Override
 	public void deleteFile(String imageFileName) {
-		String path = FILE_URL+imageFileName;
+		String path = FILE_URL + imageFileName;
 		File file = new File(path);
-		if(file.exists()) {
+		if (file.exists()) {
 			file.delete();
 		}
-		path = FILE_URL_VUE+imageFileName;
+		path = FILE_URL_VUE + imageFileName;
 		file = new File(path);
-		if(file.exists()) {
+		if (file.exists()) {
 			file.delete();
 		}
 	}
-	
-	
-	
+
 }

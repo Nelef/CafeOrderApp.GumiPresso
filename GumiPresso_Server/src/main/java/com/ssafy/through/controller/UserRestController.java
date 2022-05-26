@@ -210,7 +210,9 @@ public class UserRestController {
 	}
 
 	@PutMapping("/money")
-	public ResponseEntity<?> updateMoney(@RequestBody User user) {
+	public ResponseEntity<?> updateMoney(@RequestBody User user) throws Exception {
+		KeyPair keyPair = RSAUtil.getRSAKeyPair();
+		user.setMoney(Integer.parseInt(RSAUtil.decryptRSA(user.getMoney().toString(), keyPair.getPrivate())));
 		int result = uService.updateMoney(user);
 		if (result > 0) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -219,8 +221,7 @@ public class UserRestController {
 	}
 
 	@GetMapping("/aos")
-	public ResponseEntity<?> setPrivateKey(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
+	public ResponseEntity<?> setPrivateKey(HttpServletRequest request, HttpServletResponse response) throws Exception {		
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -232,32 +233,18 @@ public class UserRestController {
 					return new ResponseEntity<User>(selectedUser, HttpStatus.OK);
 				}
 			}
-		}
-		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-		generator.initialize(1024);
-		KeyPair keyPair = generator.genKeyPair();
+		}	
 		
-		PublicKey publicKey = keyPair.getPublic();
-		PrivateKey privateKey = keyPair.getPrivate();
-		session.setAttribute("_RSA_PRIVATE_KEY", privateKey);
-
-		byte[] pbByte = publicKey.getEncoded();
-		byte[] pkByte = privateKey.getEncoded();
-		String publicKeyString = Base64.getEncoder().encodeToString(pbByte);	
-
-		response.addHeader("publicKey", publicKeyString);		
-		
+		response.addHeader("publicKey", RSAUtil.getStringPublicKey());		
 		return new ResponseEntity<String>("da", HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/aos")
-	public ResponseEntity<?> rsaLogin(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity<?> rsaLogin(@RequestBody User user, HttpServletResponse response) throws Exception{
 		User selectedUser = uService.select(user.getId());
-		HttpSession session = request.getSession();		
-		PrivateKey privateKey = (PrivateKey) session.getAttribute("_RSA_PRIVATE_KEY");
+		KeyPair keyPair = RSAUtil.getRSAKeyPair();
 
-		String parsedPW = RSAUtil.decryptRSA(user.getPass(), privateKey);
-		System.out.println(parsedPW);
+		String parsedPW = RSAUtil.decryptRSA(user.getPass(), keyPair.getPrivate());		
 		if(selectedUser != null && selectedUser.getId().equals(user.getId())&& pwEncoder.matches(parsedPW, selectedUser.getPass())) {
 			Cookie cookie = new Cookie("loginId", selectedUser.getId());
 			cookie.setPath("/");
