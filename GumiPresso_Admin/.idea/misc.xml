@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/drawable-v24/button_go_order.xml" value="0.439" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/drawable/animation_logo.xml" value="0.351" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/drawable/textview_regular.xml" value="0.217" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/activity_main.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/activity_splash.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_banner.xml" value="0.4654205607476635" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_banner_edit.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_home.xml" value="0.2672239108409321" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_join.xml" value="0.3723958333333333" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_manage.xml" value="0.2672239108409321" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_menu_edit.xml" value="0.33" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_pay_manage.xml" value="0.3984375" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_product_detail.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_push_message.xml" value="0.33" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_sales.xml" value="0.22" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/fragment_table.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_item_banner.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_item_manage.xml" value="0.4782608695652174" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_item_order.xml" value="0.33" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_item_order_detail.xml" value="0.2672239108409321" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_item_product.xml" value="0.5494791666666666" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_item_sales.xml" value="0.2672239108409321" />
+        <entry key="..\:/SSAFY/final_gumi0607_10/GumiPresso_Admin/app/src/main/res/layout/list_table_item.xml" value="0.5494791666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
