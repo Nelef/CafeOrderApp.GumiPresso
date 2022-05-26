@@ -157,8 +157,39 @@ public class UserRestController {
 			user = uService.select(user.getId());
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
-
 	}
+	
+	@ApiOperation(value = "회원가입 버튼 클릭시 -> insert user", response = User.class)
+	@PostMapping("/vue/join")
+	public ResponseEntity<?> vueJoin(@RequestBody User user) {
+		try {			
+			int result = uService.insert(user);
+		} catch (Exception e) {
+
+		} finally {
+			user = uService.select(user.getId());
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+	}
+	
+	@ApiOperation(value = "로그인 버튼 클릭시 -> 로그인 할 유저 정보 return: User", response = User.class)
+	@PostMapping("/vue/login")
+	public ResponseEntity<?> vueLogin(@RequestBody User user, HttpServletResponse response) throws Exception {
+		User selectedUser = uService.select(user.getId());
+		if (selectedUser != null && selectedUser.getId().equals(user.getId())
+				&& selectedUser.getPass().equals(user.getPass())) {
+
+			Cookie cookie = new Cookie("loginId", selectedUser.getId());
+			cookie.setPath("/");
+			cookie.setMaxAge(10 * 60); // 초단위,. 600초
+			response.addCookie(cookie);
+
+			return new ResponseEntity<User>(selectedUser, HttpStatus.OK);
+
+		}
+		return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+	}
+
 	
 	@PostMapping("/google")
 	public ResponseEntity<?> googleLogin(@RequestBody User user, HttpServletResponse response) throws Exception {
