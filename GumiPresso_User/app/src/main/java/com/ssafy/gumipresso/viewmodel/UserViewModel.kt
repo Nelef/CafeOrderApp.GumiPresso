@@ -162,6 +162,17 @@ class UserViewModel: ViewModel() {
         }
     }
 
+    fun googleLogin(user: User){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = Retrofit.userService.googleLogin(user)
+                _user.postValue(response.body() as User)
+            }catch (e: Exception){
+                Log.d(TAG, "googleLogin: ${e.message}")
+            }
+        }
+    }
+
     fun sendFCMPushMessage(token: String, title: String, content: String){
         if(SettingsUtil().getPushStatePersonal()) {
             viewModelScope.launch(Dispatchers.IO) {

@@ -159,6 +159,22 @@ public class UserRestController {
 		}
 
 	}
+	
+	@PostMapping("/google")
+	public ResponseEntity<?> googleLogin(@RequestBody User user, HttpServletResponse response) throws Exception {
+		User selectedUser = uService.select(user.getId());
+		if (selectedUser != null) {
+			Cookie cookie = new Cookie("loginId", selectedUser.getId());
+			cookie.setPath("/");
+			cookie.setMaxAge(10 * 60); // 초단위,. 600초
+			response.addCookie(cookie);
+			return new ResponseEntity<User>(selectedUser, HttpStatus.OK);
+		}
+		else {
+			uService.insert(user);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}		
+	}
 
 	@PostMapping("/kakao")
 	public ResponseEntity<?> getKakaoToken(@RequestBody String code, HttpServletResponse response)
