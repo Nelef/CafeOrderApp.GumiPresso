@@ -101,10 +101,8 @@ class ReviewWriteFragment : Fragment() {
 
 
     fun openGalleryForImages() {
-        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "image/*"
+        var intent = Intent(Intent.ACTION_PICK)
+        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
         resultLauncher.launch(intent);
     }
 
