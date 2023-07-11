@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ssafy.gumipresso_admin">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
+        android:screenOrientation="portrait"
         android:name=".common.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_new"

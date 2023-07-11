@@ -30,5 +30,5 @@ interface UserService {
     suspend fun updateUserMoney(@Body user: User): Response<Void>
 
     @GET("/user/aos")
-    suspend fun getPublicKey(): Response<User>
+    suspend fun getPublicKey(): Response<Void>
 }

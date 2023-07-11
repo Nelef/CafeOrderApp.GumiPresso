@@ -13,50 +13,58 @@ import com.ssafy.gumipresso_admin.util.RSACryptUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.net.HttpURLConnection
 
-private const val TAG ="PayViewModel"
-class PayViewModel: ViewModel() {
+private const val TAG = "PayViewModel"
+
+class PayViewModel : ViewModel() {
     private val _user = MutableLiveData<User>()
-    val user : LiveData<User>
+
+    val user: LiveData<User>
         get() = _user
-    fun getUserByQRCode(userId: String){
-        viewModelScope.launch(Dispatchers.IO){
+
+    fun getUserByQRCode(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.userService.getPayUser(userId)
-                if(response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     _user.postValue(response.body() as User)
                 }
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "getUserByQRCode: ${e.message}")
             }
         }
     }
-    fun getRSAPublicKey(){
+
+    private var publicKey = ""
+    fun getRSAPublicKey() {
         viewModelScope.launch(Dispatchers.IO){
             try {
-                Log.d(TAG, "getRSAPublicKey: ${publicKey}")
                 val response = Retrofit.userService.getPublicKey()
                 if(response.isSuccessful){
                     publicKey = response.headers().get("publicKey").toString()
-                    Log.d(TAG, "getRSAPublicKey: $publicKey")
+                    Log.d(TAG, "getRSAPublicKey: ${publicKey}")
                 }
             }catch (e: Exception){
                 Log.d(TAG, "orderCart: ${e.message}")
             }
         }
     }
-    var publicKey = ""
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun updatePayMoney(user: User){
-        viewModelScope.launch(Dispatchers.IO){
+    fun updatePayMoney(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 Log.d(TAG, "updatePayMoney: $publicKey")
-                user.name = RSACryptUtil().encrypt(user.money.toString(), RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey))
+                user.name = RSACryptUtil().encrypt(
+                    user.money.toString(),
+                    RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey)
+                )
                 val response = Retrofit.userService.updateUserMoney(user)
                 if (response.isSuccessful && response.body() != null) {
                     _user.postValue(response.body() as User)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "updatePayMoney: ${e.message}")
             }
         }
@@ -65,10 +73,12 @@ class PayViewModel: ViewModel() {
     private val _money = MutableLiveData<Int>(0)
     val money: LiveData<Int>
         get() = _money
-    fun addMoney(money: Int){
+
+    fun addMoney(money: Int) {
         _money.value = _money.value?.plus(money)
     }
-    fun clearMoney(){
+
+    fun clearMoney() {
         _money.value = 0
     }
 }

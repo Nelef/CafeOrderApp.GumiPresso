@@ -13,7 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApplicationClass: Application() {
-    private val SERVER_URL = "http://ssafymobile.iptime.org:7890"
+    private val SERVER_URL = "https://gumipresso-back.imoneleft.synology.me"
     companion object{
         lateinit var retrofit: Retrofit
         lateinit var okHttp: OkHttpClient
