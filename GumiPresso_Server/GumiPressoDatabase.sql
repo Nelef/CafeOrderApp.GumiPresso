@@ -1,6 +1,6 @@
 drop database if exists ssafy_mobile_cafe;
-select @@global.transaction_isolation, @@transaction_isolation;
-set @@transaction_isolation="read-committed";
+-- select @@global.transaction_isolation, @@transaction_isolation;
+-- set @@transaction_isolation="read-committed";
 
 create database ssafy_mobile_cafe;
 use ssafy_mobile_cafe;
@@ -114,9 +114,6 @@ INSERT INTO t_product (name, type, price, img) VALUES ('화이트 모카라떼',
 INSERT INTO t_product (name, type, price, img) VALUES ('자몽에이드', 'coffee', 5100, 'products/coffee8.png');
 INSERT INTO t_product (name, type, price, img) VALUES ('레몬에이드', 'coffee', 5100, 'products/coffee9.png');
 INSERT INTO t_product (name, type, price, img) VALUES ('초코칩 쿠키', 'cookie', 1500, 'products/cookie.png');
-commit;
-
-
 commit;
 
 
