@@ -6,8 +6,8 @@
 <mapper namespace="com.ssafy.through.model.repo.UserRepo">
 
 	<insert id="insert" parameterType="User">
-		insert into t_user (id, name, pass) 
-		values (#{id}, #{name}, #{pass})
+		insert into t_user (id, name, pass, money) 
+		values (#{id}, #{name}, #{pass}, 50000)
 	</insert>
 	<select id="select" parameterType="string" resultType="User">
 		select * from t_user where id = #{id}
