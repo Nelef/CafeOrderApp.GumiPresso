@@ -34,8 +34,6 @@ import com.ssafy.gumipresso.databinding.FragmentLoginBinding
 import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.SettingsUtil
 import com.ssafy.gumipresso.viewmodel.UserViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 private const val TAG = "LoginFragment"
 

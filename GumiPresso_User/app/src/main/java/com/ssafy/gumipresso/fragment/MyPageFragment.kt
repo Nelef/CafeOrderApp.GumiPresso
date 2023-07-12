@@ -44,7 +44,15 @@ class MyPageFragment : Fragment() {
         initViewModel()
         user = userViewModel.user.value as User
         gradeViewModel.getUserGrade(user.stamps)
-        orderViewModel.getOrderList(user.id)
+        orderViewModel.getOrderList(user.id).invokeOnCompletion {
+            requireActivity().runOnUiThread {
+                if ((orderViewModel.recentOrderList.value?.size ?: 0) > 0) {
+                    binding.tvRecentNoOrder.visibility = View.GONE
+                } else {
+                    binding.tvRecentNoOrder.visibility = View.VISIBLE
+                }
+            }
+        }
         binding = FragmentMyPageBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -84,7 +92,15 @@ class MyPageFragment : Fragment() {
         userViewModel.user.observe(viewLifecycleOwner){
             if(userViewModel.user.value != null){
                 binding.homeUserViewModel = userViewModel
-                orderViewModel.getOrderList(userViewModel.user.value!!.id)
+                orderViewModel.getOrderList(userViewModel.user.value!!.id).invokeOnCompletion {
+                    requireActivity().runOnUiThread {
+                        if ((orderViewModel.recentOrderList.value?.size ?: 0) > 0) {
+                            binding.tvRecentNoOrder.visibility = View.GONE
+                        } else {
+                            binding.tvRecentNoOrder.visibility = View.VISIBLE
+                        }
+                    }
+                }
             }
         }
         orderViewModel.recentOrderList.observe(viewLifecycleOwner){

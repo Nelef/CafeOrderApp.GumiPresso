@@ -6,13 +6,21 @@
     <data>
 
         <import type="android.graphics.Color" />
+
         <import type="android.view.View" />
+
         <variable
             name="noticeVM"
             type="com.ssafy.gumipresso.viewmodel.NoticeViewModel" />
+
         <variable
             name="homeUserViewModel"
             type="com.ssafy.gumipresso.viewmodel.UserViewModel" />
+
+        <variable
+            name="recentOrderViewModel"
+            type="com.ssafy.gumipresso.viewmodel.RecentOrderViewModel" />
+
         <variable
             name="table"
             type="com.ssafy.gumipresso.model.dto.Table" />
@@ -51,35 +59,35 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="15dp"
                 android:src="@drawable/icon_notification"
-                app:tint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
             <ImageView
                 android:id="@+id/iv_noti_new"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/red_dot"
-                android:layout_marginBottom="3dp"
-                android:textSize="12sp"
                 android:layout_marginRight="2dp"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/red_dot"
                 android:textColor="@color/coffee_point_red"
+                android:textSize="12sp"
                 android:visibility="@{noticeVM.notice.size() > 0 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintTop_toTopOf="@id/iv_notification"
-                app:layout_constraintEnd_toEndOf="@id/iv_notification" />
+                app:layout_constraintEnd_toEndOf="@id/iv_notification"
+                app:layout_constraintTop_toTopOf="@id/iv_notification" />
 
             <TextView
+                toString="@{noticeVM.notice.size()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                toString="@{noticeVM.notice.size()}"
-                android:textSize="10sp"
                 android:textColor="@android:color/white"
-                app:layout_constraintStart_toStartOf="@id/iv_noti_new"
-                app:layout_constraintEnd_toEndOf="@id/iv_noti_new"
-                app:layout_constraintTop_toTopOf="@id/iv_noti_new"
+                android:textSize="10sp"
                 android:visibility="@{noticeVM.notice.size() > 0 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@id/iv_noti_new"/>
+                app:layout_constraintBottom_toBottomOf="@id/iv_noti_new"
+                app:layout_constraintEnd_toEndOf="@id/iv_noti_new"
+                app:layout_constraintStart_toStartOf="@id/iv_noti_new"
+                app:layout_constraintTop_toTopOf="@id/iv_noti_new" />
 
             <LinearLayout
                 android:id="@+id/divider0"
@@ -139,18 +147,18 @@
                     android:id="@+id/dots_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
                     app:dampingRatio="0.5"
-                    app:dotsCornerRadius="20dp"
                     app:dotsColor="@color/gumipresso_gray"
+                    app:dotsCornerRadius="20dp"
                     app:dotsSize="10dp"
                     app:dotsSpacing="6dp"
                     app:dotsStrokeWidth="1dp"
-                    app:stiffness="300"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/cardview_banner"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/cardview_banner"
+                    app:stiffness="300" />
 
                 <LinearLayout
                     android:id="@+id/divider2"
@@ -178,17 +186,17 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_table_list"
-                    android:layout_margin="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_table_list"/>
+                    android:layout_margin="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_table_list" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview_member1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="23dp"
+                    android:layout_marginTop="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -197,7 +205,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/gumipresso_gray"/>
+                        android:background="@color/gumipresso_gray" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -205,11 +213,11 @@
                     android:id="@+id/tv_can_use"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="사용 가능"
                     android:layout_marginLeft="10dp"
+                    android:text="사용 가능"
+                    app:layout_constraintBottom_toBottomOf="@id/cardview_member1"
                     app:layout_constraintStart_toEndOf="@id/cardview_member1"
-                    app:layout_constraintTop_toTopOf="@id/cardview_member1"
-                    app:layout_constraintBottom_toBottomOf="@id/cardview_member1"/>
+                    app:layout_constraintTop_toTopOf="@id/cardview_member1" />
 
 
                 <androidx.cardview.widget.CardView
@@ -225,7 +233,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/gumipresso_red"/>
+                        android:background="@color/gumipresso_red" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -233,11 +241,11 @@
                     android:id="@+id/tv_cant_use"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="사용 불가능"
                     android:layout_marginLeft="10dp"
+                    android:text="사용 불가능"
+                    app:layout_constraintBottom_toBottomOf="@id/cardview_member2"
                     app:layout_constraintStart_toEndOf="@id/cardview_member2"
-                    app:layout_constraintTop_toTopOf="@id/cardview_member2"
-                    app:layout_constraintBottom_toBottomOf="@id/cardview_member2"/>
+                    app:layout_constraintTop_toTopOf="@id/cardview_member2" />
 
                 <LinearLayout
                     android:id="@+id/divider3"
@@ -263,12 +271,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider3" />
 
+                <TextView
+                    android:id="@+id/tv_recent_no_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:paddingBottom="50dp"
+                    android:text="주문한 음료가 없습니다."
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recent_order_list" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_table_list2"
-                    android:layout_margin="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_recent_order_list"/>
+                    android:layout_margin="20dp"
+                    android:paddingBottom="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recent_order_list" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

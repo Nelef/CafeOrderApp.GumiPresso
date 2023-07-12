@@ -92,7 +92,7 @@ class GPSViewModel:ViewModel() {
 
             try {
                 _arrivalTime.postValue(convertTMapArrivalTime(receiveForm.features[0].properties.arrivalTime))
-                _distanceToStore.postValue(String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
+                _distanceToStore.postValue("매장과의 거리: "+String.format("%.2f",receiveForm.features[0].properties.totalDistance.toFloat()/1000)+"km")
                 _remainTime.postValue(convertTMapTotalTime(receiveForm.features[0].properties.totalTime))
                 Log.d(TAG, "getLocationInfo: ${receiveForm.features[0].properties.arrivalTime}")
             } catch (e:Exception){
