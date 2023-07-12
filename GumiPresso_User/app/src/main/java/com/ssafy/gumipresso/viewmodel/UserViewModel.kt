@@ -1,8 +1,10 @@
 package com.ssafy.gumipresso.viewmodel
 
+import android.content.Context
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,8 +34,9 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import kotlin.collections.HashMap
 
-private const val TAG ="UserViewModel"
-class UserViewModel: ViewModel() {
+private const val TAG = "UserViewModel"
+
+class UserViewModel : ViewModel() {
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
@@ -43,19 +46,18 @@ class UserViewModel: ViewModel() {
     val logdinSuccess: LiveData<Boolean>
         get() = _loginSuccess
 
-    fun login(user: User){
-        viewModelScope.launch(Dispatchers.IO){
+    fun login(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.userService.login(user)
-                if(response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     _user.postValue((response.body() as User))
                     _loginSuccess.postValue(true)
                     Log.d(TAG, "login: ${response.headers()}")
-                }
-                else if(response.body() == null){
+                } else if (response.body() == null) {
                     _loginSuccess.postValue(false)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "login: ${e.message}")
                 _loginSuccess.postValue(false)
             }
@@ -63,9 +65,10 @@ class UserViewModel: ViewModel() {
     }
 
     private val _userId = MutableLiveData<String>("")
-    val userId : LiveData<String>
+    val userId: LiveData<String>
         get() = _userId
-    fun setUserIdBind(userId: String){
+
+    fun setUserIdBind(userId: String) {
         _userId.value = userId
     }
 
@@ -74,195 +77,198 @@ class UserViewModel: ViewModel() {
         get() = _isUsedId
 
     fun getUsedId(id: String) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.userService.getUsedId(id)
-                if(response.isSuccessful &&response.body() == true){
+                if (response.isSuccessful && response.body() == true) {
                     _isUsedId.postValue(true)
-                }
-                else if(response.body() == false){
+                } else if (response.body() == false) {
                     _isUsedId.postValue(false)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "checkID: ${e.message}")
             }
         }
     }
 
-    fun join(user: User){
+    fun join(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.userService.join(user)
                 _user.postValue(response.body() as User)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "join: ${e.message}")
             }
         }
     }
 
-    fun logout(){
+    fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 Retrofit.userService.logout()
                 ApplicationClass.userPrefs.edit().clear().apply()
                 ApplicationClass.cookiePrefs.edit().clear().apply()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "join: ${e.message}")
             }
         }
     }
 
-    fun getUserInfo(){
-        viewModelScope.launch(Dispatchers.IO){
+    fun getUserInfo() {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.userService.getUser()
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     _user.postValue(response.body() as User)
                     _loginSuccess.postValue(true)
-                }
-                else{
+                } else {
                     _loginSuccess.postValue(false)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "getUser: ${e.message}")
             }
         }
     }
 
-    fun sendKakaoToken(token: String){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
+    fun sendKakaoToken(token: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
                 val response = Retrofit.userService.sendKakaoToken(token)
-                if(response.isSuccessful && response.body() != null){
+                if (response.isSuccessful && response.body() != null) {
                     _user.postValue(response.body() as User)
                     _loginSuccess.postValue(true)
-                }
-                else{
+                } else {
                     _loginSuccess.postValue(false)
                 }
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "sendToken: ${e.message}")
             }
         }
     }
 
-    fun sendNaverToken(token: String){
-        viewModelScope.launch(Dispatchers.IO){
+    fun sendNaverToken(token: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = Retrofit.userService.sendNaverToken(token)
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     _user.postValue(response.body() as User)
                     _loginSuccess.postValue(true)
                 }
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "sendNaverToken: ${e.message}")
             }
         }
     }
 
-    fun googleLogin(user: User){
+    fun googleLogin(user: User, newUser : () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val response = Retrofit.userService.googleLogin(user)
+            Log.i(TAG, "googleLogin-response: ${response.body()}")
+            if ((response.body() as User).money == 0) {
+                newUser()
+            } else {
+                _user.postValue(response.body() as User)
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "googleLogin: ${e.message}")
+        }
+    }
+
+fun sendFCMPushMessage(token: String, title: String, content: String) {
+    if (SettingsUtil().getPushStatePersonal()) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = Retrofit.userService.googleLogin(user)
+                var map = mutableMapOf<String, String>()
+                map.put("token", token)
+                map.put("title", title)
+                map.put("content", content)
+                Retrofit.userService.sendFCMPushMessgae(map)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+}
+
+fun getRSAPublicKey() {
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val response = Retrofit.userService.getLoginRSAKey()
+            if (response.isSuccessful) {
+                publicKey = response.headers().get("publicKey").toString()
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "orderCart: ${e.message}")
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun updateMoney() {
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val user = _user.value as User
+            user.name = RSACryptUtil().encrypt(
+                user.money.toString(),
+                RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey)
+            )
+            val response = Retrofit.userService.updateMoney(user)
+            if (response.isSuccessful && response.body() != null) {
                 _user.postValue(response.body() as User)
-            }catch (e: Exception){
-                Log.d(TAG, "googleLogin: ${e.message}")
             }
+        } catch (e: Exception) {
+            Log.d(TAG, "orderCart: ${e.message}")
         }
     }
+}
 
-    fun sendFCMPushMessage(token: String, title: String, content: String){
-        if(SettingsUtil().getPushStatePersonal()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    var map = mutableMapOf<String, String>()
-                    map.put("token", token)
-                    map.put("title", title)
-                    map.put("content", content)
-                    Retrofit.userService.sendFCMPushMessgae(map)
-                } catch (e: Exception) {
+fun setUserMoney(totalPrice: Int) {
+    var user = _user.value as User
+    user.money -= totalPrice
+    _user.value = user
+}
 
-                }
+private var publicKey = ""
+fun getLoginRSAKey() {
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val response = Retrofit.userService.getLoginRSAKey()
+            Log.d(TAG, "aosLogin: ${response}")
+            if (response.code() == HttpURLConnection.HTTP_OK && response.body() != null) {
+                _user.postValue(response.body() as User)
+            } else if (response.code() == 202) {
+                publicKey = response.headers().get("publicKey").toString()
+            } else {
+                Log.d(TAG, "aosLogin - FAIL: ${response}")
             }
+        } catch (e: Exception) {
+            Log.d(TAG, "aosLogin error: ${e.message}")
         }
     }
+}
 
-    fun getRSAPublicKey(){
-        viewModelScope.launch(Dispatchers.IO){
-            try {
-                val response = Retrofit.userService.getLoginRSAKey()
-                if(response.isSuccessful){
-                    publicKey = response.headers().get("publicKey").toString()
-                }
-            }catch (e: Exception){
-                Log.d(TAG, "orderCart: ${e.message}")
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun updateMoney(){
-        viewModelScope.launch(Dispatchers.IO){
-            try {
-                val user = _user.value as User
-                user.name = RSACryptUtil().encrypt(user.money.toString(), RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey))
-                val response = Retrofit.userService.updateMoney(user)
-                if(response.isSuccessful && response.body() != null){
-                    _user.postValue(response.body() as User)
-                }
-            }catch (e: Exception){
-                Log.d(TAG, "orderCart: ${e.message}")
-            }
-        }
-    }
-
-    fun setUserMoney(totalPrice: Int){
-        var user = _user.value as User
-        user.money -= totalPrice
-        _user.value = user
-    }
-
-    private var publicKey = ""
-    fun getLoginRSAKey(){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
-                val response = Retrofit.userService.getLoginRSAKey()
-                Log.d(TAG, "aosLogin: ${response}")
-                if(response.code() == HttpURLConnection.HTTP_OK && response.body() != null){
-                    _user.postValue(response.body() as User)
-                }else if(response.code() == 202){
-                    publicKey = response.headers().get("publicKey").toString()
-                }else{
-                    Log.d(TAG, "aosLogin - FAIL: ${response}")
-                }
-            }catch (e: Exception){
-                Log.d(TAG, "aosLogin error: ${e.message}")
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun loginRSA(user: User){
-        viewModelScope.launch(Dispatchers.IO){
-            try {
-                val publicKey: PublicKey = RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey)
-                val newUser = User(user.id, RSACryptUtil().encrypt(user.pass!!, publicKey))
-                val response = Retrofit.userService.rsaLogin(newUser)
-                if(response.isSuccessful && response.body() != null){
-                    _user.postValue(response.body() as User)
-                    _loginSuccess.postValue(true)
-                }else{
-                    _loginSuccess.postValue(false)
-                }
-            }catch (e: Exception){
+@RequiresApi(Build.VERSION_CODES.O)
+fun loginRSA(user: User) {
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val publicKey: PublicKey = RSACryptUtil().getPublicKeyFromBase64Encrypted(publicKey)
+            val newUser = User(user.id, RSACryptUtil().encrypt(user.pass!!, publicKey))
+            val response = Retrofit.userService.rsaLogin(newUser)
+            if (response.isSuccessful && response.body() != null) {
+                _user.postValue(response.body() as User)
+                _loginSuccess.postValue(true)
+            } else {
                 _loginSuccess.postValue(false)
-                Log.d(TAG, "loginRSA - Error: ${e.message}")
             }
-            
+        } catch (e: Exception) {
+            _loginSuccess.postValue(false)
+            Log.d(TAG, "loginRSA - Error: ${e.message}")
         }
+
     }
+}
 }
 
 

@@ -58,7 +58,7 @@ class ReviewModifyFragment : Fragment() {
             productVM = product
             if((commentViewModel.comment.value as Comment).img != null){
                 Glide.with(requireContext())
-                    .load("http://ssafymobile.iptime.org:7890/images/${(commentViewModel.comment.value as Comment).img}")
+                    .load("https://gumipresso-back.imoneleft.synology.me/images/${(commentViewModel.comment.value as Comment).img}")
                     .error(R.drawable.icon_empty_image)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.ivReviewImage)

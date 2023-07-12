@@ -2,14 +2,18 @@ package com.ssafy.gumipresso_admin.common
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.google.gson.GsonBuilder
 import com.ssafy.gumipresso_admin.common.interceptor.AddCookiesInterceptor
 import com.ssafy.gumipresso_admin.common.interceptor.ReceivedCookiesInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 
 class ApplicationClass: Application() {
-    private val SERVER_URL = "http://ssafymobile.iptime.org:7890"
+    private val SERVER_URL = "https://gumipresso-back.imoneleft.synology.me"
     companion object{
         lateinit var retrofit: Retrofit
         lateinit var okHttp: OkHttpClient

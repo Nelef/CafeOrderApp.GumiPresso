@@ -15,7 +15,7 @@ import com.ssafy.gumipresso_admin.R
 @BindingAdapter("loadImage")
 fun loadImage(view: ImageView, src: String?) {
     Glide.with(view.context)
-        .load(Uri.parse("http://ssafymobile.iptime.org:7890/images/${src}"))
+        .load(Uri.parse("https://gumipresso-back.imoneleft.synology.me/images/${src}"))
         .error(R.drawable.icon_empty_image)
         .into(view)
 }

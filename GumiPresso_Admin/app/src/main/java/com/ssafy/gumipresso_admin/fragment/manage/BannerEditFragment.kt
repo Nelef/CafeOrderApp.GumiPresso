@@ -103,7 +103,7 @@ class BannerEditFragment : Fragment() {
         binding.apply {
             bannerVM = bannerViewModel
             Glide.with(requireContext())
-                .load(Uri.parse("http://ssafymobile.iptime.org:7890/images/${banner.img}"))
+                .load(Uri.parse("https://gumipresso-back.imoneleft.synology.me/images/${banner.img}"))
                 .error(R.drawable.icon_empty_image)
                 .into(ivReviewImage)
         }

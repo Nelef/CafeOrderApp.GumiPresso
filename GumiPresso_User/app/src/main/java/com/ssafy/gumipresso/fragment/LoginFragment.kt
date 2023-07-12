@@ -28,7 +28,6 @@ import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.ssafy.gumipresso.R
 import com.ssafy.gumipresso.activity.LoginActivity
-import com.ssafy.gumipresso.activity.MainActivity
 import com.ssafy.gumipresso.common.ApplicationClass
 import com.ssafy.gumipresso.common.CONST
 import com.ssafy.gumipresso.databinding.FragmentLoginBinding
@@ -36,16 +35,17 @@ import com.ssafy.gumipresso.model.dto.User
 import com.ssafy.gumipresso.util.SettingsUtil
 import com.ssafy.gumipresso.viewmodel.UserViewModel
 
-private const val TAG ="LoginFragment"
+private const val TAG = "LoginFragment"
+
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val userViewModel : UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
     private lateinit var user: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val user = ApplicationClass.userPrefs.getString("User","")
-        if(!user.equals("") && SettingsUtil().getAutoLoginState()){
+        val user = ApplicationClass.userPrefs.getString("User", "")
+        if (!user.equals("") && SettingsUtil().getAutoLoginState()) {
             userViewModel.getUserInfo()
         }
     }
@@ -75,8 +75,8 @@ class LoginFragment : Fragment() {
         userViewModel.getLoginRSAKey()
     }
 
-    private fun initViewModel(){
-        userViewModel.user.observe(viewLifecycleOwner){
+    private fun initViewModel() {
+        userViewModel.user.observe(viewLifecycleOwner) {
             user = userViewModel.user.value as User
             Toast.makeText(context, "${user.name}님 반갑습니다.", Toast.LENGTH_SHORT).show()
             ApplicationClass.userPrefs.edit().putString("User", user.id).commit()
@@ -86,49 +86,50 @@ class LoginFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun login(){
+    private fun login() {
         userViewModel.logdinSuccess.observe(viewLifecycleOwner) {
-            if(it == false){
+            if (it == false) {
                 Toast.makeText(context, "아이디와 비밀번호를 확인해 주세요", Toast.LENGTH_SHORT).show()
             }
         }
         binding.apply {
             val id = etId.text.toString().trim()
             val pass = etPw.text.toString().trim()
-            if(id.isEmpty() || pass.isEmpty()){
+            if (id.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(context, "아이디와 비밀번호를 확인해 주세요", Toast.LENGTH_SHORT).show()
-            }
-            else{
+            } else {
                 userViewModel.loginRSA(User(id, pass))
             }
         }
 
     }
 
-    private fun join(){
+    private fun join() {
         (activity as LoginActivity).movePage(CONST.FRAG_JOIN)
     }
 
-    private  fun initNaverLogin(){
+    private fun initNaverLogin() {
         val oauthLoginCallback = object : OAuthLoginCallback {
             override fun onSuccess() {
                 Log.d(TAG, "onSuccess: ${NaverIdLoginSDK.getAccessToken()}")
                 userViewModel.sendNaverToken(NaverIdLoginSDK.getAccessToken()!!)
             }
+
             override fun onFailure(httpStatus: Int, message: String) {
             }
+
             override fun onError(errorCode: Int, message: String) {
                 onFailure(errorCode, message)
             }
         }
         binding.btnNaverLogin.setOnClickListener {
             NaverIdLoginSDK.authenticate(requireContext(), oauthLoginCallback)
+            Toast.makeText(context, "현재 네이버 로그인은 지원되지 않습니다.", Toast.LENGTH_SHORT).show()
         }
 
     }
 
-    private fun initKakaoLogin(){
-
+    private fun initKakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -136,49 +137,59 @@ class LoginFragment : Fragment() {
                         Toast.makeText(context, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.InvalidClient.toString() -> {
                         Toast.makeText(context, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                        Toast.makeText(context, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT)
+                            .show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
                         Toast.makeText(context, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.InvalidScope.toString() -> {
                         Toast.makeText(context, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                        Toast.makeText(context, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT)
+                            .show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.ServerError.toString() -> {
                         Toast.makeText(context, "서버 내부 에러", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     error.toString() == AuthErrorCause.Unauthorized.toString() -> {
                         Toast.makeText(context, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: ")
                     }
+
                     else -> { // Unknown
-                        Toast.makeText(context, "기타 에러", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "현재 카카오 로그인은 지원되지 않습니다.", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(context, "기타 에러", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "kakaoLogin: $error")
                     }
                 }
-            }
-            else if (token != null) {                
+            } else if (token != null) {
                 Log.d(TAG, "kakaoLogin: 로그인에 성공하였습니다 ${token}")
                 userViewModel.sendKakaoToken(token.accessToken!!)
             }
         }
         binding.btnKakaoLogin.setOnClickListener {
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())){
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
                 UserApiClient.instance.loginWithKakaoTalk(requireContext(), callback = callback)
-            }else{
+            } else {
                 UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
             }
         }
@@ -187,11 +198,12 @@ class LoginFragment : Fragment() {
     private var mAuth: FirebaseAuth? = null
     var mGoogleSignInClient: GoogleSignInClient? = null
 
-    private fun initGoogleLogin(){
+    private fun initGoogleLogin() {
         binding.btnGoogleLogin.setOnClickListener {
             initAuth()
         }
     }
+
     // 인증 초기화
     private fun initAuth() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -214,18 +226,23 @@ class LoginFragment : Fragment() {
     private val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { activityResult ->
-        Log.d(TAG, "firebaseAuthWithGoogle: Activity.RESULT_OK): ${AppCompatActivity.RESULT_OK}, activityResult.resultCode:${activityResult.resultCode}")
+        Log.d(
+            TAG,
+            "firebaseAuthWithGoogle: Activity.RESULT_OK): ${AppCompatActivity.RESULT_OK}, activityResult.resultCode:${activityResult.resultCode}"
+        )
         if (activityResult.resultCode == Activity.RESULT_OK) {
 
             // 인증 결과 획득
             val task = GoogleSignIn.getSignedInAccountFromIntent(activityResult.data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                Log.d(TAG, "firebaseAuthWithGoogle: account: ${account.displayName}  /// ${account.email}")
+                Log.d(
+                    TAG,
+                    "firebaseAuthWithGoogle: account: ${account.displayName}  /// ${account.email}"
+                )
                 firebaseAuthWithGoogle(account!!.idToken)
-            }
-            catch (e: ApiException) {
-                Log.w(TAG, "google sign in failed: " ,e)
+            } catch (e: ApiException) {
+                Log.w(TAG, "google sign in failed: ", e)
             }
         }
     }
@@ -234,15 +251,20 @@ class LoginFragment : Fragment() {
     private fun firebaseAuthWithGoogle(idToken: String?) {
         Log.d(TAG, "firebaseAuthWithGoogle: idToken: ${idToken}")
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        mAuth!!.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    val user = mAuth!!.currentUser
-                    val newUser = User(user!!.email!!, "0", user.displayName!!, 0, 0)
-                    userViewModel.googleLogin(newUser)
+        mAuth!!.signInWithCredential(credential).addOnCompleteListener(requireActivity()) { task ->
+            if (task.isSuccessful) {
+                val user = mAuth!!.currentUser
+                val newUser = User(user!!.email!!, "0", user.displayName!!, 0, 0)
+                userViewModel.googleLogin(newUser) {
+                    requireActivity().runOnUiThread {
+                        Toast.makeText(
+                            context,
+                            "구글 회원가입이 완료되었습니다. 로그인을 시도해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
+        }
     }
-
-
 }

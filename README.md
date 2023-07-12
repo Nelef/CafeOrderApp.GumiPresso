@@ -1,3 +1,11 @@
+## 다운로드
+- [GumiPresso.apk](http://gofile.me/76Cd2/5DWBzajiX)
+    - google계정 로그인 가능
+    - 일반 회원가입 가능
+- [GumiPresso_Admin.apk](http://gofile.me/76Cd2/6q7iS56x6)
+    - id: admin pw: admin
+    - 일반 회원가입 가능
+
 ## 소개 동영상
 [![Video Label](http://img.youtube.com/vi/QlIlsPsgLyI/0.jpg)](https://youtu.be/QlIlsPsgLyI)
 https://youtu.be/QlIlsPsgLyI
