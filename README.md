@@ -1,8 +1,8 @@
 ## 다운로드
-- [GumiPresso.apk](http://gofile.me/76Cd2/5DWBzajiX)
+- GumiPresso.apk - [OneDrive](https://kumohackr-my.sharepoint.com/:u:/g/personal/imoneleft_kumoh_ac_kr/ERIa9-X_SWNEonWuURKUcrQBn1vHgt1uIIVo8_7JGv5cUA?e=kmfArt) / [Synology](http://gofile.me/76Cd2/5DWBzajiX)
     - google계정 로그인 가능
     - 일반 회원가입 가능
-- [GumiPresso_Admin.apk](http://gofile.me/76Cd2/6q7iS56x6)
+- GumiPresso_Admin.apk - [OneDrive](https://kumohackr-my.sharepoint.com/:u:/g/personal/imoneleft_kumoh_ac_kr/EXRGiTYV969PrmvnyErmysgBlqFnyn6VJOcaIRSGKCPxgw?e=KLlFPF) / [Synology](http://gofile.me/76Cd2/6q7iS56x6)
     - id: admin pw: admin
     - 일반 회원가입 가능
 
