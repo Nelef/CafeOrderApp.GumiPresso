@@ -65,4 +65,4 @@ https://youtu.be/QlIlsPsgLyI
 
 ## 더 자세한 사항은 ppt에..
 <img src="https://github.com/Nelef/CafeOrderApp.GumiPresso/assets/40861980/0eb76433-61ec-489e-8f51-c7f06c1203bd" height="500">
-(https://1drv.ms/p/s!Atw7293_myNLnfYdMDdUkOnR9wG1Uw?e=RXZv0z)
+(http://gofile.me/76Cd2/lvX3sBfQR)
