@@ -1,3 +1,7 @@
+## 미리보기
+![img_2_5](https://github.com/user-attachments/assets/900a86ee-fa28-48cd-b521-aafff880aef4)
+
+
 ## 다운로드
 - GumiPresso.apk - [OneDrive](https://kumohackr-my.sharepoint.com/:u:/g/personal/imoneleft_kumoh_ac_kr/ERIa9-X_SWNEonWuURKUcrQBn1vHgt1uIIVo8_7JGv5cUA?e=kmfArt) / [Synology](http://gofile.me/76Cd2/5DWBzajiX)
     - google계정 로그인 가능
